@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Final_App
+namespace WindowsFormsApp1
 {
 	static class Program
 	{
@@ -16,7 +16,7 @@ namespace Final_App
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new Final_Application());
+			Application.Run(new FibonacciCalculator());
 		}
 	}
 }

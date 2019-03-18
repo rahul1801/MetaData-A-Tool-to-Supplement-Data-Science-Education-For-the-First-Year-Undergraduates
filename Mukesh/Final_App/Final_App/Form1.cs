@@ -12,35 +12,207 @@ using System.Windows.Forms;
 
 namespace Final_App
 {
-	public partial class Final_App : Form
+	public partial class Final_Application : Form
 	{
-		public Final_App()
+
+		// list of dropdowns
+		List<ComboBox> myComboBoxes = new List<ComboBox>();
+
+		// present tab
+		int index = 1;
+
+		public Final_Application()
 		{
 			InitializeComponent();
 		}
 
-		// list of panels
-		List<Panel> panelList = new List<Panel>();
+		private void Final_Application_Load(object sender, EventArgs e)
+		{ 
+			// Add dropdowns to list
+			myComboBoxes.Add(dataInputDropDown);
+			myComboBoxes.Add(preProcessDropDown);
 
-		// index of panel being shown
-		int index = 0;
+			// Disable submit button
+			submitButton.Enabled = false;
+		}
 
-		ProcessStartInfo myProcessStartInfo;
-
-		Process myProcess;
-
-		private void Final_App_Load(object sender, EventArgs e)
+		private void dataInputDropDown_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			// add panels to list
-			panelList.Add(panel1);
-			panelList.Add(panel2);
-			panelList[index].BringToFront();
 
+			// If this is reset
+			if (dataInputDropDown.SelectedIndex == -1)
+				return;
+
+			// Reset all other dropdowns
+			for (int i = 0; i < myComboBoxes.Count(); i++)
+			{
+				if (i != 0)
+				{
+					myComboBoxes[i].SelectedIndex = -1;
+				}
+			}
+
+			// Choice selected
+			string choice = dataInputDropDown.SelectedItem.ToString();
+
+			// Enable submit button
+			submitButton.Enabled = true;
+
+			if (choice == "Load Data")
+			{
+				// Update index
+				index = 1;
+
+				// switch to loadDataTab
+				stackPanel1.SelectedIndex = index;
+			}
+			else if(choice == "Data Info.")
+			{
+				// Update index
+				index = 2;
+
+				// hide label
+				dataInfoLabel.Visible = false;
+
+				// switch to dataInfoTab
+				stackPanel1.SelectedIndex = index;
+
+				// change text of button
+				submitButton.Text = "Load";
+			}
+		}
+
+		private void preProcessDropDown_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			// If this is reset
+			if (preProcessDropDown.SelectedIndex == -1)
+				return;
+
+			// Reset all other dropdowns
+			for (int i = 0; i < myComboBoxes.Count(); i++)
+			{
+				if (i != 1)
+				{
+					myComboBoxes[i].SelectedIndex = -1;
+				}
+			}
+
+			// Choice selected
+			string choice = preProcessDropDown.SelectedItem.ToString();
+
+			// Enable submit button
+			submitButton.Enabled = true;
+
+			if (choice == "Categorical to Numerical Conversion")
+			{
+				// Update index
+				index = 3;
+
+				// Switch to catToNumTab
+				stackPanel1.SelectedIndex = index;
+			}
+		}
+
+		private void submitButton_Click(object sender, EventArgs e)
+		{
+			if(index == 1)
+			{
+				// Get entered filename
+				string filename = filenameTextBox.Text;
+
+				// Argument to the script
+				string arg = " 0 " + filename;
+
+				// Start the asynchronous operation.
+				backgroundWorker1.RunWorkerAsync(arg);
+			}
+			else if(index == 2)
+			{
+				// Argument to the script
+				string arg = " 1";
+
+				// Start the asynchronous operation.
+				backgroundWorker1.RunWorkerAsync(arg);
+			}
+			else if(index==3)
+			{
+				// Argument to the script
+				string arg = " 2 ";
+
+				// Assign argument correspondingly;
+				if (labelEncodingRadio.Checked)
+				{
+					arg += "1";
+				}
+				else if(oneHotRadio.Checked)
+				{
+					arg += "2";
+				}
+
+				// Start the asynchronous operation.
+				backgroundWorker1.RunWorkerAsync(arg);
+			}
+		}
+
+		private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+		{
+			// Get the BackgroundWorker that raised this event.
+			BackgroundWorker worker = sender as BackgroundWorker;
+
+			// Assign the result of the computation
+			// to the Result property of the DoWorkEventArgs
+			// object. This will be available to the 
+			// RunWorkerCompleted eventhandler.
+			e.Result = callProcess((string)e.Argument, worker, e);
+		}
+
+		private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+		{
+			// Prompt text
+			string prompt;
+
+			// Error
+			if (e.Error != null)
+			{
+				prompt = e.Error.Message;
+			}
+
+			// Success
+			else
+			{
+				// Get result - <output of program,arguments>
+				KeyValuePair<string, string> result = (KeyValuePair<string, string>)e.Result;
+				if(result.Value == " 1")
+				{
+					// write and show label
+					dataInfoLabel.Text = result.Key;
+					dataInfoLabel.Visible = true;
+
+					// change text of button
+					submitButton.Text = "Submit";
+				}
+				else
+				{
+					// Show Prompt
+					MessageBox.Show(result.Key);
+				}
+			}
+			// Disable further action
+			submitButton.Enabled = false;
+		}
+
+		KeyValuePair<string, string> callProcess(string arg, BackgroundWorker worker, DoWorkEventArgs e)
+		{
+			string myString = "";
+
+			ProcessStartInfo myProcessStartInfo;
+
+			Process myProcess;
 			// full path of python interpreter 
 			string python = @"C:\Users\Mukesh Chugani\Anaconda3\python.exe";
 
 			// python app to call 
-			string myPythonApp = @"E:\IBM\Mukesh\prac.py";
+			string myPythonApp = @"E:\IBM\Mukesh\Data_menu_driven.py";
 
 
 			// Create new process start info 
@@ -53,47 +225,39 @@ namespace Final_App
 			myProcessStartInfo.CreateNoWindow = true;
 
 			// arguments
-			myProcessStartInfo.Arguments = myPythonApp + " -u";
+			myProcessStartInfo.Arguments = myPythonApp + arg;
 
 			myProcess = new Process();
 
 			// assign start information to the process 
 			myProcess.StartInfo = myProcessStartInfo;
-		}
-
-		private void startButton_Click(object sender, EventArgs e)
-		{
 
 			// start the process 
 			myProcess.Start();
 
 			// Read the standard output of the app.
 			StreamReader myStreamReader = myProcess.StandardOutput;
-			string myString = "";
 
 			while (!myStreamReader.EndOfStream)
 			{
 				String s = myStreamReader.ReadLine();
 				if (s != "")
 				{
-					myString += s+'\n';
-					// Console.WriteLine(s);
+					myString += s + '\n';
 				}
 			}
-			Console.WriteLine(myString);
-			// Show Welcome text
-			welcomeLabel.Text = myString;
-
-
-			// Change the panel
-			panelList[index].Hide();
-			panelList[++index].Show();
-			myProcess.Close();
+			KeyValuePair<string, string> result = new KeyValuePair<string, string>(myString, arg);
+			return result;
 		}
+	}
 
-		private void enterUrlButton_Click(object sender, EventArgs e)
+	class StackPanel : TabControl
+	{
+		protected override void WndProc(ref Message m)
 		{
-
+			// Hide tabs by trapping the TCM_ADJUSTRECT message
+			if (m.Msg == 0x1328 && !DesignMode) m.Result = (IntPtr)1;
+			else base.WndProc(ref m);
 		}
 	}
 }
