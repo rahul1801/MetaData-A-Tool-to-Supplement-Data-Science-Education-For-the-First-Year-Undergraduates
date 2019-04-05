@@ -104,8 +104,9 @@ class Analysis:
         print("")
         graph_final = list(graph_set)
         if(reg_count>0):
-            scatter_matrix(self.data_frame[graph_final],figsize=(12,8))
-            plt.show()
+            # scatter_matrix(self.data_frame[graph_final],figsize=(12,8))
+            # plt.show()
+            pass
         elif(reg_count==0):
             print('No multicollinearity detected between pair wise regressors')
             print("")
@@ -168,21 +169,19 @@ class Analysis:
                 return df_1hot
 
     def MVD(self,strat_ch):
-        print('Performing missing value detection and handling on the numerical features: ')
+        # print('Performing missing value detection and handling on the numerical features: ')
         missing = self.num_df.columns[self.num_df.isna().any()].tolist()
         self.data_matrix = self.num_df.values
         if(len(missing)==0):
             print('The data does not contain any missing values')
             mis_flag = 0
         else:
-            print('The data contains missing values which should be handled')
+            #print('The data contains missing values which should be handled')
             mis_flag = 1
-            print("")
-            print('The features with missing values: ')
-            for i in range(len(missing)):
-                print(missing[i])
-            print('-------------------------------------------------------------------------------------')
-            print("")
+            # print("")
+            # print('The features with missing values: ')
+            # for i in range(len(missing)):
+            #     print(missing[i])
         if(mis_flag==1):
             if(strat_ch==1):
                 imputer = Imputer(strategy = "mean")
@@ -194,18 +193,16 @@ class Analysis:
             self.data_matrix = imputer.transform(self.data_matrix)
             print("")
             print('The missing values have been detected and handled')
-        print('-------------------------------------------------------------------------------------')
-        print("")
     
     def Scaling_decision(self,ch_num):
         if(ch_num==1):
             self.data_matrix = self.z_score_standardization(self.data_matrix)
             print('The data has been z-score standardized')
-            print('-------------------------------------------------------------------------------------')
+            # print('-------------------------------------------------------------------------------------')
         if(ch_num==2):
             self.data_matrix = self.max_min_normalization(self.data_matrix)
             print('The data has been max-min normalized')
-            print('-------------------------------------------------------------------------------------')
+            # print('-------------------------------------------------------------------------------------')
 
 def store_obj(filename,obj):
     pickle_file = open(filename,"wb")
