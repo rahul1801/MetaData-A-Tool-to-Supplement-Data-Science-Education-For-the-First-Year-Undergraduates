@@ -4,6 +4,13 @@ from numpy.linalg import eig
 from sklearn.preprocessing import Imputer
 from future_encoders import OrdinalEncoder,OneHotEncoder
 from pandas.plotting import scatter_matrix
+
+#import libraries for regression analysis
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import mean_squared_error, r2_score
+
 import matplotlib.pyplot as plt
 import sys
 try:
@@ -191,6 +198,8 @@ class Analysis:
                 imputer = Imputer(strategy = "most_frequent")
             imputer.fit(self.data_matrix)
             self.data_matrix = imputer.transform(self.data_matrix)
+            #copy data_matrix to feed into regression models
+            self.data_regres = self.data_matrix
             print("")
             print('The missing values have been detected and handled')
     
@@ -204,6 +213,86 @@ class Analysis:
             print('The data has been max-min normalized')
             # print('-------------------------------------------------------------------------------------')
 
+    def Linear_Regression_model(X, Y):
+        xTrain, xTest, yTrain, yTest = train_test_split(X, Y, test_size = 0.25, random_state = 0)
+        LinearRegressor = LinearRegression()
+        LinearRegressor.fit(xTrain, yTrain)
+        yPrediction = LinearRegressor.predict(xTest)
+        # Printing the results
+        print('Results of Multivariate Regression')
+        print('intercept            : \n', LinearRegressor.intercept_)
+        print('Coefficients         : \n', LinearRegressor.coef_)
+        print('Mean squared error   : %.2f' % mean_squared_error(yTest, yPrediction))
+        print('Variance score       : %.2f' % r2_score(yTest, yPrediction))
+
+    def Logistic_Regression_model(X, Y):
+        X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size = 0.25, random_state = 0)       
+        classifier = LogisticRegression(random_state = 0)
+        classifier.fit(X_train, y_train)
+        y_pred = classifier.predict(X_test)
+        # Printing the results
+        print("Results of Logistic Regression")
+        print("Intercept value      : %.2f",classifier.intercept_)
+        print("Mean Squared Error   : %.2f",mean_squared_error(y_test,y_pred))
+        print("Coefficients         : %.2f",classifier.coef_)
+
+    def Exp_Regression_model(X, Y):
+        X_exp = np.exp(X)
+        x_Train, x_Test, y_Train, y_Test = train_test_split(X_exp, Y, test_size = 0.25, random_state = 0)
+        LinearRegressor = LinearRegression()
+        LinearRegressor.fit(x_Train, yTrain)
+        yPrediction = LinearRegressor.predict(x_Test)
+        # Printing the results
+        print('Results for Exponential Regression')
+        print('intercept            : \n', LinearRegressor.intercept_)
+        print('Coefficients         : \n', LinearRegressor.coef_)
+        print('Mean squared error   : %.2f' % mean_squared_error(yTest, yPrediction))
+        print('Variance score       : %.2f' % r2_score(yTest, yPrediction))
+
+    def Regression_models(self, ch_reg):
+        data_1 = self.data_regres
+        data_2 = self.data_matrix
+
+        X_1 = self.data_1[:,0:(self.data_1.shape[1]-1)]
+        Y_1 = self.data_1[:,(self.data_1.shape[1]-1)]
+        X_2 = self.data_2[:,0:(self.data_2.shape[1]-1)]
+        Y_2 = self.data_2[:,(self.data_2.shape[1]-1)]
+
+        if(ch_reg==1):
+            #do multivariate / simple linear regression
+            print("Analysis before data scaling")
+            Linear_Regression_model(X_1, Y_1)
+
+            print("Analysis after complete data scaling")
+            Linear_Regression_model(X_2, Y_2)
+
+        elif(ch_reg==2):
+            #do exponential regression
+            print("Analysis before data scaling")
+            Exp_Regression_model(X_1, Y_1)
+
+            print("Analysis after complete data scaling")
+            Exp_Regression_model(X_2, Y_2)
+
+        elif(ch_reg==3):
+            #do logistic regression
+            print("Analysis before data scaling")
+            Logistic_Regression_model(X_1, Y_1)
+
+            print("Analysis after complete data scaling")
+            Logistic_Regression_model(X_2, Y_2)
+
+        elif(ch_reg==4): #do all regressions
+            print("Analysis before data scaling")
+            Linear_Regression_model(X_1, Y_1)
+            Exp_Regression_model(X_1, Y_1)
+            Logistic_Regression_model(X_1, Y_1)
+
+            print("Analysis after complete data scaling")
+            Linear_Regression_model(X_2, Y_2)
+            Exp_Regression_model(X_2, Y_2)
+            Logistic_Regression_model(X_2, Y_2)
+        
 def store_obj(filename,obj):
     pickle_file = open(filename,"wb")
     pickle.dump(obj,pickle_file)
