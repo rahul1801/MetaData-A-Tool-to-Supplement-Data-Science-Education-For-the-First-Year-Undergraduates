@@ -1,3 +1,9 @@
+
+# coding: utf-8
+
+# In[1]:
+
+
 import numpy as np
 import pandas as pd
 from numpy.linalg import eig
@@ -6,13 +12,45 @@ from future_encoders import OrdinalEncoder,OneHotEncoder
 from pandas.plotting import scatter_matrix
 import matplotlib.pyplot as plt
 import sys
+from numpy.linalg import eig
+
+
+# In[25]:
+
+
 try:
     import cPickle as pickle
 except ModuleNotFoundError:
     import pickle
 
+
+# In[26]:
+
+
 pickle_filename = "myAnalysis.pickle"
 pd.set_option('display.max_columns', 20)
+
+
+# In[2]:
+
+
+from random import gauss
+from random import seed
+from pandas import Series
+from pandas.tools.plotting import autocorrelation_plot
+import statsmodels.api
+
+
+# In[3]:
+
+
+import tensorflow as tf
+import keras
+from keras.layers import Input,Dense
+from keras.models import Model
+
+
+# In[42]:
 
 
 class Analysis:
@@ -148,10 +186,7 @@ class Analysis:
             print('Result Post VIF Analysis: ')
             print('Number of regressors exhibiting near linear dependence: '+str(vif_count))
             print('Feature exhibiting maximum multicollinearity: '+self.data_frame.columns[vif_max_index])
-            self.data_frame_modified = self.data_frame.drop(self.data_frame.columns[vif_max_index],axis=1)
-            self.data_matrix_modified = self.data_frame_modified.values
-            print('The feature: '+self.data_frame.columns[vif_max_index]+' has been eliminated')
-    
+            
     def cat_to_num(self,ch):
         if(self.cat_flag==0):
             print('The data is devoid of any categorical features.')
@@ -203,6 +238,74 @@ class Analysis:
             self.data_matrix = self.max_min_normalization(self.data_matrix)
             print('The data has been max-min normalized')
             # print('-------------------------------------------------------------------------------------')
+            
+    def Noise_detection(self):
+        noise = []
+        cols = self.num_df.columns
+        for i in range(len(cols)):
+            k = 0
+            series = Series(self.num_df[cols[i]])
+            stats = statsmodels.stats.diagnostic.acorr_ljungbox(series, lags=None, boxpierce=False)
+            vals = stats[1]
+            if(vals.any()<=0.05):
+                k = 1
+            if(k==1):
+                noise.append(cols[i])
+        if(len(noise)==0):
+            print('The features are devoid of White Gaussian and Gaussian Noise')
+        else:
+            print('The numerical features with Gaussian White Noise')
+            print(noise)
+    
+    def PCA(self,data,f):
+        X = self.data_matrix[:,0:(self.data_matrix.shape[1]-1)]
+        cov_matrix = np.dot(X.T,X)/self.data_matrix.shape[0]
+        e1,e2 = eig(cov_matrix)
+        e1 = abs(e1)
+        e2 = e2.T
+        idx = np.argsort(e1)[::-1]
+        e2 = e2[:,idx]
+        e2 = e2[:,0:f]
+        e1_sort = np.sort(e1)[::-1]
+        self.data_matrix_reduced = np.matmul(X,e2)
+        print(self.data_matrix_reduced.shape)
+        sum1 = sum(e1_sort)
+        sum_break = 0
+        for i in range(f):
+            sum_break+=e1_sort[i]
+        retention = (sum_break/sum1)*100
+        print('Percentage retention of features on applying PCA (linear transformation): '+str(retention))
+        
+    def Auto_Encoder(self,data,features):
+        X = data[:,0:(data.shape[1]-1)]
+        data_count = data.shape[0]
+        f = features
+        value = X.shape[1]
+        input_value = Input(shape=(value,))
+        hidden_value = int(0.80*(value))
+        encoded_1 = Dense(hidden_value,activation='sigmoid')(input_value)
+        encoded = Dense(f,activation='relu')(encoded_1)
+        decoded_1 = Dense(hidden_value,activation='sigmoid')(encoded)
+        decoded = Dense(value, activation='sigmoid')(decoded_1)
+        autoencoder = Model(input_value,decoded)
+        encoder = Model(input_value,encoded)
+        autoencoder.compile(optimizer='adadelta', loss='binary_crossentropy')
+        autoencoder.fit(X,X,
+                epochs=5,
+                batch_size=int(data_count/5),
+                shuffle=True)
+        self.latent_representation = encoder.predict(X)
+        print(self.latent_representation.shape)
+        
+    
+    def Dim_Reduction(self,dim_ch,features):
+        f = features
+        if(dim_ch==1):
+            self.PCA(self.data_matrix,f)
+        elif(dim_ch==2):
+            self.Auto_Encoder(self.data_matrix,features)
+            
+            
 
 def store_obj(filename,obj):
     pickle_file = open(filename,"wb")
@@ -240,4 +343,52 @@ if __name__ == '__main__':
         myAnalysis = load_obj(pickle_filename)
         myAnalysis.Multicollinearity_Analysis()
         store_obj(pickle_filename, myAnalysis)
+
+
+# In[43]:
+
+
+a = Analysis('housing.csv')
+
+
+# In[44]:
+
+
+a.Entry()
+
+
+# In[45]:
+
+
+a.cat_to_num(1)
+
+
+# In[46]:
+
+
+a.MVD(1)
+
+
+# In[47]:
+
+
+a.Scaling_decision(1)
+
+
+# In[48]:
+
+
+a.Noise_detection()
+
+
+# In[49]:
+
+
+a.Multicollinearity_Analysis()
+
+
+# In[50]:
+
+
+a.Dim_Reduction(2,4)
 
