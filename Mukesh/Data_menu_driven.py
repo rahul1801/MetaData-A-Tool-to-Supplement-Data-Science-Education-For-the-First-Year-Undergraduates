@@ -8,9 +8,17 @@ import numpy as np
 import pandas as pd
 from numpy.linalg import eig
 from sklearn.preprocessing import Imputer
-from future_encoders import OrdinalEncoder,OneHotEncoder
+from future_encoders import OrdinalEncoder, OneHotEncoder
 from pandas.plotting import scatter_matrix
+
+#import libraries for regression analysis
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import mean_squared_error, r2_score
+
 import matplotlib.pyplot as plt
+from sklearn.metrics import confusion_matrix
 import sys
 from numpy.linalg import eig
 
@@ -226,6 +234,8 @@ class Analysis:
                 imputer = Imputer(strategy = "most_frequent")
             imputer.fit(self.data_matrix)
             self.data_matrix = imputer.transform(self.data_matrix)
+            #copy data_matrix to feed into regression models
+            self.data_regres = self.data_matrix
             print("")
             print('The missing values have been detected and handled')
     
@@ -307,6 +317,150 @@ class Analysis:
             
             
 
+    def Linear_Regression_model(X, Y):
+        xTrain, xTest, yTrain, yTest = train_test_split(X, Y, test_size = 0.25, random_state = 0)
+        LinearRegressor = LinearRegression()
+        LinearRegressor.fit(xTrain, yTrain)
+        yPrediction = LinearRegressor.predict(xTest)
+        # Printing the results
+        print('Results of Multivariate Regression')
+        print('intercept            : \n', LinearRegressor.intercept_)
+        print('Coefficients         : \n', LinearRegressor.coef_)
+        print('Mean squared error   : %.2f' % mean_squared_error(yTest, yPrediction))
+        print('Variance score       : %.2f' % r2_score(yTest, yPrediction))
+        return yTest, yPrediction
+
+    def Logistic_Regression_model(X, Y):
+        X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size = 0.25, random_state = 0)       
+        classifier = LogisticRegression(random_state = 0)
+        classifier.fit(X_train, y_train)
+        y_pred = classifier.predict(X_test)
+        # Printing the results
+        # Making the Confusion Matrix
+        cm = confusion_matrix(y_test, y_pred)
+
+        print("Results of the Confusion Matrix")
+        print("True Negatives: ",cm[0][0])
+        print("False Postives: ",cm[0][1])
+        print("False Negatives: ",cm[1][0])
+        print("True Positives: ",cm[1][1])
+        print("Results of Logistic Regression")
+        print("Intercept value      : %.2f",classifier.intercept_)
+        print("Mean Squared Error   : %.2f",mean_squared_error(y_test,y_pred))
+        print("Coefficients         : %.2f",classifier.coef_)
+        return y_test, y_pred
+
+    def Exp_Regression_model(X, Y):
+        X_exp = np.exp(X)
+        xTrain, xTest, yTrain, yTest = train_test_split(X_exp, Y, test_size = 0.25, random_state = 0)
+        LinearRegressor = LinearRegression()
+        LinearRegressor.fit(xTrain, yTrain)
+        yPrediction = LinearRegressor.predict(xTest)
+        # Printing the results
+        print('Results for Exponential Regression')
+        print('intercept            : \n', LinearRegressor.intercept_)
+        print('Coefficients         : \n', LinearRegressor.coef_)
+        print('Mean squared error   : %.2f' % mean_squared_error(yTest, yPrediction))
+        print('Variance score       : %.2f' % r2_score(yTest, yPrediction))
+        return yTest, yPrediction
+
+    def Regression_models(self, ch_reg):
+        data_1 = self.data_regres
+        data_2 = self.data_matrix
+
+        X_1 = self.data_1[:,0:(self.data_1.shape[1]-1)]
+        Y_1 = self.data_1[:,(self.data_1.shape[1]-1)]
+        X_2 = self.data_2[:,0:(self.data_2.shape[1]-1)]
+        Y_2 = self.data_2[:,(self.data_2.shape[1]-1)]
+
+        if(ch_reg==1):
+            #do multivariate / simple linear regression
+            print("Analysis before data scaling")
+            yt, y1 = Linear_Regression_model(X_1, Y_1)
+            print("Analysis after complete data scaling")
+            yt, y2 = Linear_Regression_model(X_2, Y_2)
+            #plot graph
+            plt.plot(yt, color='r') #actual y test value
+            plt.plot(y1, color='g') #predicted y value before scaling
+            plt.plot(y2, color='orange') #predicted y value after scaling
+            plt.xlabel('Data set #')
+            plt.ylabel('Target value')
+            plt.show()
+            plt.savefig('./images/LiR.png')
+
+        elif(ch_reg==2):
+            #do exponential regression
+            print("Analysis before data scaling")
+            yt, y1 = Exp_Regression_model(X_1, Y_1)
+            print("Analysis after complete data scaling")
+            yt, y2 = Exp_Regression_model(X_2, Y_2)
+            #plot graph
+            plt.plot(yt, color='r')
+            plt.plot(y1, color='g')
+            plt.plot(y2, color='orange')
+            plt.xlabel('Data set #')
+            plt.ylabel('Target value')
+            plt.show()
+            plt.savefig('./images/ExR.png')
+
+        elif(ch_reg==3):
+            #do logistic regression
+            print("Analysis before data scaling")
+            yt, y1 = Logistic_Regression_model(X_1, Y_1)
+            print("Analysis after complete data scaling")
+            yt, y2 = Logistic_Regression_model(X_2, Y_2)
+            #plot graph
+            plt.plot(yt, color='r')
+            plt.plot(y1, color='g')
+            plt.plot(y2, color='orange')
+            plt.xlabel('Data set #')
+            plt.ylabel('Target value')
+            plt.show()
+            plt.savefig('./images/LoR.png')
+
+        elif(ch_reg==4): #do all regressions
+            print("Analysis before data scaling")
+            yt, y1_lir = Linear_Regression_model(X_1, Y_1)
+            yt, y1_exr = Exp_Regression_model(X_1, Y_1)
+            yt, y1_lor = Logistic_Regression_model(X_1, Y_1)
+
+            print("Analysis after complete data scaling")
+            yt, y2_lir = Linear_Regression_model(X_2, Y_2)
+            yt, y2_exr = Exp_Regression_model(X_2, Y_2)
+            yt, y2_lor = Logistic_Regression_model(X_2, Y_2)
+
+            fig = plt.figure()
+
+            ax1 = fig.add_subplot(2,2,1)
+            ax1.plot(yt, color='r', label='Y_test') #actual y test value
+            ax1.plot(y1_lir, color='g', label='Y_pred_before_Scaling') #predicted y value before scaling
+            ax1.plot(y2_lir, color='orange', label='Y_pred_after_Scaling') #predicted y value after scaling
+            ax1.legend()
+            ax1.set_title('Linear Regression')
+            ax1.set_xlabel('Data set #')
+            ax1.set_ylabel('Target value')
+            
+            ax2 = fig.add_subplot(2,2,2)
+            ax2.plot(yt, color='r', label='Y_test') #actual y test value
+            ax2.plot(y1_lor, color='g', label='Y_pred_before_Scaling') #predicted y value before scaling
+            ax2.plot(y2_lor, color='orange', label='Y_pred_after_Scaling') #predicted y value after scaling
+            ax2.legend()
+            ax2.set_title('Logistic Regression')
+            ax2.set_xlabel('Data set #')
+            ax2.set_ylabel('Target value')
+
+            ax3 = fig.add_subplot(2, 1, 2)
+            ax3.plot(yt, color='r', label='Y_test') #actual y test value
+            ax3.plot(y1_exr, color='g', label='Y_pred_before_Scaling') #predicted y value before scaling
+            ax3.plot(y2_exr, color='orange', label='Y_pred_after_Scaling') #predicted y value after scaling
+            ax3.legend()
+            ax3.set_title('Expo Regression')
+            ax3.set_xlabel('Data set #')
+            ax3.set_ylabel('Target value')
+
+            plt.show()
+            plt.savefig('./images/Reg_Compare.png')
+        
 def store_obj(filename,obj):
     pickle_file = open(filename,"wb")
     pickle.dump(obj,pickle_file)
