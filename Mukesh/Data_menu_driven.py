@@ -317,20 +317,34 @@ class Analysis:
             yt, y2_exr = Exp_Regression_model(X_2, Y_2)
             yt, y2_lor = Logistic_Regression_model(X_2, Y_2)
 
-            plt.subplot(211)
-            plt.plot(yt, color='r')
-            plt.plot(y1_lir, color='g')
-            plt.plot(y2_lir, color='orange')
+            fig = plt.figure()
 
-            plt.subplot(212)
-            plt.plot(yt, color='r')
-            plt.plot(y1_lor, color='g')
-            plt.plot(y2_lor, color='orange')
+            ax1 = fig.add_subplot(2,2,1)
+            ax1.plot(yt, color='r', label='Y_test') #actual y test value
+            ax1.plot(y1_lir, color='g', label='Y_pred_before_Scaling') #predicted y value before scaling
+            ax1.plot(y2_lir, color='orange', label='Y_pred_after_Scaling') #predicted y value after scaling
+            ax1.legend()
+            ax1.set_title('Linear Regression')
+            ax1.set_xlabel('Data set #')
+            ax1.set_ylabel('Target value')
             
-            plt.subplot(213)
-            plt.plot(yt, color='r')
-            plt.plot(y1_exr, color='g')
-            plt.plot(y2_exr, color='orange')
+            ax2 = fig.add_subplot(2,2,2)
+            ax2.plot(yt, color='r', label='Y_test') #actual y test value
+            ax2.plot(y1_lor, color='g', label='Y_pred_before_Scaling') #predicted y value before scaling
+            ax2.plot(y2_lor, color='orange', label='Y_pred_after_Scaling') #predicted y value after scaling
+            ax2.legend()
+            ax2.set_title('Logistic Regression')
+            ax2.set_xlabel('Data set #')
+            ax2.set_ylabel('Target value')
+
+            ax3 = fig.add_subplot(2, 1, 2)
+            ax3.plot(yt, color='r', label='Y_test') #actual y test value
+            ax3.plot(y1_exr, color='g', label='Y_pred_before_Scaling') #predicted y value before scaling
+            ax3.plot(y2_exr, color='orange', label='Y_pred_after_Scaling') #predicted y value after scaling
+            ax3.legend()
+            ax3.set_title('Expo Regression')
+            ax3.set_xlabel('Data set #')
+            ax3.set_ylabel('Target value')
 
             plt.show()
             plt.savefig('./images/Reg_Compare.png')
