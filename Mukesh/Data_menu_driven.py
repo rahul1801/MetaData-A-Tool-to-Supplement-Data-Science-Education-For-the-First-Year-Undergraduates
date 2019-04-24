@@ -12,6 +12,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import mean_squared_error, r2_score
 
 import matplotlib.pyplot as plt
+from sklearn.metrics import confusion_matrix
 import sys
 try:
     import cPickle as pickle
@@ -232,6 +233,14 @@ class Analysis:
         classifier.fit(X_train, y_train)
         y_pred = classifier.predict(X_test)
         # Printing the results
+        # Making the Confusion Matrix
+        cm = confusion_matrix(y_test, y_pred)
+
+        print("Results of the Confusion Matrix")
+        print("True Negatives: ",cm[0][0])
+        print("False Postives: ",cm[0][1])
+        print("False Negatives: ",cm[1][0])
+        print("True Positives: ",cm[1][1])
         print("Results of Logistic Regression")
         print("Intercept value      : %.2f",classifier.intercept_)
         print("Mean Squared Error   : %.2f",mean_squared_error(y_test,y_pred))
