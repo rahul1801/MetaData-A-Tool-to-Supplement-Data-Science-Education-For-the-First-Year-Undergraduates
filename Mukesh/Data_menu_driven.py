@@ -1,9 +1,3 @@
-
-# coding: utf-8
-
-# In[1]:
-
-
 import numpy as np
 import pandas as pd
 from numpy.linalg import eig
@@ -22,24 +16,13 @@ from sklearn.metrics import confusion_matrix
 import sys
 from numpy.linalg import eig
 
-
-# In[25]:
-
-
 try:
     import cPickle as pickle
 except ModuleNotFoundError:
     import pickle
 
-
-# In[26]:
-
-
 pickle_filename = "myAnalysis.pickle"
 pd.set_option('display.max_columns', 20)
-
-
-# In[2]:
 
 
 from random import gauss
@@ -49,16 +32,10 @@ from pandas.tools.plotting import autocorrelation_plot
 import statsmodels.api
 
 
-# In[3]:
-
-
 import tensorflow as tf
 import keras
 from keras.layers import Input,Dense
 from keras.models import Model
-
-
-# In[42]:
 
 
 class Analysis:
@@ -212,19 +189,13 @@ class Analysis:
                 return df_1hot
 
     def MVD(self,strat_ch):
-        # print('Performing missing value detection and handling on the numerical features: ')
         missing = self.num_df.columns[self.num_df.isna().any()].tolist()
         self.data_matrix = self.num_df.values
         if(len(missing)==0):
             print('The data does not contain any missing values')
             mis_flag = 0
         else:
-            #print('The data contains missing values which should be handled')
             mis_flag = 1
-            # print("")
-            # print('The features with missing values: ')
-            # for i in range(len(missing)):
-            #     print(missing[i])
         if(mis_flag==1):
             if(strat_ch==1):
                 imputer = Imputer(strategy = "mean")
@@ -243,11 +214,9 @@ class Analysis:
         if(ch_num==1):
             self.data_matrix = self.z_score_standardization(self.data_matrix)
             print('The data has been z-score standardized')
-            # print('-------------------------------------------------------------------------------------')
         if(ch_num==2):
             self.data_matrix = self.max_min_normalization(self.data_matrix)
             print('The data has been max-min normalized')
-            # print('-------------------------------------------------------------------------------------')
             
     def Noise_detection(self):
         noise = []
@@ -317,7 +286,7 @@ class Analysis:
             
             
 
-    def Linear_Regression_model(X, Y):
+    def Linear_Regression_model(self,X, Y):
         xTrain, xTest, yTrain, yTest = train_test_split(X, Y, test_size = 0.25, random_state = 0)
         LinearRegressor = LinearRegression()
         LinearRegressor.fit(xTrain, yTrain)
@@ -330,7 +299,7 @@ class Analysis:
         print('Variance score       : %.2f' % r2_score(yTest, yPrediction))
         return yTest, yPrediction
 
-    def Logistic_Regression_model(X, Y):
+    def Logistic_Regression_model(self, X, Y):
         X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size = 0.25, random_state = 0)       
         classifier = LogisticRegression(random_state = 0)
         classifier.fit(X_train, y_train)
@@ -350,7 +319,7 @@ class Analysis:
         print("Coefficients         : %.2f",classifier.coef_)
         return y_test, y_pred
 
-    def Exp_Regression_model(X, Y):
+    def Exp_Regression_model(self, X, Y):
         X_exp = np.exp(X)
         xTrain, xTest, yTrain, yTest = train_test_split(X_exp, Y, test_size = 0.25, random_state = 0)
         LinearRegressor = LinearRegression()
@@ -365,8 +334,8 @@ class Analysis:
         return yTest, yPrediction
 
     def Regression_models(self, ch_reg):
-        data_1 = self.data_regres
-        data_2 = self.data_matrix
+        self.data_1 = self.data_regres
+        self.data_2 = self.data_matrix
 
         X_1 = self.data_1[:,0:(self.data_1.shape[1]-1)]
         Y_1 = self.data_1[:,(self.data_1.shape[1]-1)]
@@ -376,9 +345,9 @@ class Analysis:
         if(ch_reg==1):
             #do multivariate / simple linear regression
             print("Analysis before data scaling")
-            yt, y1 = Linear_Regression_model(X_1, Y_1)
+            yt, y1 = self.Linear_Regression_model(X_1, Y_1)
             print("Analysis after complete data scaling")
-            yt, y2 = Linear_Regression_model(X_2, Y_2)
+            yt, y2 = self.Linear_Regression_model(X_2, Y_2)
             #plot graph
             plt.plot(yt, color='r') #actual y test value
             plt.plot(y1, color='g') #predicted y value before scaling
@@ -391,9 +360,9 @@ class Analysis:
         elif(ch_reg==2):
             #do exponential regression
             print("Analysis before data scaling")
-            yt, y1 = Exp_Regression_model(X_1, Y_1)
+            yt, y1 = self.Exp_Regression_model(X_1, Y_1)
             print("Analysis after complete data scaling")
-            yt, y2 = Exp_Regression_model(X_2, Y_2)
+            yt, y2 = self.Exp_Regression_model(X_2, Y_2)
             #plot graph
             plt.plot(yt, color='r')
             plt.plot(y1, color='g')
@@ -406,9 +375,9 @@ class Analysis:
         elif(ch_reg==3):
             #do logistic regression
             print("Analysis before data scaling")
-            yt, y1 = Logistic_Regression_model(X_1, Y_1)
+            yt, y1 = self.Logistic_Regression_model(X_1, Y_1)
             print("Analysis after complete data scaling")
-            yt, y2 = Logistic_Regression_model(X_2, Y_2)
+            yt, y2 = self.Logistic_Regression_model(X_2, Y_2)
             #plot graph
             plt.plot(yt, color='r')
             plt.plot(y1, color='g')
@@ -420,14 +389,14 @@ class Analysis:
 
         elif(ch_reg==4): #do all regressions
             print("Analysis before data scaling")
-            yt, y1_lir = Linear_Regression_model(X_1, Y_1)
-            yt, y1_exr = Exp_Regression_model(X_1, Y_1)
-            yt, y1_lor = Logistic_Regression_model(X_1, Y_1)
+            yt, y1_lir = self.Linear_Regression_model(X_1, Y_1)
+            yt, y1_exr = self.Exp_Regression_model(X_1, Y_1)
+            yt, y1_lor = self.Logistic_Regression_model(X_1, Y_1)
 
             print("Analysis after complete data scaling")
-            yt, y2_lir = Linear_Regression_model(X_2, Y_2)
-            yt, y2_exr = Exp_Regression_model(X_2, Y_2)
-            yt, y2_lor = Logistic_Regression_model(X_2, Y_2)
+            yt, y2_lir = self.Linear_Regression_model(X_2, Y_2)
+            yt, y2_exr = self.Exp_Regression_model(X_2, Y_2)
+            yt, y2_lor = self.Logistic_Regression_model(X_2, Y_2)
 
             fig = plt.figure()
 
@@ -497,52 +466,15 @@ if __name__ == '__main__':
         myAnalysis = load_obj(pickle_filename)
         myAnalysis.Multicollinearity_Analysis()
         store_obj(pickle_filename, myAnalysis)
-
-
-# In[43]:
-
-
-a = Analysis('housing.csv')
-
-
-# In[44]:
-
-
-a.Entry()
-
-
-# In[45]:
-
-
-a.cat_to_num(1)
-
-
-# In[46]:
-
-
-a.MVD(1)
-
-
-# In[47]:
-
-
-a.Scaling_decision(1)
-
-
-# In[48]:
-
-
-a.Noise_detection()
-
-
-# In[49]:
-
-
-a.Multicollinearity_Analysis()
-
-
-# In[50]:
-
-
-a.Dim_Reduction(2,4)
-
+    elif arg == 6:
+        myAnalysis = load_obj(pickle_filename)
+        myAnalysis.Noise_detection()
+        store_obj(pickle_filename, myAnalysis)
+    elif arg == 7:
+        myAnalysis = load_obj(pickle_filename)
+        myAnalysis.Dim_Reduction(int(sys.argv[2]), int(sys.argv[3]))
+        store_obj(pickle_filename, myAnalysis)
+    elif arg == 8:
+        myAnalysis = load_obj(pickle_filename)
+        myAnalysis.Regression_models(int(sys.argv[2]))
+        store_obj(pickle_filename, myAnalysis)

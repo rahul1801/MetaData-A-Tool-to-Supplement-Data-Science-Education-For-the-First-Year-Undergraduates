@@ -39,12 +39,6 @@
 			this.featureEngineerDropDown = new System.Windows.Forms.ComboBox();
 			this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
 			this.submitButton = new System.Windows.Forms.Button();
-			this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
-			this.panel1 = new System.Windows.Forms.Panel();
-			this.pictureBox1 = new System.Windows.Forms.PictureBox();
-			this.panel4 = new System.Windows.Forms.Panel();
-			this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.stackPanel1 = new Final_App.StackPanel();
 			this.emptyTab = new System.Windows.Forms.TabPage();
 			this.emptyPanel = new System.Windows.Forms.Panel();
@@ -84,16 +78,24 @@
 			this.mcaPanel = new System.Windows.Forms.Panel();
 			this.mcaLabel = new System.Windows.Forms.Label();
 			this.label11 = new System.Windows.Forms.Label();
+			this.dimReduceTab = new System.Windows.Forms.TabPage();
+			this.noiseDetectTab = new System.Windows.Forms.TabPage();
+			this.noiseDetectPanel = new System.Windows.Forms.Panel();
+			this.noiseDetectLabel = new System.Windows.Forms.Label();
+			this.label12 = new System.Windows.Forms.Label();
+			this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
+			this.panel1 = new System.Windows.Forms.Panel();
+			this.pictureBox1 = new System.Windows.Forms.PictureBox();
+			this.panel4 = new System.Windows.Forms.Panel();
 			this.pictureBox2 = new System.Windows.Forms.PictureBox();
+			this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.flowLayoutPanel1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			this.groupBox3.SuspendLayout();
 			this.flowLayoutPanel2.SuspendLayout();
-			this.panel1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-			this.panel4.SuspendLayout();
 			this.stackPanel1.SuspendLayout();
 			this.emptyTab.SuspendLayout();
 			this.loadDataTab.SuspendLayout();
@@ -111,6 +113,11 @@
 			this.panel3.SuspendLayout();
 			this.mcaTab.SuspendLayout();
 			this.mcaPanel.SuspendLayout();
+			this.noiseDetectTab.SuspendLayout();
+			this.noiseDetectPanel.SuspendLayout();
+			this.panel1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+			this.panel4.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -205,7 +212,9 @@
 			this.preProcessDropDown.Items.AddRange(new object[] {
             "Categorical to Numerical Conversion",
             "Missing Value Handling",
-            "Scaling"});
+            "Scaling",
+            "Noise Detection",
+            "Noise Elimination"});
 			this.preProcessDropDown.Location = new System.Drawing.Point(6, 38);
 			this.preProcessDropDown.Name = "preProcessDropDown";
 			this.preProcessDropDown.Size = new System.Drawing.Size(317, 28);
@@ -235,7 +244,8 @@
 			this.featureEngineerDropDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.featureEngineerDropDown.FormattingEnabled = true;
 			this.featureEngineerDropDown.Items.AddRange(new object[] {
-            "Multi-Collinearity Analysis"});
+            "Multi-Collinearity Analysis",
+            "Dimensionality Reduction"});
 			this.featureEngineerDropDown.Location = new System.Drawing.Point(6, 38);
 			this.featureEngineerDropDown.Name = "featureEngineerDropDown";
 			this.featureEngineerDropDown.Size = new System.Drawing.Size(317, 28);
@@ -269,55 +279,6 @@
 			this.submitButton.UseVisualStyleBackColor = false;
 			this.submitButton.Click += new System.EventHandler(this.submitButton_Click);
 			// 
-			// flowLayoutPanel3
-			// 
-			this.flowLayoutPanel3.BackColor = System.Drawing.Color.LightSkyBlue;
-			this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.flowLayoutPanel3.Location = new System.Drawing.Point(4, 769);
-			this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-			this.flowLayoutPanel3.Size = new System.Drawing.Size(401, 35);
-			this.flowLayoutPanel3.TabIndex = 8;
-			// 
-			// panel1
-			// 
-			this.panel1.BackColor = System.Drawing.Color.White;
-			this.panel1.Controls.Add(this.pictureBox1);
-			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel1.Location = new System.Drawing.Point(4, 109);
-			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(401, 653);
-			this.panel1.TabIndex = 10;
-			// 
-			// pictureBox1
-			// 
-			this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-			this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-			this.pictureBox1.Name = "pictureBox1";
-			this.pictureBox1.Size = new System.Drawing.Size(401, 653);
-			this.pictureBox1.TabIndex = 0;
-			this.pictureBox1.TabStop = false;
-			// 
-			// panel4
-			// 
-			this.panel4.BackColor = System.Drawing.Color.White;
-			this.panel4.Controls.Add(this.pictureBox2);
-			this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel4.Location = new System.Drawing.Point(4, 4);
-			this.panel4.Name = "panel4";
-			this.panel4.Size = new System.Drawing.Size(401, 98);
-			this.panel4.TabIndex = 11;
-			// 
-			// backgroundWorker1
-			// 
-			this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
-			this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
-			// 
-			// openFileDialog1
-			// 
-			this.openFileDialog1.FileName = "openFileDialog1";
-			this.openFileDialog1.InitialDirectory = "/";
-			// 
 			// stackPanel1
 			// 
 			this.stackPanel1.Controls.Add(this.emptyTab);
@@ -326,7 +287,9 @@
 			this.stackPanel1.Controls.Add(this.catToNumSTab);
 			this.stackPanel1.Controls.Add(this.missingValueTab);
 			this.stackPanel1.Controls.Add(this.ScalingTab);
+			this.stackPanel1.Controls.Add(this.noiseDetectTab);
 			this.stackPanel1.Controls.Add(this.mcaTab);
+			this.stackPanel1.Controls.Add(this.dimReduceTab);
 			this.stackPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.stackPanel1.Location = new System.Drawing.Point(412, 109);
 			this.stackPanel1.Name = "stackPanel1";
@@ -739,6 +702,95 @@
 			this.label11.TabIndex = 0;
 			this.label11.Text = "Multi-Collinearity Analysis";
 			// 
+			// dimReduceTab
+			// 
+			this.dimReduceTab.Location = new System.Drawing.Point(4, 25);
+			this.dimReduceTab.Name = "dimReduceTab";
+			this.dimReduceTab.Size = new System.Drawing.Size(937, 624);
+			this.dimReduceTab.TabIndex = 8;
+			this.dimReduceTab.Text = "dimReduce";
+			this.dimReduceTab.UseVisualStyleBackColor = true;
+			// 
+			// noiseDetectTab
+			// 
+			this.noiseDetectTab.Controls.Add(this.noiseDetectPanel);
+			this.noiseDetectTab.Location = new System.Drawing.Point(4, 25);
+			this.noiseDetectTab.Name = "noiseDetectTab";
+			this.noiseDetectTab.Size = new System.Drawing.Size(937, 624);
+			this.noiseDetectTab.TabIndex = 7;
+			this.noiseDetectTab.Text = "Noise Detect";
+			this.noiseDetectTab.UseVisualStyleBackColor = true;
+			// 
+			// noiseDetectPanel
+			// 
+			this.noiseDetectPanel.AutoScroll = true;
+			this.noiseDetectPanel.Controls.Add(this.noiseDetectLabel);
+			this.noiseDetectPanel.Controls.Add(this.label12);
+			this.noiseDetectPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.noiseDetectPanel.Location = new System.Drawing.Point(0, 0);
+			this.noiseDetectPanel.Name = "noiseDetectPanel";
+			this.noiseDetectPanel.Size = new System.Drawing.Size(937, 624);
+			this.noiseDetectPanel.TabIndex = 2;
+			// 
+			// noiseDetectLabel
+			// 
+			this.noiseDetectLabel.AutoSize = true;
+			this.noiseDetectLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.noiseDetectLabel.Location = new System.Drawing.Point(5, 95);
+			this.noiseDetectLabel.Name = "noiseDetectLabel";
+			this.noiseDetectLabel.Size = new System.Drawing.Size(82, 26);
+			this.noiseDetectLabel.TabIndex = 1;
+			this.noiseDetectLabel.Text = "label10";
+			// 
+			// label12
+			// 
+			this.label12.AutoSize = true;
+			this.label12.Font = new System.Drawing.Font("Lucida Sans", 20F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label12.Location = new System.Drawing.Point(3, 26);
+			this.label12.Name = "label12";
+			this.label12.Size = new System.Drawing.Size(282, 39);
+			this.label12.TabIndex = 0;
+			this.label12.Text = "Noise Detection";
+			// 
+			// flowLayoutPanel3
+			// 
+			this.flowLayoutPanel3.BackColor = System.Drawing.Color.LightSkyBlue;
+			this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.flowLayoutPanel3.Location = new System.Drawing.Point(4, 769);
+			this.flowLayoutPanel3.Name = "flowLayoutPanel3";
+			this.flowLayoutPanel3.Size = new System.Drawing.Size(401, 35);
+			this.flowLayoutPanel3.TabIndex = 8;
+			// 
+			// panel1
+			// 
+			this.panel1.BackColor = System.Drawing.Color.White;
+			this.panel1.Controls.Add(this.pictureBox1);
+			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panel1.Location = new System.Drawing.Point(4, 109);
+			this.panel1.Name = "panel1";
+			this.panel1.Size = new System.Drawing.Size(401, 653);
+			this.panel1.TabIndex = 10;
+			// 
+			// pictureBox1
+			// 
+			this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+			this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+			this.pictureBox1.Name = "pictureBox1";
+			this.pictureBox1.Size = new System.Drawing.Size(401, 653);
+			this.pictureBox1.TabIndex = 0;
+			this.pictureBox1.TabStop = false;
+			// 
+			// panel4
+			// 
+			this.panel4.BackColor = System.Drawing.Color.White;
+			this.panel4.Controls.Add(this.pictureBox2);
+			this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panel4.Location = new System.Drawing.Point(4, 4);
+			this.panel4.Name = "panel4";
+			this.panel4.Size = new System.Drawing.Size(401, 98);
+			this.panel4.TabIndex = 11;
+			// 
 			// pictureBox2
 			// 
 			this.pictureBox2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -749,6 +801,16 @@
 			this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
 			this.pictureBox2.TabIndex = 0;
 			this.pictureBox2.TabStop = false;
+			// 
+			// backgroundWorker1
+			// 
+			this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+			this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
+			// 
+			// openFileDialog1
+			// 
+			this.openFileDialog1.FileName = "openFileDialog1";
+			this.openFileDialog1.InitialDirectory = "/";
 			// 
 			// Final_Application
 			// 
@@ -770,9 +832,6 @@
 			this.groupBox3.ResumeLayout(false);
 			this.flowLayoutPanel2.ResumeLayout(false);
 			this.flowLayoutPanel2.PerformLayout();
-			this.panel1.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-			this.panel4.ResumeLayout(false);
 			this.stackPanel1.ResumeLayout(false);
 			this.emptyTab.ResumeLayout(false);
 			this.loadDataTab.ResumeLayout(false);
@@ -799,6 +858,12 @@
 			this.mcaTab.ResumeLayout(false);
 			this.mcaPanel.ResumeLayout(false);
 			this.mcaPanel.PerformLayout();
+			this.noiseDetectTab.ResumeLayout(false);
+			this.noiseDetectPanel.ResumeLayout(false);
+			this.noiseDetectPanel.PerformLayout();
+			this.panel1.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+			this.panel4.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
 			this.ResumeLayout(false);
 
@@ -862,6 +927,11 @@
 		private System.Windows.Forms.OpenFileDialog openFileDialog1;
 		private System.Windows.Forms.Panel panel4;
 		private System.Windows.Forms.PictureBox pictureBox2;
+		private System.Windows.Forms.TabPage noiseDetectTab;
+		private System.Windows.Forms.Panel noiseDetectPanel;
+		private System.Windows.Forms.Label noiseDetectLabel;
+		private System.Windows.Forms.Label label12;
+		private System.Windows.Forms.TabPage dimReduceTab;
 	}
 }
 
