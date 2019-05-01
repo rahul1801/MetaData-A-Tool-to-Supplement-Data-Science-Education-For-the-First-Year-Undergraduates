@@ -386,49 +386,6 @@ class Analysis:
             plt.ylabel('Target value')
             plt.show()
             plt.savefig('./images/LoR.png')
-
-        elif(ch_reg==4): #do all regressions
-            print("Analysis before data scaling")
-            yt, y1_lir = self.Linear_Regression_model(X_1, Y_1)
-            yt, y1_exr = self.Exp_Regression_model(X_1, Y_1)
-            yt, y1_lor = self.Logistic_Regression_model(X_1, Y_1)
-
-            print("Analysis after complete data scaling")
-            yt, y2_lir = self.Linear_Regression_model(X_2, Y_2)
-            yt, y2_exr = self.Exp_Regression_model(X_2, Y_2)
-            yt, y2_lor = self.Logistic_Regression_model(X_2, Y_2)
-
-            fig = plt.figure()
-
-            ax1 = fig.add_subplot(2,2,1)
-            ax1.plot(yt, color='r', label='Y_test') #actual y test value
-            ax1.plot(y1_lir, color='g', label='Y_pred_before_Scaling') #predicted y value before scaling
-            ax1.plot(y2_lir, color='orange', label='Y_pred_after_Scaling') #predicted y value after scaling
-            ax1.legend()
-            ax1.set_title('Linear Regression')
-            ax1.set_xlabel('Data set #')
-            ax1.set_ylabel('Target value')
-            
-            ax2 = fig.add_subplot(2,2,2)
-            ax2.plot(yt, color='r', label='Y_test') #actual y test value
-            ax2.plot(y1_lor, color='g', label='Y_pred_before_Scaling') #predicted y value before scaling
-            ax2.plot(y2_lor, color='orange', label='Y_pred_after_Scaling') #predicted y value after scaling
-            ax2.legend()
-            ax2.set_title('Logistic Regression')
-            ax2.set_xlabel('Data set #')
-            ax2.set_ylabel('Target value')
-
-            ax3 = fig.add_subplot(2, 1, 2)
-            ax3.plot(yt, color='r', label='Y_test') #actual y test value
-            ax3.plot(y1_exr, color='g', label='Y_pred_before_Scaling') #predicted y value before scaling
-            ax3.plot(y2_exr, color='orange', label='Y_pred_after_Scaling') #predicted y value after scaling
-            ax3.legend()
-            ax3.set_title('Expo Regression')
-            ax3.set_xlabel('Data set #')
-            ax3.set_ylabel('Target value')
-
-            plt.show()
-            plt.savefig('./images/Reg_Compare.png')
         
 def store_obj(filename,obj):
     pickle_file = open(filename,"wb")
