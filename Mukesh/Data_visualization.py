@@ -16,9 +16,15 @@ def box_plot(features):
     
     print("Saved Box plot")
 
-def hlines_plot(features):
+def hlines_plot(features): #features here is just a list of single feature
     fig = plt.figure(figsize=(20,8))
+    y = np.arange(1, len(features), 1)
+    plt.hlines(y, [0], features)
 
+    my_path = os.path.abspath(__file__) # Figures out the absolute path for you in case your working directory moves around.
+    my_path = os.path.dirname(my_path)  # Goes to previous directory to store the image
+    my_file = 'hlines_plot.jpeg'       # Name of the scatter plot file
+    fig.savefig(os.path.join(my_path, my_file))
 
 def histogram_plot(features):
     
