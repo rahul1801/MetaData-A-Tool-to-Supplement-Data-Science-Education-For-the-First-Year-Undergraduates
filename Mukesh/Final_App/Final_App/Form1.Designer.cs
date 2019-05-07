@@ -74,15 +74,15 @@
 			this.zScoreRadio = new System.Windows.Forms.RadioButton();
 			this.label8 = new System.Windows.Forms.Label();
 			this.label9 = new System.Windows.Forms.Label();
+			this.noiseDetectTab = new System.Windows.Forms.TabPage();
+			this.noiseDetectPanel = new System.Windows.Forms.Panel();
+			this.noiseDetectLabel = new System.Windows.Forms.Label();
+			this.label12 = new System.Windows.Forms.Label();
 			this.mcaTab = new System.Windows.Forms.TabPage();
 			this.mcaPanel = new System.Windows.Forms.Panel();
 			this.mcaLabel = new System.Windows.Forms.Label();
 			this.label11 = new System.Windows.Forms.Label();
 			this.dimReduceTab = new System.Windows.Forms.TabPage();
-			this.noiseDetectTab = new System.Windows.Forms.TabPage();
-			this.noiseDetectPanel = new System.Windows.Forms.Panel();
-			this.noiseDetectLabel = new System.Windows.Forms.Label();
-			this.label12 = new System.Windows.Forms.Label();
 			this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -90,6 +90,16 @@
 			this.pictureBox2 = new System.Windows.Forms.PictureBox();
 			this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+			this.dimReducePanel = new System.Windows.Forms.Panel();
+			this.panel6 = new System.Windows.Forms.Panel();
+			this.autoencoderRadio = new System.Windows.Forms.RadioButton();
+			this.pcaRadio = new System.Windows.Forms.RadioButton();
+			this.label10 = new System.Windows.Forms.Label();
+			this.label13 = new System.Windows.Forms.Label();
+			this.label14 = new System.Windows.Forms.Label();
+			this.dimrReduceNumber = new System.Windows.Forms.NumericUpDown();
+			this.loaderTab = new System.Windows.Forms.TabPage();
+			this.loaderPictureBox = new System.Windows.Forms.PictureBox();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.flowLayoutPanel1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -111,14 +121,20 @@
 			this.ScalingTab.SuspendLayout();
 			this.scalingPanel.SuspendLayout();
 			this.panel3.SuspendLayout();
-			this.mcaTab.SuspendLayout();
-			this.mcaPanel.SuspendLayout();
 			this.noiseDetectTab.SuspendLayout();
 			this.noiseDetectPanel.SuspendLayout();
+			this.mcaTab.SuspendLayout();
+			this.mcaPanel.SuspendLayout();
+			this.dimReduceTab.SuspendLayout();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.panel4.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+			this.dimReducePanel.SuspendLayout();
+			this.panel6.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.dimrReduceNumber)).BeginInit();
+			this.loaderTab.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.loaderPictureBox)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// tableLayoutPanel1
@@ -213,8 +229,7 @@
             "Categorical to Numerical Conversion",
             "Missing Value Handling",
             "Scaling",
-            "Noise Detection",
-            "Noise Elimination"});
+            "Noise Detection and Elimination"});
 			this.preProcessDropDown.Location = new System.Drawing.Point(6, 38);
 			this.preProcessDropDown.Name = "preProcessDropDown";
 			this.preProcessDropDown.Size = new System.Drawing.Size(317, 28);
@@ -290,6 +305,7 @@
 			this.stackPanel1.Controls.Add(this.noiseDetectTab);
 			this.stackPanel1.Controls.Add(this.mcaTab);
 			this.stackPanel1.Controls.Add(this.dimReduceTab);
+			this.stackPanel1.Controls.Add(this.loaderTab);
 			this.stackPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.stackPanel1.Location = new System.Drawing.Point(412, 109);
 			this.stackPanel1.Name = "stackPanel1";
@@ -661,6 +677,47 @@
 			this.label9.TabIndex = 3;
 			this.label9.Text = "Feature Scaling";
 			// 
+			// noiseDetectTab
+			// 
+			this.noiseDetectTab.Controls.Add(this.noiseDetectPanel);
+			this.noiseDetectTab.Location = new System.Drawing.Point(4, 25);
+			this.noiseDetectTab.Name = "noiseDetectTab";
+			this.noiseDetectTab.Size = new System.Drawing.Size(937, 624);
+			this.noiseDetectTab.TabIndex = 7;
+			this.noiseDetectTab.Text = "Noise Detect";
+			this.noiseDetectTab.UseVisualStyleBackColor = true;
+			// 
+			// noiseDetectPanel
+			// 
+			this.noiseDetectPanel.AutoScroll = true;
+			this.noiseDetectPanel.Controls.Add(this.noiseDetectLabel);
+			this.noiseDetectPanel.Controls.Add(this.label12);
+			this.noiseDetectPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.noiseDetectPanel.Location = new System.Drawing.Point(0, 0);
+			this.noiseDetectPanel.Name = "noiseDetectPanel";
+			this.noiseDetectPanel.Size = new System.Drawing.Size(937, 624);
+			this.noiseDetectPanel.TabIndex = 2;
+			// 
+			// noiseDetectLabel
+			// 
+			this.noiseDetectLabel.AutoSize = true;
+			this.noiseDetectLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.noiseDetectLabel.Location = new System.Drawing.Point(5, 95);
+			this.noiseDetectLabel.Name = "noiseDetectLabel";
+			this.noiseDetectLabel.Size = new System.Drawing.Size(82, 26);
+			this.noiseDetectLabel.TabIndex = 1;
+			this.noiseDetectLabel.Text = "label10";
+			// 
+			// label12
+			// 
+			this.label12.AutoSize = true;
+			this.label12.Font = new System.Drawing.Font("Lucida Sans", 20F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label12.Location = new System.Drawing.Point(3, 26);
+			this.label12.Name = "label12";
+			this.label12.Size = new System.Drawing.Size(282, 39);
+			this.label12.TabIndex = 0;
+			this.label12.Text = "Noise Detection";
+			// 
 			// mcaTab
 			// 
 			this.mcaTab.Controls.Add(this.mcaPanel);
@@ -704,53 +761,13 @@
 			// 
 			// dimReduceTab
 			// 
+			this.dimReduceTab.Controls.Add(this.dimReducePanel);
 			this.dimReduceTab.Location = new System.Drawing.Point(4, 25);
 			this.dimReduceTab.Name = "dimReduceTab";
 			this.dimReduceTab.Size = new System.Drawing.Size(937, 624);
 			this.dimReduceTab.TabIndex = 8;
 			this.dimReduceTab.Text = "dimReduce";
 			this.dimReduceTab.UseVisualStyleBackColor = true;
-			// 
-			// noiseDetectTab
-			// 
-			this.noiseDetectTab.Controls.Add(this.noiseDetectPanel);
-			this.noiseDetectTab.Location = new System.Drawing.Point(4, 25);
-			this.noiseDetectTab.Name = "noiseDetectTab";
-			this.noiseDetectTab.Size = new System.Drawing.Size(937, 624);
-			this.noiseDetectTab.TabIndex = 7;
-			this.noiseDetectTab.Text = "Noise Detect";
-			this.noiseDetectTab.UseVisualStyleBackColor = true;
-			// 
-			// noiseDetectPanel
-			// 
-			this.noiseDetectPanel.AutoScroll = true;
-			this.noiseDetectPanel.Controls.Add(this.noiseDetectLabel);
-			this.noiseDetectPanel.Controls.Add(this.label12);
-			this.noiseDetectPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.noiseDetectPanel.Location = new System.Drawing.Point(0, 0);
-			this.noiseDetectPanel.Name = "noiseDetectPanel";
-			this.noiseDetectPanel.Size = new System.Drawing.Size(937, 624);
-			this.noiseDetectPanel.TabIndex = 2;
-			// 
-			// noiseDetectLabel
-			// 
-			this.noiseDetectLabel.AutoSize = true;
-			this.noiseDetectLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.noiseDetectLabel.Location = new System.Drawing.Point(5, 95);
-			this.noiseDetectLabel.Name = "noiseDetectLabel";
-			this.noiseDetectLabel.Size = new System.Drawing.Size(82, 26);
-			this.noiseDetectLabel.TabIndex = 1;
-			this.noiseDetectLabel.Text = "label10";
-			// 
-			// label12
-			// 
-			this.label12.AutoSize = true;
-			this.label12.Font = new System.Drawing.Font("Lucida Sans", 20F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label12.Location = new System.Drawing.Point(3, 26);
-			this.label12.Name = "label12";
-			this.label12.Size = new System.Drawing.Size(282, 39);
-			this.label12.TabIndex = 0;
-			this.label12.Text = "Noise Detection";
 			// 
 			// flowLayoutPanel3
 			// 
@@ -812,6 +829,122 @@
 			this.openFileDialog1.FileName = "openFileDialog1";
 			this.openFileDialog1.InitialDirectory = "/";
 			// 
+			// dimReducePanel
+			// 
+			this.dimReducePanel.Controls.Add(this.dimrReduceNumber);
+			this.dimReducePanel.Controls.Add(this.label14);
+			this.dimReducePanel.Controls.Add(this.panel6);
+			this.dimReducePanel.Controls.Add(this.label10);
+			this.dimReducePanel.Controls.Add(this.label13);
+			this.dimReducePanel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.dimReducePanel.Location = new System.Drawing.Point(0, 0);
+			this.dimReducePanel.Name = "dimReducePanel";
+			this.dimReducePanel.Size = new System.Drawing.Size(937, 624);
+			this.dimReducePanel.TabIndex = 2;
+			// 
+			// panel6
+			// 
+			this.panel6.AutoSize = true;
+			this.panel6.Controls.Add(this.autoencoderRadio);
+			this.panel6.Controls.Add(this.pcaRadio);
+			this.panel6.Location = new System.Drawing.Point(22, 277);
+			this.panel6.Name = "panel6";
+			this.panel6.Size = new System.Drawing.Size(381, 100);
+			this.panel6.TabIndex = 5;
+			// 
+			// autoencoderRadio
+			// 
+			this.autoencoderRadio.AutoSize = true;
+			this.autoencoderRadio.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.autoencoderRadio.Location = new System.Drawing.Point(12, 60);
+			this.autoencoderRadio.Name = "autoencoderRadio";
+			this.autoencoderRadio.Size = new System.Drawing.Size(261, 29);
+			this.autoencoderRadio.TabIndex = 1;
+			this.autoencoderRadio.TabStop = true;
+			this.autoencoderRadio.Text = "Autoencoder (Non-Linear)";
+			this.autoencoderRadio.UseVisualStyleBackColor = true;
+			// 
+			// pcaRadio
+			// 
+			this.pcaRadio.AutoSize = true;
+			this.pcaRadio.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.pcaRadio.Location = new System.Drawing.Point(12, 15);
+			this.pcaRadio.Name = "pcaRadio";
+			this.pcaRadio.Size = new System.Drawing.Size(366, 29);
+			this.pcaRadio.TabIndex = 0;
+			this.pcaRadio.TabStop = true;
+			this.pcaRadio.Text = "Principal Component Analysis (Linear)";
+			this.pcaRadio.UseVisualStyleBackColor = true;
+			// 
+			// label10
+			// 
+			this.label10.AutoSize = true;
+			this.label10.Font = new System.Drawing.Font("Lucida Sans", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label10.Location = new System.Drawing.Point(17, 200);
+			this.label10.Name = "label10";
+			this.label10.Size = new System.Drawing.Size(403, 29);
+			this.label10.TabIndex = 4;
+			this.label10.Text = "Select the type of compression:";
+			// 
+			// label13
+			// 
+			this.label13.AutoSize = true;
+			this.label13.Font = new System.Drawing.Font("Lucida Sans", 20F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label13.Location = new System.Drawing.Point(15, 44);
+			this.label13.Name = "label13";
+			this.label13.Size = new System.Drawing.Size(438, 39);
+			this.label13.TabIndex = 3;
+			this.label13.Text = "Dimensionality Reduction";
+			// 
+			// label14
+			// 
+			this.label14.AutoSize = true;
+			this.label14.Font = new System.Drawing.Font("Lucida Sans", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label14.Location = new System.Drawing.Point(17, 417);
+			this.label14.Name = "label14";
+			this.label14.Size = new System.Drawing.Size(491, 29);
+			this.label14.TabIndex = 6;
+			this.label14.Text = "Select the desired number of features:";
+			// 
+			// dimrReduceNumber
+			// 
+			this.dimrReduceNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.dimrReduceNumber.Location = new System.Drawing.Point(540, 417);
+			this.dimrReduceNumber.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.dimrReduceNumber.Name = "dimrReduceNumber";
+			this.dimrReduceNumber.Size = new System.Drawing.Size(132, 36);
+			this.dimrReduceNumber.TabIndex = 7;
+			this.dimrReduceNumber.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			// 
+			// loaderTab
+			// 
+			this.loaderTab.Controls.Add(this.loaderPictureBox);
+			this.loaderTab.Location = new System.Drawing.Point(4, 25);
+			this.loaderTab.Name = "loaderTab";
+			this.loaderTab.Size = new System.Drawing.Size(937, 624);
+			this.loaderTab.TabIndex = 9;
+			this.loaderTab.Text = "Loader";
+			this.loaderTab.UseVisualStyleBackColor = true;
+			// 
+			// loaderPictureBox
+			// 
+			this.loaderPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.loaderPictureBox.Image = global::Final_App.Properties.Resources._9wcA;
+			this.loaderPictureBox.Location = new System.Drawing.Point(0, 0);
+			this.loaderPictureBox.Name = "loaderPictureBox";
+			this.loaderPictureBox.Size = new System.Drawing.Size(937, 624);
+			this.loaderPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+			this.loaderPictureBox.TabIndex = 0;
+			this.loaderPictureBox.TabStop = false;
+			// 
 			// Final_Application
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -855,16 +988,24 @@
 			this.scalingPanel.PerformLayout();
 			this.panel3.ResumeLayout(false);
 			this.panel3.PerformLayout();
-			this.mcaTab.ResumeLayout(false);
-			this.mcaPanel.ResumeLayout(false);
-			this.mcaPanel.PerformLayout();
 			this.noiseDetectTab.ResumeLayout(false);
 			this.noiseDetectPanel.ResumeLayout(false);
 			this.noiseDetectPanel.PerformLayout();
+			this.mcaTab.ResumeLayout(false);
+			this.mcaPanel.ResumeLayout(false);
+			this.mcaPanel.PerformLayout();
+			this.dimReduceTab.ResumeLayout(false);
 			this.panel1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.panel4.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+			this.dimReducePanel.ResumeLayout(false);
+			this.dimReducePanel.PerformLayout();
+			this.panel6.ResumeLayout(false);
+			this.panel6.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.dimrReduceNumber)).EndInit();
+			this.loaderTab.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.loaderPictureBox)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -932,6 +1073,16 @@
 		private System.Windows.Forms.Label noiseDetectLabel;
 		private System.Windows.Forms.Label label12;
 		private System.Windows.Forms.TabPage dimReduceTab;
+		private System.Windows.Forms.Panel dimReducePanel;
+		private System.Windows.Forms.Panel panel6;
+		private System.Windows.Forms.RadioButton autoencoderRadio;
+		private System.Windows.Forms.RadioButton pcaRadio;
+		private System.Windows.Forms.Label label10;
+		private System.Windows.Forms.Label label13;
+		private System.Windows.Forms.NumericUpDown dimrReduceNumber;
+		private System.Windows.Forms.Label label14;
+		private System.Windows.Forms.TabPage loaderTab;
+		private System.Windows.Forms.PictureBox loaderPictureBox;
 	}
 }
 

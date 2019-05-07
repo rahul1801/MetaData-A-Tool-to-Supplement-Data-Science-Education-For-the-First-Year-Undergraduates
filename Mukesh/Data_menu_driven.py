@@ -435,3 +435,7 @@ if __name__ == '__main__':
         myAnalysis = load_obj(pickle_filename)
         myAnalysis.Regression_models(int(sys.argv[2]))
         store_obj(pickle_filename, myAnalysis)
+    elif arg == 99:
+        myAnalysis = load_obj(pickle_filename)
+        print(len(myAnalysis.data.columns)-1)
+        store_obj(pickle_filename, myAnalysis)

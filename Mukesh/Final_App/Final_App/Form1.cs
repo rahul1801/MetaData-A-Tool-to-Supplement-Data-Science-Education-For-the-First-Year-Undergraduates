@@ -131,6 +131,20 @@ namespace Final_App
 				// Switch to missingValueTab
 				stackPanel1.SelectedIndex = index;
 			}
+			else if (choice == "Noise Detection and Elimination")
+			{
+				// Update index
+				index = 6;
+
+				// hide label
+				noiseDetectLabel.Visible = false;
+
+				// switch to mcaTab
+				stackPanel1.SelectedIndex = index;
+
+				// change text of button
+				submitButton.Text = "Perform";
+			}
 		}
 
 		private void featureEngineerDropDown_SelectedIndexChanged(object sender, EventArgs e)
@@ -157,7 +171,7 @@ namespace Final_App
 			if (choice == "Multi-Collinearity Analysis")
 			{
 				// Update index
-				index = 6;
+				index = 7;
 
 				// hide label
 				mcaLabel.Visible = false;
@@ -167,6 +181,21 @@ namespace Final_App
 
 				// change text of button
 				submitButton.Text = "Perform";
+			}
+			else if (choice == "Dimensionality Reduction")
+			{
+				// Update index
+				index = 8;
+
+				string arg = " 99";
+
+				// Switch to loaderTab
+				stackPanel1.SelectedIndex = 9;
+
+				// Disable Submit Button
+				submitButton.Enabled = false;
+
+				backgroundWorker1.RunWorkerAsync(arg);
 			}
 		}
 
@@ -252,7 +281,36 @@ namespace Final_App
 			else if (index == 6)
 			{
 				// Argument to the script
+				string arg = " 6";
+
+				// Start the asynchronous operation.
+				backgroundWorker1.RunWorkerAsync(arg);
+			}
+			else if (index == 7)
+			{
+				// Argument to the script
 				string arg = " 5";
+
+				// Start the asynchronous operation.
+				backgroundWorker1.RunWorkerAsync(arg);
+			}
+			else if (index == 8)
+			{
+				// Argument to the script
+				string arg = " 7 ";
+
+				// Assign argument correspondingly;
+				if (pcaRadio.Checked)
+				{
+					arg += "1 ";
+				}
+				else if (autoencoderRadio.Checked)
+				{
+					arg += "2 ";
+				}
+
+				// Desired no of features
+				arg += dimrReduceNumber.Value.ToString();
 
 				// Start the asynchronous operation.
 				backgroundWorker1.RunWorkerAsync(arg);
@@ -305,6 +363,29 @@ namespace Final_App
 
 					// change text of button
 					submitButton.Text = "Submit";
+				}
+				else if (result.Value == " 6")
+				{
+					// write and show label
+					noiseDetectLabel.Text = result.Key;
+					noiseDetectLabel.Visible = true;
+
+					// change text of button
+					submitButton.Text = "Submit";
+				}
+				else if (result.Value == " 99")
+				{
+					// get total number of features in data
+					int num_features = Int32.Parse(result.Key);
+					dimrReduceNumber.Value = num_features;
+					dimrReduceNumber.Maximum = num_features;
+
+					// Switch to dimReduceTab
+					stackPanel1.SelectedIndex = 8;
+
+					// Enable submit button
+					submitButton.Enabled = true;
+					return;
 				}
 				else
 				{
