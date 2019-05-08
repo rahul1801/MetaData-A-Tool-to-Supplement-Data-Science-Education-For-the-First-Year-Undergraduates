@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import os
 from numpy.linalg import eig
 from sklearn.preprocessing import Imputer
 from future_encoders import OrdinalEncoder, OneHotEncoder
@@ -392,6 +393,88 @@ class Analysis:
             plt.ylabel('Target value')
             plt.show()
             plt.savefig('./images/LoR.png')
+
+    def box_plot(features):
+        fig = plt.figure(figsize=(20,8))
+        
+        df = data_visual[features]
+
+        df.plot(kind="box")
+        plt.ylabel("Number")
+
+        my_path = os.path.abspath(__file__) # Figures out the absolute path for you in case your working directory moves around.
+        my_path = os.path.dirname(my_path)  # Goes to previous directory to store the image
+        my_file = '/images/box_plot.jpeg'       # Name of the scatter plot file
+        fig.savefig(os.path.join(my_path, my_file))
+        print("Saved Box plot")
+
+    def hlines_plot(features): 
+        fig = plt.figure(figsize=(20,8))
+        x = list(data_visual[features[0]])
+        x = np.unique(x)
+        plt.hlines(1, np.min(x)-1, np.max(x)+1)
+        plt.xlim(np.min(x)-1, np.max(x)+1)
+        plt.ylim(0.5, 1.5)
+        y = np.ones(np.shape(x))
+        plt.plot(x, y, '|', ms = 40)
+        xlabel = features[0]
+        plt.title('HLines for '+ xlabel)
+
+        my_path = os.path.abspath(__file__) # Figures out the absolute path for you in case your working directory moves around.
+        my_path = os.path.dirname(my_path)  # Goes to previous directory to store the image
+        my_file = '/images/hlines_plot.jpeg'       # Name of the scatter plot file
+        fig.savefig(os.path.join(my_path, my_file))
+        print("Saved HLines plot")
+
+    def histogram_plot(features):
+        xlabel = features[0]
+        x = list(data_visual[features[0]])
+        
+        fig = plt.figure(figsize=(20,8))
+        plt.hist(x,bins=20)
+        plt.ylabel('No of times')
+        plt.title(xlabel)
+
+        my_path = os.path.abspath(__file__) # Figures out the absolute path for you in case your working directory moves around.
+        my_path = os.path.dirname(my_path)  # Goes to previous directory to store the image
+        my_file = '/images/histogram_plot.jpeg'       # Name of the scatter plot file
+        fig.savefig(os.path.join(my_path, my_file))
+        print("Saved Histogram plot")
+
+    def scatter_plot(features):
+        xlabel = features[0]
+        ylabel = features[1]
+        x = list(data_visual[features[0]])
+        y = list(data_visual[features[1]])
+        fig = plt.figure(figsize=(20,8))
+        plt.scatter(x,y,alpha=0.5)
+        plt.xlabel(xlabel)
+        plt.ylabel(ylabel)
+        plt.title(xlabel+" vs "+ylabel)
+        
+        my_path = os.path.abspath(__file__) # Figures out the absolute path for you in case your working directory moves around.
+        my_path = os.path.dirname(my_path)  # Goes to previous directory to store the image
+        my_file = '/images/scatter_plot.jpeg'       # Name of the scatter plot file
+        fig.savefig(os.path.join(my_path, my_file))
+        print("Saved Scatter plot")
+
+    def line_plot(features):
+        xlabel = features[0]
+        ylabel = features[1]
+        x = list(data_visual[features[0]])
+        y = list(data_visual[features[1]])
+        fig = plt.figure(figsize=(20,8))
+        
+        plt.plot(x,y)
+        plt.xlabel(xlabel)
+        plt.ylabel(ylabel)
+        plt.title(xlabel+" vs "+ylabel)
+
+        my_path = os.path.abspath(__file__) # Figures out the absolute path for you in case your working directory moves around.
+        my_path = os.path.dirname(my_path)  # Goes to previous directory to store the image
+        my_file = '/images/line_plot.jpeg'       # Name of the scatter plot file
+        fig.savefig(os.path.join(my_path, my_file))
+        print("Saved Line plot")
         
 def store_obj(filename,obj):
     pickle_file = open(filename,"wb")
