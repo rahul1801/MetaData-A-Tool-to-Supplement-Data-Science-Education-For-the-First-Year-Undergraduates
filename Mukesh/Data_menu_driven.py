@@ -191,6 +191,8 @@ class Analysis:
     def MVD(self,strat_ch):
         missing = self.num_df.columns[self.num_df.isna().any()].tolist()
         self.data_matrix = self.num_df.values
+        self.column_names = list(num_df.columns.values) #store column names
+
         if(len(missing)==0):
             print('The data does not contain any missing values')
             mis_flag = 0
@@ -204,9 +206,13 @@ class Analysis:
             elif(strat_ch==3):
                 imputer = Imputer(strategy = "most_frequent")
             imputer.fit(self.data_matrix)
+
             self.data_matrix = imputer.transform(self.data_matrix)
-            #copy data_matrix to feed into regression models
+            #copy data_matrix to data_regres to feed into regression models
             self.data_regres = self.data_matrix
+            #convert data_matrix to dataframe for visualisation
+            self.data_visual = pd.DataFrame(data_matrix, columns=column_names)
+            
             print("")
             print('The missing values have been detected and handled')
     
@@ -334,8 +340,8 @@ class Analysis:
         return yTest, yPrediction
 
     def Regression_models(self, ch_reg):
-        self.data_1 = self.data_regres
-        self.data_2 = self.data_matrix
+        self.data_1 = self.data_regres #before scaling
+        self.data_2 = self.data_matrix #after scaling
 
         X_1 = self.data_1[:,0:(self.data_1.shape[1]-1)]
         Y_1 = self.data_1[:,(self.data_1.shape[1]-1)]
