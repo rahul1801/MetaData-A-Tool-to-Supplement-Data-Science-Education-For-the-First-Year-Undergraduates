@@ -192,7 +192,7 @@ class Analysis:
     def MVD(self,strat_ch):
         missing = self.num_df.columns[self.num_df.isna().any()].tolist()
         self.data_matrix = self.num_df.values
-        self.column_names = list(num_df.columns.values) #store column names
+        self.column_names = list(self.num_df.columns.values) #store column names
 
         if(len(missing)==0):
             print('The data does not contain any missing values')
@@ -212,7 +212,7 @@ class Analysis:
             #copy data_matrix to data_regres to feed into regression models
             self.data_regres = self.data_matrix
             #convert data_matrix to dataframe for visualisation
-            self.data_visual = pd.DataFrame(data_matrix, columns=column_names)
+            self.data_visual = pd.DataFrame(self.data_matrix, columns=self.column_names)
             
             print("")
             print('The missing values have been detected and handled')
