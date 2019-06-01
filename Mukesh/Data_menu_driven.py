@@ -63,7 +63,7 @@ from keras.layers import Input,Dense
 from keras.models import Model
 
 
-# In[176]:
+# In[377]:
 
 
 class Analysis:
@@ -245,7 +245,7 @@ class Analysis:
         self.target_data = pd.DataFrame(self.merged_data.iloc[:,(len(self.merged_data.columns)-1)])
 
     def MVD(self,strat_ch):
-        # X is passed (Y is seperated from the data)
+        self.Data_concatenation()
         missing = self.analysis_data.columns[self.num_df.isna().any()].tolist()
         self.data_matrix = self.analysis_data.values
         self.column_names = list(self.analysis_data.columns.values) #store column names
@@ -266,7 +266,11 @@ class Analysis:
 
             self.data_matrix = imputer.transform(self.data_matrix)
             #copy data_matrix to data_regres to feed into regression models
-            self.data_regres = self.data_matrix
+            data_new = pd.DataFrame(self.data_matrix)
+            data_new.reset_index(drop=True,inplace=True)
+            frames2 = [data_new,self.target_data]
+            self.data_regres = pd.concat(frames2,axis=1,sort=False)
+            
             #convert data_matrix to dataframe for visualisation
             self.data_visual = pd.DataFrame(self.data_matrix, columns=self.column_names)
             print("")
@@ -316,6 +320,8 @@ class Analysis:
             sum_break+=e1_sort[i]
         retention = (sum_break/sum1)*100
         print('Percentage retention of features on applying PCA (linear transformation): '+str(retention))
+        print("")
+        self.Final_Concatenation()
         
     def Auto_Encoder(self,features):
         X = self.data_matrix
@@ -336,6 +342,8 @@ class Analysis:
                 batch_size=int(data_count/5),
                 shuffle=True)
         self.data_matrix_reduced = encoder.predict(X)
+        print("")
+        self.Final_Concatenation()
     
     def Dim_Reduction(self,dim_ch,features):
         f = features
@@ -351,6 +359,7 @@ class Analysis:
         self.data_final = pd.concat(frames,axis=1,sort=False)
             
     def Linear_Regression_model(self,X, Y):
+        print("")
         xTrain, xTest, yTrain, yTest = train_test_split(X, Y, test_size = 0.25, random_state = 0)
         LinearRegressor = LinearRegression()
         LinearRegressor.fit(xTrain, yTrain)
@@ -364,52 +373,52 @@ class Analysis:
         return yTest, yPrediction
 
     def Logistic_Regression_model(self, X, Y):
-        X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size = 0.25, random_state = 0)       
+        print("")
+        X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size = 0.25, random_state = 0) 
+        diag_sum = 0
         classifier = LogisticRegression(random_state = 0)
         classifier.fit(X_train, y_train)
         y_pred = classifier.predict(X_test)
         # Printing the results
         # Making the Confusion Matrix
         cm = confusion_matrix(y_test, y_pred)
-
-        print("Results of the Confusion Matrix")
-        print("True Negatives: ",cm[0][0])
-        print("False Postives: ",cm[0][1])
-        print("False Negatives: ",cm[1][0])
-        print("True Positives: ",cm[1][1])
+        for i in range(cm.shape[0]):
+            diag_sum+=cm[i][i]
+        acc = round(100*(diag_sum/sum(sum(cm))),2)
         print("Results of Logistic Regression")
-        print("Intercept value      : %.2f",classifier.intercept_)
-        print("Mean Squared Error   : %.2f",mean_squared_error(y_test,y_pred))
-        print("Coefficients         : %.2f",classifier.coef_)
+        print("")
+        print('Accuracy: '+str(acc))
         return y_test, y_pred
 
-    def Exp_Regression_model(self, X, Y):
-        X_exp = np.exp(X)
-        xTrain, xTest, yTrain, yTest = train_test_split(X_exp, Y, test_size = 0.25, random_state = 0)
-        LinearRegressor = LinearRegression()
-        LinearRegressor.fit(xTrain, yTrain)
-        yPrediction = LinearRegressor.predict(xTest)
-        # Printing the results
-        print('Results for Exponential Regression')
-        print('intercept            : \n', LinearRegressor.intercept_)
-        print('Coefficients         : \n', LinearRegressor.coef_)
-        print('Mean squared error   : %.2f' % mean_squared_error(yTest, yPrediction))
-        print('Variance score       : %.2f' % r2_score(yTest, yPrediction))
-        return yTest, yPrediction
+#     def Exp_Regression_model(self, X, Y):
+#         X_exp = np.exp(X)
+#         xTrain, xTest, yTrain, yTest = train_test_split(X_exp, Y, test_size = 0.25, random_state = 0)
+#         LinearRegressor = LinearRegression()
+#         LinearRegressor.fit(xTrain, yTrain)
+#         yPrediction = LinearRegressor.predict(xTest)
+#         # Printing the results
+#         print('Results for Exponential Regression')
+#         print('intercept            : \n', LinearRegressor.intercept_)
+#         print('Coefficients         : \n', LinearRegressor.coef_)
+#         print('Mean squared error   : %.2f' % mean_squared_error(yTest, yPrediction))
+#         print('Variance score       : %.2f' % r2_score(yTest, yPrediction))
+#         return yTest, yPrediction
 
     def Regression_models(self, ch_reg):
-        self.data_1 = self.data_regres #before scaling
-        self.data_2 = self.data_matrix #after scaling
+        self.data_1 = self.data_regres #data before preprocessing
+        self.data_2 = self.data_final #data after preprocessing
 
-        X_1 = self.data_1[:,0:(self.data_1.shape[1]-1)]
-        Y_1 = self.data_1[:,(self.data_1.shape[1]-1)]
-        X_2 = self.data_2[:,0:(self.data_2.shape[1]-1)]
-        Y_2 = self.data_2[:,(self.data_2.shape[1]-1)]
+        X_1 = self.data_1.iloc[:,0:(self.data_1.shape[1]-1)]
+        Y_1 = self.data_1.iloc[:,(self.data_1.shape[1]-1)]
+        X_2 = self.data_2.iloc[:,0:(self.data_2.shape[1]-1)]
+        Y_2 = self.data_2.iloc[:,(self.data_2.shape[1]-1)]
 
         if(ch_reg==1):
             #do multivariate / simple linear regression
             print("Analysis before data scaling")
             yt, y1 = self.Linear_Regression_model(X_1, Y_1)
+            print("")
+            print("")
             print("Analysis after complete data scaling")
             yt, y2 = self.Linear_Regression_model(X_2, Y_2)
             #plot graph
@@ -422,25 +431,12 @@ class Analysis:
             plt.savefig('./images/LiR.png')
 
         elif(ch_reg==2):
-            #do exponential regression
-            print("Analysis before data scaling")
-            yt, y1 = self.Exp_Regression_model(X_1, Y_1)
-            print("Analysis after complete data scaling")
-            yt, y2 = self.Exp_Regression_model(X_2, Y_2)
-            #plot graph
-            plt.plot(yt, color='r')
-            plt.plot(y1, color='g')
-            plt.plot(y2, color='orange')
-            plt.xlabel('Data set #')
-            plt.ylabel('Target value')
-            plt.show()
-            plt.savefig('./images/ExR.png')
-
-        elif(ch_reg==3):
             #do logistic regression
-            print("Analysis before data scaling")
+            print("Analysis before data preprocessing")
             yt, y1 = self.Logistic_Regression_model(X_1, Y_1)
-            print("Analysis after complete data scaling")
+            print("")
+            print("")
+            print("Analysis after complete data preprocessing")
             yt, y2 = self.Logistic_Regression_model(X_2, Y_2)
             #plot graph
             plt.plot(yt, color='r')
@@ -450,8 +446,12 @@ class Analysis:
             plt.ylabel('Target value')
             plt.show()
             plt.savefig('./images/LoR.png')
+            
+    def graph_test(self):
+        feat = self.data.columns
+        self.box_plot(feat)
 
-    def box_plot(features):
+    def box_plot(self,features):
         fig = plt.figure(figsize=(20,8))
         
         df = data_visual[features]
@@ -465,7 +465,7 @@ class Analysis:
         fig.savefig(os.path.join(my_path, my_file))
         print("Saved Box plot")
 
-    def hlines_plot(features): 
+    def hlines_plot(self,features): 
         fig = plt.figure(figsize=(20,8))
         x = list(data_visual[features[0]])
         x = np.unique(x)
@@ -483,7 +483,7 @@ class Analysis:
         fig.savefig(os.path.join(my_path, my_file))
         print("Saved HLines plot")
 
-    def histogram_plot(features):
+    def histogram_plot(self,features):
         xlabel = features[0]
         x = list(data_visual[features[0]])
         
@@ -498,7 +498,7 @@ class Analysis:
         fig.savefig(os.path.join(my_path, my_file))
         print("Saved Histogram plot")
 
-    def scatter_plot(features):
+    def scatter_plot(self,features):
         xlabel = features[0]
         ylabel = features[1]
         x = list(data_visual[features[0]])
@@ -515,7 +515,7 @@ class Analysis:
         fig.savefig(os.path.join(my_path, my_file))
         print("Saved Scatter plot")
 
-    def line_plot(features):
+    def line_plot(self,features):
         xlabel = features[0]
         ylabel = features[1]
         x = list(data_visual[features[0]])
