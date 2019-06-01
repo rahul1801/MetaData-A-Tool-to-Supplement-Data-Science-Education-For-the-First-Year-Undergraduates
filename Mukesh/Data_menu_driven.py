@@ -1,3 +1,9 @@
+
+# coding: utf-8
+
+# In[1]:
+
+
 import numpy as np
 import pandas as pd
 import os
@@ -6,16 +12,28 @@ from sklearn.preprocessing import Imputer
 from future_encoders import OrdinalEncoder, OneHotEncoder
 from pandas.plotting import scatter_matrix
 
+
+# In[2]:
+
+
 #import libraries for regression analysis
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import mean_squared_error, r2_score
 
+
+# In[3]:
+
+
 import matplotlib.pyplot as plt
 from sklearn.metrics import confusion_matrix
 import sys
 from numpy.linalg import eig
+
+
+# In[4]:
+
 
 try:
     import cPickle as pickle
@@ -26,6 +44,9 @@ pickle_filename = "myAnalysis.pickle"
 pd.set_option('display.max_columns', 20)
 
 
+# In[5]:
+
+
 from random import gauss
 from random import seed
 from pandas import Series
@@ -33,10 +54,16 @@ from pandas.tools.plotting import autocorrelation_plot
 import statsmodels.api
 
 
+# In[6]:
+
+
 import tensorflow as tf
 import keras
 from keras.layers import Input,Dense
 from keras.models import Model
+
+
+# In[176]:
 
 
 class Analysis:
@@ -46,6 +73,7 @@ class Analysis:
         print("Data Loaded.")
         self.cat_flag = 0
         self.num_flag = 0
+        self.target_detection = 0
         
     def Entry(self):
         op_count = 0
@@ -63,6 +91,11 @@ class Analysis:
         print("")
         print(self.data.head())
         cols = self.data.columns
+        self.data_target = pd.DataFrame(self.data.iloc[:,(len(cols)-1)])
+        if(len(self.data_target._get_numeric_data().columns)==1):
+            self.target_detection = 1
+        else:
+            self.target_detection = 0
         num_cols = self.data._get_numeric_data().columns
         cat_cols = list(set(cols) - set(num_cols))
         self.num_df = self.data[num_cols]
@@ -78,6 +111,12 @@ class Analysis:
             print(self.cat_df.columns[i])
             self.cat_flag = 1
         print('-------------------------------------------------------------------------------------')
+        if(self.target_detection==1):
+            print('Target Feature: Numerical')
+            print("")
+        else:
+            print('Target Feature: Categorical')
+            print("")
         self.data_frame = self.data
         unique = self.data_frame[self.data_frame.columns[self.data_frame.shape[1]-1]].unique().tolist()
         print(unique)
@@ -101,11 +140,11 @@ class Analysis:
                 x_maxmin = (x - x_min)/(x_max - x_min)
                 data[:,j] = x_maxmin
         return data
+    
 
     def Multicollinearity_Analysis(self):
         print('Performing Multicollinearity Analysis:')
-        X = self.data_matrix[:,0:(self.data_matrix.shape[1]-1)]
-        Y = self.data_matrix[:,(self.data_matrix.shape[1]-1)]
+        X = self.data_matrix
         graph_set = set([])
         corr_matrix = np.dot(X.T,X)/self.data_matrix.shape[0]
         print('Correlation Matrix Analysis:')
@@ -180,19 +219,36 @@ class Analysis:
         elif(self.cat_flag==1):
             if ch==1:      
                 ordinal_encoder = OrdinalEncoder()
-                df_encoded = ordinal_encoder.fit_transform(self.cat_df)
+                self.df_encoded = ordinal_encoder.fit_transform(self.cat_df)
+                self.df_encoded = pd.DataFrame(self.df_encoded)
+                self.df_encoded.columns = self.df_encoded.columns.astype(str)
+                self.df_encoded = self.df_encoded.rename(index=str,columns={'0':self.data.columns[len(self.data.columns)-1]})
                 print('The data has been ordinal/label encoded')
-                return df_encoded
-            elif ch==2:
-                onehot_encoder = OneHotEncoder(sparse=False)
-                df_1hot = onehot_encoder.fit_transform(self.cat_df)
-                print('The data has been one-hot encoded')
-                return df_1hot
+#             #to be handled later (post discussion)
+#             elif ch==2:
+#                 onehot_encoder = OneHotEncoder(sparse=False)
+#                 df_1hot = onehot_encoder.fit_transform(self.cat_df)
+#                 print('The data has been one-hot encoded')
+#                 return df_1hot
+
+    def Data_concatenation(self):
+        self.num_df.reset_index(drop=True,inplace=True)
+        self.df_encoded.reset_index(drop=True,inplace=True)
+        if(self.target_detection==0):
+            data_frames = [self.num_df,self.df_encoded]
+            self.merged_data = pd.concat(data_frames,axis=1,sort=False)
+        elif(self.target_detection==1):
+            data_frames = [self.df_encoded,self.num_df]
+            self.merged_data = pd.concat(data_frames,axis=1,sort=False)
+        print(self.merged_data)
+        self.analysis_data = pd.DataFrame(self.merged_data.iloc[:,0:(len(self.merged_data.columns)-1)])
+        self.target_data = pd.DataFrame(self.merged_data.iloc[:,(len(self.merged_data.columns)-1)])
 
     def MVD(self,strat_ch):
-        missing = self.num_df.columns[self.num_df.isna().any()].tolist()
-        self.data_matrix = self.num_df.values
-        self.column_names = list(self.num_df.columns.values) #store column names
+        # X is passed (Y is seperated from the data)
+        missing = self.analysis_data.columns[self.num_df.isna().any()].tolist()
+        self.data_matrix = self.analysis_data.values
+        self.column_names = list(self.analysis_data.columns.values) #store column names
 
         if(len(missing)==0):
             print('The data does not contain any missing values')
@@ -213,7 +269,6 @@ class Analysis:
             self.data_regres = self.data_matrix
             #convert data_matrix to dataframe for visualisation
             self.data_visual = pd.DataFrame(self.data_matrix, columns=self.column_names)
-            
             print("")
             print('The missing values have been detected and handled')
     
@@ -227,10 +282,10 @@ class Analysis:
             
     def Noise_detection(self):
         noise = []
-        cols = self.num_df.columns
+        cols = self.analysis_data.columns
         for i in range(len(cols)):
             k = 0
-            series = Series(self.num_df[cols[i]])
+            series = Series(self.analysis_data[cols[i]])
             stats = statsmodels.stats.diagnostic.acorr_ljungbox(series, lags=None, boxpierce=False)
             vals = stats[1]
             if(vals.any()<=0.05):
@@ -243,8 +298,8 @@ class Analysis:
             print('The numerical features with Gaussian White Noise')
             print(noise)
     
-    def PCA(self,data,f):
-        X = self.data_matrix[:,0:(self.data_matrix.shape[1]-1)]
+    def PCA(self,f):
+        X = self.data_matrix
         cov_matrix = np.dot(X.T,X)/self.data_matrix.shape[0]
         e1,e2 = eig(cov_matrix)
         e1 = abs(e1)
@@ -262,9 +317,9 @@ class Analysis:
         retention = (sum_break/sum1)*100
         print('Percentage retention of features on applying PCA (linear transformation): '+str(retention))
         
-    def Auto_Encoder(self,data,features):
-        X = data[:,0:(data.shape[1]-1)]
-        data_count = data.shape[0]
+    def Auto_Encoder(self,features):
+        X = self.data_matrix
+        data_count = X.shape[0]
         f = features
         value = X.shape[1]
         input_value = Input(shape=(value,))
@@ -275,24 +330,26 @@ class Analysis:
         decoded = Dense(value, activation='sigmoid')(decoded_1)
         autoencoder = Model(input_value,decoded)
         encoder = Model(input_value,encoded)
-        autoencoder.compile(optimizer='adadelta', loss='binary_crossentropy')
+        autoencoder.compile(optimizer='adadelta', loss='mean_squared_error')
         autoencoder.fit(X,X,
-                epochs=5,
+                epochs=25,
                 batch_size=int(data_count/5),
                 shuffle=True)
-        self.latent_representation = encoder.predict(X)
-        print(self.latent_representation.shape)
-        
+        self.data_matrix_reduced = encoder.predict(X)
     
     def Dim_Reduction(self,dim_ch,features):
         f = features
         if(dim_ch==1):
-            self.PCA(self.data_matrix,f)
+            self.PCA(f)
         elif(dim_ch==2):
-            self.Auto_Encoder(self.data_matrix,features)
+            self.Auto_Encoder(f)
             
+    def Final_Concatenation(self):
+        self.X1 = pd.DataFrame(self.data_matrix_reduced)
+        self.Y1 = self.target_data
+        frames = [self.X1,self.Y1]
+        self.data_final = pd.concat(frames,axis=1,sort=False)
             
-
     def Linear_Regression_model(self,X, Y):
         xTrain, xTest, yTrain, yTest = train_test_split(X, Y, test_size = 0.25, random_state = 0)
         LinearRegressor = LinearRegression()
@@ -475,7 +532,12 @@ class Analysis:
         my_file = '/images/line_plot.jpeg'       # Name of the scatter plot file
         fig.savefig(os.path.join(my_path, my_file))
         print("Saved Line plot")
-        
+
+
+# In[161]:
+
+
+#to be included
 def store_obj(filename,obj):
     pickle_file = open(filename,"wb")
     pickle.dump(obj,pickle_file)
@@ -528,3 +590,4 @@ if __name__ == '__main__':
         myAnalysis = load_obj(pickle_filename)
         print(len(myAnalysis.data.columns)-1)
         store_obj(pickle_filename, myAnalysis)
+
