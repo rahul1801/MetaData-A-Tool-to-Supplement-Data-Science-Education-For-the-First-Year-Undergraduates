@@ -83,6 +83,16 @@
 			this.mcaLabel = new System.Windows.Forms.Label();
 			this.label11 = new System.Windows.Forms.Label();
 			this.dimReduceTab = new System.Windows.Forms.TabPage();
+			this.dimReducePanel = new System.Windows.Forms.Panel();
+			this.dimrReduceNumber = new System.Windows.Forms.NumericUpDown();
+			this.label14 = new System.Windows.Forms.Label();
+			this.panel6 = new System.Windows.Forms.Panel();
+			this.autoencoderRadio = new System.Windows.Forms.RadioButton();
+			this.pcaRadio = new System.Windows.Forms.RadioButton();
+			this.label10 = new System.Windows.Forms.Label();
+			this.label13 = new System.Windows.Forms.Label();
+			this.loaderTab = new System.Windows.Forms.TabPage();
+			this.loaderPictureBox = new System.Windows.Forms.PictureBox();
 			this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -90,16 +100,8 @@
 			this.pictureBox2 = new System.Windows.Forms.PictureBox();
 			this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-			this.dimReducePanel = new System.Windows.Forms.Panel();
-			this.panel6 = new System.Windows.Forms.Panel();
-			this.autoencoderRadio = new System.Windows.Forms.RadioButton();
-			this.pcaRadio = new System.Windows.Forms.RadioButton();
-			this.label10 = new System.Windows.Forms.Label();
-			this.label13 = new System.Windows.Forms.Label();
-			this.label14 = new System.Windows.Forms.Label();
-			this.dimrReduceNumber = new System.Windows.Forms.NumericUpDown();
-			this.loaderTab = new System.Windows.Forms.TabPage();
-			this.loaderPictureBox = new System.Windows.Forms.PictureBox();
+			this.groupBox4 = new System.Windows.Forms.GroupBox();
+			this.analysisDropDown = new System.Windows.Forms.ComboBox();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.flowLayoutPanel1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -126,20 +128,20 @@
 			this.mcaTab.SuspendLayout();
 			this.mcaPanel.SuspendLayout();
 			this.dimReduceTab.SuspendLayout();
+			this.dimReducePanel.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.dimrReduceNumber)).BeginInit();
+			this.panel6.SuspendLayout();
+			this.loaderTab.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.loaderPictureBox)).BeginInit();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.panel4.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-			this.dimReducePanel.SuspendLayout();
-			this.panel6.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.dimrReduceNumber)).BeginInit();
-			this.loaderTab.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.loaderPictureBox)).BeginInit();
+			this.groupBox4.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tableLayoutPanel1
 			// 
-			this.tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
 			this.tableLayoutPanel1.ColumnCount = 2;
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
@@ -156,7 +158,7 @@
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 13F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 82F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(1361, 808);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(1797, 908);
 			this.tableLayoutPanel1.TabIndex = 0;
 			// 
 			// flowLayoutPanel1
@@ -165,10 +167,12 @@
 			this.flowLayoutPanel1.Controls.Add(this.groupBox2);
 			this.flowLayoutPanel1.Controls.Add(this.groupBox1);
 			this.flowLayoutPanel1.Controls.Add(this.groupBox3);
+			this.flowLayoutPanel1.Controls.Add(this.groupBox4);
 			this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.flowLayoutPanel1.Location = new System.Drawing.Point(412, 4);
+			this.flowLayoutPanel1.Location = new System.Drawing.Point(539, 0);
+			this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
 			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-			this.flowLayoutPanel1.Size = new System.Drawing.Size(945, 98);
+			this.flowLayoutPanel1.Size = new System.Drawing.Size(1258, 118);
 			this.flowLayoutPanel1.TabIndex = 2;
 			// 
 			// groupBox2
@@ -274,9 +278,10 @@
 			this.flowLayoutPanel2.Controls.Add(this.submitButton);
 			this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-			this.flowLayoutPanel2.Location = new System.Drawing.Point(412, 769);
+			this.flowLayoutPanel2.Location = new System.Drawing.Point(539, 862);
+			this.flowLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
 			this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-			this.flowLayoutPanel2.Size = new System.Drawing.Size(945, 35);
+			this.flowLayoutPanel2.Size = new System.Drawing.Size(1258, 46);
 			this.flowLayoutPanel2.TabIndex = 5;
 			// 
 			// submitButton
@@ -286,7 +291,7 @@
 			this.submitButton.Dock = System.Windows.Forms.DockStyle.Right;
 			this.submitButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.submitButton.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.submitButton.Location = new System.Drawing.Point(867, 3);
+			this.submitButton.Location = new System.Drawing.Point(1180, 3);
 			this.submitButton.Name = "submitButton";
 			this.submitButton.Size = new System.Drawing.Size(75, 30);
 			this.submitButton.TabIndex = 4;
@@ -307,10 +312,11 @@
 			this.stackPanel1.Controls.Add(this.dimReduceTab);
 			this.stackPanel1.Controls.Add(this.loaderTab);
 			this.stackPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.stackPanel1.Location = new System.Drawing.Point(412, 109);
+			this.stackPanel1.Location = new System.Drawing.Point(539, 118);
+			this.stackPanel1.Margin = new System.Windows.Forms.Padding(0);
 			this.stackPanel1.Name = "stackPanel1";
 			this.stackPanel1.SelectedIndex = 0;
-			this.stackPanel1.Size = new System.Drawing.Size(945, 653);
+			this.stackPanel1.Size = new System.Drawing.Size(1258, 744);
 			this.stackPanel1.TabIndex = 7;
 			// 
 			// emptyTab
@@ -319,7 +325,7 @@
 			this.emptyTab.Location = new System.Drawing.Point(4, 25);
 			this.emptyTab.Name = "emptyTab";
 			this.emptyTab.Padding = new System.Windows.Forms.Padding(3);
-			this.emptyTab.Size = new System.Drawing.Size(937, 624);
+			this.emptyTab.Size = new System.Drawing.Size(1242, 706);
 			this.emptyTab.TabIndex = 0;
 			this.emptyTab.Text = "Empty";
 			this.emptyTab.UseVisualStyleBackColor = true;
@@ -330,7 +336,7 @@
 			this.emptyPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.emptyPanel.Location = new System.Drawing.Point(3, 3);
 			this.emptyPanel.Name = "emptyPanel";
-			this.emptyPanel.Size = new System.Drawing.Size(931, 618);
+			this.emptyPanel.Size = new System.Drawing.Size(1236, 700);
 			this.emptyPanel.TabIndex = 6;
 			// 
 			// loadDataTab
@@ -339,7 +345,7 @@
 			this.loadDataTab.Location = new System.Drawing.Point(4, 25);
 			this.loadDataTab.Name = "loadDataTab";
 			this.loadDataTab.Padding = new System.Windows.Forms.Padding(3);
-			this.loadDataTab.Size = new System.Drawing.Size(937, 624);
+			this.loadDataTab.Size = new System.Drawing.Size(1250, 715);
 			this.loadDataTab.TabIndex = 1;
 			this.loadDataTab.Text = "Load Data";
 			this.loadDataTab.UseVisualStyleBackColor = true;
@@ -355,7 +361,7 @@
 			this.loadDataPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.loadDataPanel.Location = new System.Drawing.Point(3, 3);
 			this.loadDataPanel.Name = "loadDataPanel";
-			this.loadDataPanel.Size = new System.Drawing.Size(931, 618);
+			this.loadDataPanel.Size = new System.Drawing.Size(1244, 709);
 			this.loadDataPanel.TabIndex = 3;
 			// 
 			// fileLoadButton
@@ -366,7 +372,7 @@
 			this.fileLoadButton.Name = "fileLoadButton";
 			this.fileLoadButton.Size = new System.Drawing.Size(120, 39);
 			this.fileLoadButton.TabIndex = 3;
-			this.fileLoadButton.Text = "Upload";
+			this.fileLoadButton.Text = "Browse";
 			this.fileLoadButton.UseVisualStyleBackColor = true;
 			this.fileLoadButton.Click += new System.EventHandler(this.fileLoadButton_Click);
 			// 
@@ -769,66 +775,6 @@
 			this.dimReduceTab.Text = "dimReduce";
 			this.dimReduceTab.UseVisualStyleBackColor = true;
 			// 
-			// flowLayoutPanel3
-			// 
-			this.flowLayoutPanel3.BackColor = System.Drawing.Color.LightSkyBlue;
-			this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.flowLayoutPanel3.Location = new System.Drawing.Point(4, 769);
-			this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-			this.flowLayoutPanel3.Size = new System.Drawing.Size(401, 35);
-			this.flowLayoutPanel3.TabIndex = 8;
-			// 
-			// panel1
-			// 
-			this.panel1.BackColor = System.Drawing.Color.White;
-			this.panel1.Controls.Add(this.pictureBox1);
-			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel1.Location = new System.Drawing.Point(4, 109);
-			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(401, 653);
-			this.panel1.TabIndex = 10;
-			// 
-			// pictureBox1
-			// 
-			this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-			this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-			this.pictureBox1.Name = "pictureBox1";
-			this.pictureBox1.Size = new System.Drawing.Size(401, 653);
-			this.pictureBox1.TabIndex = 0;
-			this.pictureBox1.TabStop = false;
-			// 
-			// panel4
-			// 
-			this.panel4.BackColor = System.Drawing.Color.White;
-			this.panel4.Controls.Add(this.pictureBox2);
-			this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel4.Location = new System.Drawing.Point(4, 4);
-			this.panel4.Name = "panel4";
-			this.panel4.Size = new System.Drawing.Size(401, 98);
-			this.panel4.TabIndex = 11;
-			// 
-			// pictureBox2
-			// 
-			this.pictureBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-			this.pictureBox2.Location = new System.Drawing.Point(0, 0);
-			this.pictureBox2.Name = "pictureBox2";
-			this.pictureBox2.Size = new System.Drawing.Size(401, 98);
-			this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-			this.pictureBox2.TabIndex = 0;
-			this.pictureBox2.TabStop = false;
-			// 
-			// backgroundWorker1
-			// 
-			this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
-			this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
-			// 
-			// openFileDialog1
-			// 
-			this.openFileDialog1.FileName = "openFileDialog1";
-			this.openFileDialog1.InitialDirectory = "/";
-			// 
 			// dimReducePanel
 			// 
 			this.dimReducePanel.Controls.Add(this.dimrReduceNumber);
@@ -841,6 +787,34 @@
 			this.dimReducePanel.Name = "dimReducePanel";
 			this.dimReducePanel.Size = new System.Drawing.Size(937, 624);
 			this.dimReducePanel.TabIndex = 2;
+			// 
+			// dimrReduceNumber
+			// 
+			this.dimrReduceNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.dimrReduceNumber.Location = new System.Drawing.Point(540, 417);
+			this.dimrReduceNumber.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.dimrReduceNumber.Name = "dimrReduceNumber";
+			this.dimrReduceNumber.Size = new System.Drawing.Size(132, 36);
+			this.dimrReduceNumber.TabIndex = 7;
+			this.dimrReduceNumber.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			// 
+			// label14
+			// 
+			this.label14.AutoSize = true;
+			this.label14.Font = new System.Drawing.Font("Lucida Sans", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label14.Location = new System.Drawing.Point(17, 417);
+			this.label14.Name = "label14";
+			this.label14.Size = new System.Drawing.Size(491, 29);
+			this.label14.TabIndex = 6;
+			this.label14.Text = "Select the desired number of features:";
 			// 
 			// panel6
 			// 
@@ -896,34 +870,6 @@
 			this.label13.TabIndex = 3;
 			this.label13.Text = "Dimensionality Reduction";
 			// 
-			// label14
-			// 
-			this.label14.AutoSize = true;
-			this.label14.Font = new System.Drawing.Font("Lucida Sans", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label14.Location = new System.Drawing.Point(17, 417);
-			this.label14.Name = "label14";
-			this.label14.Size = new System.Drawing.Size(491, 29);
-			this.label14.TabIndex = 6;
-			this.label14.Text = "Select the desired number of features:";
-			// 
-			// dimrReduceNumber
-			// 
-			this.dimrReduceNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.dimrReduceNumber.Location = new System.Drawing.Point(540, 417);
-			this.dimrReduceNumber.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-			this.dimrReduceNumber.Name = "dimrReduceNumber";
-			this.dimrReduceNumber.Size = new System.Drawing.Size(132, 36);
-			this.dimrReduceNumber.TabIndex = 7;
-			this.dimrReduceNumber.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-			// 
 			// loaderTab
 			// 
 			this.loaderTab.Controls.Add(this.loaderPictureBox);
@@ -945,13 +891,106 @@
 			this.loaderPictureBox.TabIndex = 0;
 			this.loaderPictureBox.TabStop = false;
 			// 
+			// flowLayoutPanel3
+			// 
+			this.flowLayoutPanel3.BackColor = System.Drawing.Color.White;
+			this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.flowLayoutPanel3.Location = new System.Drawing.Point(0, 862);
+			this.flowLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
+			this.flowLayoutPanel3.Name = "flowLayoutPanel3";
+			this.flowLayoutPanel3.Size = new System.Drawing.Size(539, 46);
+			this.flowLayoutPanel3.TabIndex = 8;
+			// 
+			// panel1
+			// 
+			this.panel1.BackColor = System.Drawing.Color.White;
+			this.panel1.Controls.Add(this.pictureBox1);
+			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panel1.Location = new System.Drawing.Point(0, 118);
+			this.panel1.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
+			this.panel1.Name = "panel1";
+			this.panel1.Size = new System.Drawing.Size(537, 744);
+			this.panel1.TabIndex = 10;
+			// 
+			// pictureBox1
+			// 
+			this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+			this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+			this.pictureBox1.Name = "pictureBox1";
+			this.pictureBox1.Size = new System.Drawing.Size(537, 744);
+			this.pictureBox1.TabIndex = 0;
+			this.pictureBox1.TabStop = false;
+			// 
+			// panel4
+			// 
+			this.panel4.BackColor = System.Drawing.Color.White;
+			this.panel4.Controls.Add(this.pictureBox2);
+			this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panel4.Location = new System.Drawing.Point(0, 0);
+			this.panel4.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
+			this.panel4.Name = "panel4";
+			this.panel4.Size = new System.Drawing.Size(537, 118);
+			this.panel4.TabIndex = 11;
+			// 
+			// pictureBox2
+			// 
+			this.pictureBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+			this.pictureBox2.Location = new System.Drawing.Point(0, 0);
+			this.pictureBox2.Name = "pictureBox2";
+			this.pictureBox2.Size = new System.Drawing.Size(537, 118);
+			this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+			this.pictureBox2.TabIndex = 0;
+			this.pictureBox2.TabStop = false;
+			// 
+			// backgroundWorker1
+			// 
+			this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+			this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
+			// 
+			// openFileDialog1
+			// 
+			this.openFileDialog1.FileName = "openFileDialog1";
+			this.openFileDialog1.InitialDirectory = "/";
+			// 
+			// groupBox4
+			// 
+			this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+			this.groupBox4.AutoSize = true;
+			this.groupBox4.Controls.Add(this.analysisDropDown);
+			this.groupBox4.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+			this.groupBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.groupBox4.Location = new System.Drawing.Point(879, 3);
+			this.groupBox4.Name = "groupBox4";
+			this.groupBox4.Size = new System.Drawing.Size(329, 91);
+			this.groupBox4.TabIndex = 3;
+			this.groupBox4.TabStop = false;
+			this.groupBox4.Text = "Analysis";
+			// 
+			// analysisDropDown
+			// 
+			this.analysisDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.analysisDropDown.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+			this.analysisDropDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.analysisDropDown.FormattingEnabled = true;
+			this.analysisDropDown.Items.AddRange(new object[] {
+            "Regressional Analysis",
+            "Visualization"});
+			this.analysisDropDown.Location = new System.Drawing.Point(6, 38);
+			this.analysisDropDown.Name = "analysisDropDown";
+			this.analysisDropDown.Size = new System.Drawing.Size(317, 28);
+			this.analysisDropDown.TabIndex = 0;
+			this.analysisDropDown.TabStop = false;
+			// 
 			// Final_Application
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoScroll = true;
 			this.AutoSize = true;
-			this.ClientSize = new System.Drawing.Size(1361, 808);
+			this.ClientSize = new System.Drawing.Size(1797, 908);
 			this.Controls.Add(this.tableLayoutPanel1);
 			this.Name = "Final_Application";
 			this.Text = "MetaData";
@@ -995,17 +1034,18 @@
 			this.mcaPanel.ResumeLayout(false);
 			this.mcaPanel.PerformLayout();
 			this.dimReduceTab.ResumeLayout(false);
+			this.dimReducePanel.ResumeLayout(false);
+			this.dimReducePanel.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.dimrReduceNumber)).EndInit();
+			this.panel6.ResumeLayout(false);
+			this.panel6.PerformLayout();
+			this.loaderTab.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.loaderPictureBox)).EndInit();
 			this.panel1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.panel4.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-			this.dimReducePanel.ResumeLayout(false);
-			this.dimReducePanel.PerformLayout();
-			this.panel6.ResumeLayout(false);
-			this.panel6.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.dimrReduceNumber)).EndInit();
-			this.loaderTab.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.loaderPictureBox)).EndInit();
+			this.groupBox4.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -1083,6 +1123,8 @@
 		private System.Windows.Forms.Label label14;
 		private System.Windows.Forms.TabPage loaderTab;
 		private System.Windows.Forms.PictureBox loaderPictureBox;
+		private System.Windows.Forms.GroupBox groupBox4;
+		private System.Windows.Forms.ComboBox analysisDropDown;
 	}
 }
 
