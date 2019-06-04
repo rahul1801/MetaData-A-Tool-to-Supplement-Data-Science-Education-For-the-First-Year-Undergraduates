@@ -7,13 +7,18 @@
 import numpy as np
 import pandas as pd
 import os
+
+
+# In[2]:
+
+
 from numpy.linalg import eig
 from sklearn.preprocessing import Imputer
 from future_encoders import OrdinalEncoder, OneHotEncoder
 from pandas.plotting import scatter_matrix
 
 
-# In[2]:
+# In[3]:
 
 
 #import libraries for regression analysis
@@ -23,7 +28,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import mean_squared_error, r2_score
 
 
-# In[3]:
+# In[4]:
 
 
 import matplotlib.pyplot as plt
@@ -32,7 +37,7 @@ import sys
 from numpy.linalg import eig
 
 
-# In[4]:
+# In[5]:
 
 
 try:
@@ -44,7 +49,7 @@ pickle_filename = "myAnalysis.pickle"
 pd.set_option('display.max_columns', 20)
 
 
-# In[5]:
+# In[6]:
 
 
 from random import gauss
@@ -54,26 +59,61 @@ from pandas.tools.plotting import autocorrelation_plot
 import statsmodels.api
 
 
-# In[6]:
+# In[7]:
 
 
 import tensorflow as tf
 import keras
 from keras.layers import Input,Dense
 from keras.models import Model
+from keras.losses import mean_squared_error
+import keras.backend as K
 
 
-# In[377]:
+# In[8]:
+
+
+counter_value = 0
+
+
+# In[10]:
 
 
 class Analysis:
-    def __init__(self,url):
+    def __init__(self,url,choice):
         url = str(url)
+        self.target_detection = 0
         self.data = pd.read_csv(url)
+        self.flag1 = 0
+        target_column = pd.DataFrame(self.data.iloc[:,(len(self.data.columns)-1)])
+        val = target_column._get_numeric_data().columns
+        if(len(val) != self.target_detection):
+            self.flag1 = 1
+            self.data = pd.DataFrame(self.data.iloc[:,0:(len(self.data.columns)-1)])
+            self.target_var = target_column
+            print("")
+        cols1 = self.data.columns
+        num_cols1 = self.data._get_numeric_data().columns
+        cat_cols1 = list(set(cols1) - set(num_cols1))
+        num_pr = self.data[num_cols1]
+        cat_pr = self.data[cat_cols1]
+        if(choice==1):
+            self.target_detection = 1
+            frm = [cat_pr,num_pr]
+        elif(choice==0):
+            self.target_detection = 0
+            frm = [num_pr,cat_pr]
+        if(self.flag1==0):
+            self.data_preview = pd.concat(frm,axis=1,sort=False)
+        elif(self.flag1==1):
+            pre = pd.concat(frm,axis=1,sort=False)
+            frm2 = [pre,self.target_var]
+            self.data_preview = pd.concat(frm2,axis=1,sort=False)
+        self.col_preview = self.data_preview.columns
         print("Data Loaded.")
         self.cat_flag = 0
         self.num_flag = 0
-        self.target_detection = 0
+        
         
     def Entry(self):
         op_count = 0
@@ -91,15 +131,10 @@ class Analysis:
         print("")
         print(self.data.head())
         cols = self.data.columns
-        self.data_target = pd.DataFrame(self.data.iloc[:,(len(cols)-1)])
-        if(len(self.data_target._get_numeric_data().columns)==1):
-            self.target_detection = 1
-        else:
-            self.target_detection = 0
-        num_cols = self.data._get_numeric_data().columns
-        cat_cols = list(set(cols) - set(num_cols))
-        self.num_df = self.data[num_cols]
-        self.cat_df = self.data[cat_cols]
+        self.num_cols = self.data._get_numeric_data().columns
+        self.cat_cols = list(set(cols) - set(self.num_cols))
+        self.num_df = self.data[self.num_cols]
+        self.cat_df = self.data[self.cat_cols]
         print('-------------------------------------------------------------------------------------')
         print('Identified numerical valued features: ')
         for i in range(self.num_df.shape[1]):
@@ -118,7 +153,14 @@ class Analysis:
             print('Target Feature: Categorical')
             print("")
         self.data_frame = self.data
-        unique = self.data_frame[self.data_frame.columns[self.data_frame.shape[1]-1]].unique().tolist()
+        if(self.flag1==0):
+            print('Target Feature Name: '+self.data.columns[len(self.data.columns)-1])
+            unique = self.data_frame[self.data_frame.columns[self.data_frame.shape[1]-1]].unique().tolist()
+        elif(self.flag1==1):
+            print('Target Feature Name: '+self.target_var.columns[0])
+            unique = self.target_var[self.target_var.columns[0]].unique().tolist()
+        print("")
+        print('Values taken by the target variable:')
         print(unique)
         print("")
         
@@ -181,15 +223,15 @@ class Analysis:
         condition_number = e1[0]/e1[(corr_matrix.shape[0]-1)]
         multicol=0
         if(condition_number>100):
-            multicol=1
+            self.multicol=1
         else:
-            multicol=0
-        if(multicol==1):
+            self.multicol=0
+        if(self.multicol==1):
             print('Multicollinearity exists in the data (eigen system analysis)')
         else:
             print('The data is free from any multicollinearity issue (eigen system analysis)')
         count=0
-        if(multicol==1):
+        if(self.multicol==1):
             for i in range(len(e1)):
                 if(e1[0]/e1[i]>=100):
                     count+=1
@@ -221,8 +263,7 @@ class Analysis:
                 ordinal_encoder = OrdinalEncoder()
                 self.df_encoded = ordinal_encoder.fit_transform(self.cat_df)
                 self.df_encoded = pd.DataFrame(self.df_encoded)
-                self.df_encoded.columns = self.df_encoded.columns.astype(str)
-                self.df_encoded = self.df_encoded.rename(index=str,columns={'0':self.data.columns[len(self.data.columns)-1]})
+                self.df_encoded.columns = self.cat_cols
                 print('The data has been ordinal/label encoded')
 #             #to be handled later (post discussion)
 #             elif ch==2:
@@ -232,21 +273,28 @@ class Analysis:
 #                 return df_1hot
 
     def Data_concatenation(self):
-        self.num_df.reset_index(drop=True,inplace=True)
-        self.df_encoded.reset_index(drop=True,inplace=True)
-        if(self.target_detection==0):
-            data_frames = [self.num_df,self.df_encoded]
-            self.merged_data = pd.concat(data_frames,axis=1,sort=False)
-        elif(self.target_detection==1):
-            data_frames = [self.df_encoded,self.num_df]
-            self.merged_data = pd.concat(data_frames,axis=1,sort=False)
-        print(self.merged_data)
-        self.analysis_data = pd.DataFrame(self.merged_data.iloc[:,0:(len(self.merged_data.columns)-1)])
-        self.target_data = pd.DataFrame(self.merged_data.iloc[:,(len(self.merged_data.columns)-1)])
+        if(self.cat_flag==0):
+            self.merged_data = pd.DataFrame(self.num_df)
+        elif(self.num_flag==0):
+            self.merged_data = pd.DataFrame(self.df_encoded)
+        else:
+            self.num_df.reset_index(drop=True,inplace=True)
+            self.df_encoded.reset_index(drop=True,inplace=True)
+            if(self.target_detection==0):
+                data_frames = [self.num_df,self.df_encoded]
+                self.merged_data = pd.concat(data_frames,axis=1,sort=False)
+            elif(self.target_detection==1):
+                data_frames = [self.df_encoded,self.num_df]
+                self.merged_data = pd.concat(data_frames,axis=1,sort=False)
+        if(self.flag1==0):
+            self.analysis_data = pd.DataFrame(self.merged_data.iloc[:,0:(len(self.merged_data.columns)-1)])
+            self.target_data = pd.DataFrame(self.merged_data.iloc[:,(len(self.merged_data.columns)-1)])
+        elif(self.flag1==1):
+            self.analysis_data = self.merged_data
+            self.target_data = self.target_var
 
     def MVD(self,strat_ch):
-        self.Data_concatenation()
-        missing = self.analysis_data.columns[self.num_df.isna().any()].tolist()
+        missing = self.analysis_data.columns[self.analysis_data.isna().any()].tolist()
         self.data_matrix = self.analysis_data.values
         self.column_names = list(self.analysis_data.columns.values) #store column names
 
@@ -263,18 +311,18 @@ class Analysis:
             elif(strat_ch==3):
                 imputer = Imputer(strategy = "most_frequent")
             imputer.fit(self.data_matrix)
-
             self.data_matrix = imputer.transform(self.data_matrix)
-            #copy data_matrix to data_regres to feed into regression models
-            data_new = pd.DataFrame(self.data_matrix)
-            data_new.reset_index(drop=True,inplace=True)
-            frames2 = [data_new,self.target_data]
-            self.data_regres = pd.concat(frames2,axis=1,sort=False)
-            
-            #convert data_matrix to dataframe for visualisation
-            self.data_visual = pd.DataFrame(self.data_matrix, columns=self.column_names)
             print("")
             print('The missing values have been detected and handled')
+        #copy data_matrix to data_regres to feed into regression models
+        data_new = pd.DataFrame(self.data_matrix)
+        data_new.reset_index(drop=True,inplace=True)
+        frames2 = [data_new,self.target_data]
+        self.data_regres = pd.concat(frames2,axis=1,sort=False)
+            
+        #convert data_matrix to dataframe for visualisation
+        self.data_visual = pd.DataFrame(self.data_matrix, columns=self.column_names)
+        
     
     def Scaling_decision(self,ch_num):
         if(ch_num==1):
@@ -297,12 +345,15 @@ class Analysis:
             if(k==1):
                 noise.append(cols[i])
         if(len(noise)==0):
+            self.no = 0
             print('The features are devoid of White Gaussian and Gaussian Noise')
         else:
+            self.no = 1
             print('The numerical features with Gaussian White Noise')
             print(noise)
     
     def PCA(self,f):
+        self.d = 0
         X = self.data_matrix
         cov_matrix = np.dot(X.T,X)/self.data_matrix.shape[0]
         e1,e2 = eig(cov_matrix)
@@ -313,17 +364,19 @@ class Analysis:
         e2 = e2[:,0:f]
         e1_sort = np.sort(e1)[::-1]
         self.data_matrix_reduced = np.matmul(X,e2)
-        print(self.data_matrix_reduced.shape)
         sum1 = sum(e1_sort)
         sum_break = 0
         for i in range(f):
             sum_break+=e1_sort[i]
-        retention = (sum_break/sum1)*100
-        print('Percentage retention of features on applying PCA (linear transformation): '+str(retention))
+        self.retention = round((sum_break/sum1)*100,2)
+        print('Percentage retention of features on applying PCA (linear transformation): '+str(self.retention))
         print("")
         self.Final_Concatenation()
+        self.compression = round(100*((self.data_matrix.shape[0]*self.data_matrix.shape[1] - (self.data_matrix_reduced.shape[0]*self.data_matrix_reduced.shape[1] + e2.shape[0]*e2.shape[1]))/(self.data_matrix.shape[0]*self.data_matrix.shape[1])),2)
+        print('Percentage reduction or compression in the storage of data: '+str(self.compression)+' %')
         
     def Auto_Encoder(self,features):
+        self.d = 1
         X = self.data_matrix
         data_count = X.shape[0]
         f = features
@@ -338,12 +391,22 @@ class Analysis:
         encoder = Model(input_value,encoded)
         autoencoder.compile(optimizer='adadelta', loss='mean_squared_error')
         autoencoder.fit(X,X,
-                epochs=25,
+                epochs=20,
                 batch_size=int(data_count/5),
                 shuffle=True)
         self.data_matrix_reduced = encoder.predict(X)
+        org = self.data_matrix.shape[0]*self.data_matrix.shape[1]
+        # new = latent + weight_component
+        new  = self.data_matrix_reduced.shape[0]*self.data_matrix_reduced.shape[1] + self.data_matrix.shape[1]*self.data_matrix_reduced.shape[1]
+        self.comp = round(100*((org - new)/org),2)
         print("")
         self.Final_Concatenation()
+        x_pred = autoencoder.predict(X)
+        self.error = round(np.mean(np.square(X - x_pred)),2)
+        print('Percentage reduction or compression in the storage of data: '+str(self.comp)+' %')
+        print("")
+        print('Mean Squared Error between the original data and the reconstruction of the compressed data representation: '+str(self.error))
+        
     
     def Dim_Reduction(self,dim_ch,features):
         f = features
@@ -368,7 +431,8 @@ class Analysis:
         print('Results of Multivariate Regression')
         print('intercept            : \n', LinearRegressor.intercept_)
         print('Coefficients         : \n', LinearRegressor.coef_)
-        print('Mean squared error   : %.2f' % mean_squared_error(yTest, yPrediction))
+        #print('Mean squared error   : %.2f' % mean_squared_error(yTest, yPrediction))
+        print('Root Mean squared error   : %.2f' % np.sqrt(np.mean(np.square(yTest - yPrediction))))
         print('Variance score       : %.2f' % r2_score(yTest, yPrediction))
         return yTest, yPrediction
 
@@ -387,6 +451,8 @@ class Analysis:
         acc = round(100*(diag_sum/sum(sum(cm))),2)
         print("Results of Logistic Regression")
         print("")
+        print('Total test samples: '+str(sum(sum(cm))))
+        print("")
         print('Accuracy: '+str(acc))
         return y_test, y_pred
 
@@ -404,7 +470,7 @@ class Analysis:
 #         print('Variance score       : %.2f' % r2_score(yTest, yPrediction))
 #         return yTest, yPrediction
 
-    def Regression_models(self, ch_reg):
+    def Regression_models(self):
         self.data_1 = self.data_regres #data before preprocessing
         self.data_2 = self.data_final #data after preprocessing
 
@@ -413,13 +479,13 @@ class Analysis:
         X_2 = self.data_2.iloc[:,0:(self.data_2.shape[1]-1)]
         Y_2 = self.data_2.iloc[:,(self.data_2.shape[1]-1)]
 
-        if(ch_reg==1):
+        if(self.target_detection==1):
             #do multivariate / simple linear regression
-            print("Analysis before data scaling")
+            print("Analysis before data preprocessing")
             yt, y1 = self.Linear_Regression_model(X_1, Y_1)
             print("")
             print("")
-            print("Analysis after complete data scaling")
+            print("Analysis after complete data preprocessing")
             yt, y2 = self.Linear_Regression_model(X_2, Y_2)
             #plot graph
             plt.plot(yt, color='r') #actual y test value
@@ -430,7 +496,7 @@ class Analysis:
             plt.show()
             plt.savefig('./images/LiR.png')
 
-        elif(ch_reg==2):
+        elif(self.target_detection==0):
             #do logistic regression
             print("Analysis before data preprocessing")
             yt, y1 = self.Logistic_Regression_model(X_1, Y_1)
@@ -532,62 +598,131 @@ class Analysis:
         my_file = '/images/line_plot.jpeg'       # Name of the scatter plot file
         fig.savefig(os.path.join(my_path, my_file))
         print("Saved Line plot")
+        
+    def report(self):
+        print('Data Report')
+        print("")
+        print('Total Rows in the original dataset: '+str(self.data.shape[0]))
+        print("")
+        print('Total Columns in the original dataset: '+str(self.data.shape[1]))
+        print("")
+        print("")
+        print('Target Feature Name: '+str(self.data_final.columns[len(self.data_final.columns)-1]))
+        print("")
+        if(self.target_detection==0):
+            print('Target Feature Type: Categorical')
+        if(self.target_detection==1):
+            print('Target Feature Type: Numerical')
+        print("")
+        if(self.d==0):
+            print('Data compression technique used: PCA (Linear)')
+            print("")
+            print('Percentage retention of features achieved: '+str(self.retention)+' %')
+            print("")
+            print('Percentage compression achieved on the Data: '+str(self.compression)+' %')
+            print("")
+            print("")
+        if(self.d==1):
+            print('Data compression technique used Auto Encoder (Non Linear)')
+            print("")
+            print('Mean Squared Error between the original data and the reconstruction of the compressed data representation: '+str(self.error)+' %')
+            print("")
+            print('Percentage compression achieved on the Data: '+str(self.comp)+' %')
+            print("")
+            print("")
+        print('Final Conclusions')
+        print("")
+        print("")
+        if(self.no==0):
+            print('The features are free from any noise or deviations')
+            print("")
+        if(self.no==1):
+            print('The features are noisy. Thus noise elimination techniques need to be employed to the data')
+            print("")
+        if(self.multicol==0):
+            print('The features are devoid of any Multicollinearity issues. Hence, regression models can be used for prediction.')
+        elif(self.multicol==1):
+            print('The features face Multicollinearity issues. Hence regression models should not be applied directly.')
+            
+    def preview(self,counter_value):
+        if(counter_value==1 or counter_value==2):
+            print(self.data_preview)
+        elif(counter_value==3):
+            self.Data_concatenation()
+            if(self.flag1==0):
+                print(self.merged_data)
+            elif(self.flag1==1):
+                fr = [self.merged_data,self.target_var]
+                merge = pd.concat(fr,axis=1,sort=False)
+                print(merge)
+        elif(counter_value==4 or counter_value==5 or counter_value==6 or counter_value==7):
+            self.fr2 = [pd.DataFrame(self.data_matrix),self.target_data]
+            self.new_preview = pd.concat(self.fr2,axis=1,sort=False)
+            self.new_preview.columns = self.col_preview
+            print(self.new_preview)
+        elif(counter_value==8 or counter_value==9 or  counter_value==10):
+            print(self.data_final)
+        
+    def store_obj(filename,obj):
+        pickle_file = open(filename,"wb")
+        pickle.dump(obj,pickle_file)
+        pickle_file.close()
 
-
-# In[161]:
-
-
-#to be included
-def store_obj(filename,obj):
-    pickle_file = open(filename,"wb")
-    pickle.dump(obj,pickle_file)
-    pickle_file.close()
-
-def load_obj(filename):
-    pickle_file = open(filename,"rb")
-    obj = pickle.load(pickle_file)
-    pickle_file.close()
-    return obj
-
+    def load_obj(filename):
+        pickle_file = open(filename,"rb")
+        obj = pickle.load(pickle_file)
+        pickle_file.close()
+        return obj
+    
 if __name__ == '__main__':
     arg = int(sys.argv[1])
     if arg == 0:
         myAnalysis = Analysis(sys.argv[2])
         store_obj(pickle_filename, myAnalysis)
+        counter_value+=1
     elif arg == 1:
         myAnalysis = load_obj(pickle_filename)
         myAnalysis.Entry()
         store_obj(pickle_filename, myAnalysis)
+        counter_value+=1
     elif arg == 2:
         myAnalysis = load_obj(pickle_filename)
         myAnalysis.cat_to_num(int(sys.argv[2]))
         store_obj(pickle_filename, myAnalysis)
+        counter_value+=1
     elif arg == 3:
         myAnalysis = load_obj(pickle_filename)
         myAnalysis.MVD(int(sys.argv[2]))
         store_obj(pickle_filename, myAnalysis)
+        counter_value+=1
     elif arg == 4:
         myAnalysis = load_obj(pickle_filename)
         myAnalysis.Scaling_decision(int(sys.argv[2]))
         store_obj(pickle_filename, myAnalysis)
+        counter_value+=1
     elif arg == 5:
         myAnalysis = load_obj(pickle_filename)
         myAnalysis.Multicollinearity_Analysis()
         store_obj(pickle_filename, myAnalysis)
+        counter_value+=1
     elif arg == 6:
         myAnalysis = load_obj(pickle_filename)
         myAnalysis.Noise_detection()
         store_obj(pickle_filename, myAnalysis)
+        counter_value+=1
     elif arg == 7:
         myAnalysis = load_obj(pickle_filename)
         myAnalysis.Dim_Reduction(int(sys.argv[2]), int(sys.argv[3]))
         store_obj(pickle_filename, myAnalysis)
+        counter_value+=1
     elif arg == 8:
         myAnalysis = load_obj(pickle_filename)
         myAnalysis.Regression_models(int(sys.argv[2]))
         store_obj(pickle_filename, myAnalysis)
+        counter_value+=1
     elif arg == 99:
         myAnalysis = load_obj(pickle_filename)
         print(len(myAnalysis.data.columns)-1)
         store_obj(pickle_filename, myAnalysis)
+        counter_value+=1
 
