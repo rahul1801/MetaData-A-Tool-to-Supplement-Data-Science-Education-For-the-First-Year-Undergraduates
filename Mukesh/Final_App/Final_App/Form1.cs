@@ -206,8 +206,19 @@ namespace Final_App
 				// Get entered filename
 				string filename = filenameTextBox.Text;
 
+				// Get nature of y
+				string n_y = "";
+				if(numericalRadio.Checked)
+				{
+					n_y = " 1";
+				}
+				else if(categoricalRadio.Checked)
+				{
+					n_y = " 0";
+				}
+
 				// Argument to the script
-				string arg = " 0 " + filename;
+				string arg = " 0 " + filename + n_y;
 
 				// Start the asynchronous operation.
 				backgroundWorker1.RunWorkerAsync(arg);
@@ -352,6 +363,33 @@ namespace Final_App
 					dataInfoLabel.Text = result.Key;
 					dataInfoLabel.Visible = true;
 
+					// write info table
+					bindCSV("E:\\IBM\\Mukesh\\Entry_data\\info.csv", infoGridView, true);
+
+					// write head table
+					bindCSV("E:\\IBM\\Mukesh\\Entry_data\\head.csv", headGridView, true);
+
+					// write numerical features and categorical features
+					string[] res_split = result.Key.Split('!');
+					string[] num_features = res_split[0].Split('\n');
+					string[] cat_features = res_split[1].Split('\n');
+					numericalListView.Items.Clear();
+					numericalListView.Columns[0].Width = numericalListView.Width - 4;
+					for(int i=0;i<num_features.Length;i++)
+					{
+						numericalListView.Items.Add(num_features[i], i);
+					}
+					categoricalListView.Items.Clear();
+					categoricalListView.Columns[0].Width = categoricalListView.Width - 4;
+					for (int i = 0; i < cat_features.Length; i++)
+					{
+						Console.WriteLine(cat_features[i]);
+						categoricalListView.Items.Add(cat_features[i], i);
+					}
+
+					// write name of target feature
+					dataInfoLabel.Text = res_split[2];
+
 					// change text of button
 					submitButton.Text = "Submit";
 				}
@@ -452,6 +490,59 @@ namespace Final_App
 			{
 				string file_name = openFileDialog1.FileName;
 				filenameTextBox.Text = file_name;
+			}
+		}
+
+		// Parses a csv file and displays it to a DataGridView
+		private void bindCSV(string filePath, DataGridView dgv, Boolean rowNo)
+		{
+			DataTable dt = new DataTable();
+			string[] lines = System.IO.File.ReadAllLines(filePath);
+			if(lines.Length > 0)
+			{
+				// first line to create header
+				string firstLine = lines[0];
+
+				string[] headerLabels = firstLine.Split(',');
+
+				foreach(string hword in headerLabels)
+				{
+					dt.Columns.Add(new DataColumn(hword));
+				}
+
+				// data
+				for(int r=1;r<lines.Length;r++)
+				{
+					string[] dwords = lines[r].Split(',');
+					DataRow dr = dt.NewRow();
+					int colIndex = 0;
+					foreach(string hword in headerLabels)
+					{
+						dr[hword] = dwords[colIndex++];
+					}
+					dt.Rows.Add(dr);
+				}
+			}
+			if(dt.Rows.Count>0)
+			{
+				dgv.DataSource = dt;
+				if(rowNo)
+				{
+					setRowNumber(dgv);
+				}
+				else
+				{
+					dgv.RowHeadersVisible = false;
+				}
+			}
+		}
+
+		// Displays row number
+		private void setRowNumber(DataGridView dgv)
+		{
+			foreach (DataGridViewRow row in dgv.Rows)
+			{
+				row.HeaderCell.Value = (row.Index + 1).ToString();
 			}
 		}
 	}
