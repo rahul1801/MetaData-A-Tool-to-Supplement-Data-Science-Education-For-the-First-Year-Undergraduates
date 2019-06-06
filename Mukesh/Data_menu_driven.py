@@ -172,17 +172,16 @@ class Analysis:
         self.data_frame = self.data
         if(self.flag1 == 0):
             print('Target Feature: ' +
-                  self.data.columns[len(self.data.columns)-1]+' ('+tf_nature+')')
+                  self.data.columns[len(self.data.columns)-1]+' ('+tf_nature+')',end='')
             unique = self.data_frame[self.data_frame.columns[self.data_frame.shape[1]-1]
                                      ].unique().tolist()
         elif(self.flag1 == 1):
-            print('Target Feature: '+self.target_var.columns[0]+' ('+tf_nature+')')
+            print('Target Feature: '+self.target_var.columns[0]+' ('+tf_nature+')',end='')
             unique = self.target_var[self.target_var.columns[0]].unique(
             ).tolist()
-        print("")
         if(self.target_detection==0):
-	        print('Values taken by the target variable:')
-	        print(unique)
+            print(' - '+str(len(unique))+' classes')
+        else:
 	        print("")
 
     def z_score_standardization(self, data):
@@ -375,11 +374,13 @@ class Analysis:
                 noise.append(cols[i])
         if(len(noise) == 0):
             self.no = 0
-            print('The features are devoid of White Gaussian and Gaussian Noise')
+            print('All features are devoid of White Gaussian and Gaussian Noise')
         else:
             self.no = 1
-            print('The numerical features with Gaussian White Noise')
-            print(noise)
+            # With Delimiter
+            print('The numerical features with Gaussian White Noise are:!',end="")
+            for each in noise:
+            	print(each)
 
     def PCA(self, f):
         self.d = 0

@@ -76,7 +76,23 @@ namespace Final_App
 				index = 2;
 
 				// hide label
+				targetFeatureLabel.Visible = false;
+
+				// hide data head table and label
+				dataHeadLabel.Visible = false;
+				headGridView.Visible = false;
+
+				// hide info table and label
 				dataInfoLabel.Visible = false;
+				infoGridView.Visible = false;
+
+				// hide numerical features table and label
+				numericalListView.Visible = false;
+				numericalLabel.Visible = false;
+
+				// hide categorical features table and label
+				categoricalListView.Visible = false;
+				categoricalLabel.Visible = false;
 
 				// switch to dataInfoTab
 				stackPanel1.SelectedIndex = index;
@@ -139,7 +155,10 @@ namespace Final_App
 				// hide label
 				noiseDetectLabel.Visible = false;
 
-				// switch to mcaTab
+				// hide ListView
+				noisyListView.Visible = false;
+
+				// switch to noiseDetectTab
 				stackPanel1.SelectedIndex = index;
 
 				// change text of button
@@ -228,6 +247,9 @@ namespace Final_App
 				// Argument to the script
 				string arg = " 1";
 
+				// Switch to loaderTab
+				stackPanel1.SelectedIndex = 9;
+
 				// Start the asynchronous operation.
 				backgroundWorker1.RunWorkerAsync(arg);
 			}
@@ -294,6 +316,9 @@ namespace Final_App
 				// Argument to the script
 				string arg = " 6";
 
+				// Switch to loaderTab
+				stackPanel1.SelectedIndex = 9;
+
 				// Start the asynchronous operation.
 				backgroundWorker1.RunWorkerAsync(arg);
 			}
@@ -359,10 +384,6 @@ namespace Final_App
 				KeyValuePair<string, string> result = (KeyValuePair<string, string>)e.Result;
 				if(result.Value == " 1")
 				{
-					// write and show label
-					dataInfoLabel.Text = result.Key;
-					dataInfoLabel.Visible = true;
-
 					// write info table
 					bindCSV("E:\\IBM\\Mukesh\\Entry_data\\info.csv", infoGridView, true);
 
@@ -388,10 +409,32 @@ namespace Final_App
 					}
 
 					// write name of target feature
-					dataInfoLabel.Text = res_split[2];
+					targetFeatureLabel.Text = res_split[2];
 
 					// change text of button
 					submitButton.Text = "Submit";
+
+					// show target feature
+					targetFeatureLabel.Visible = true;
+
+					// show data head table and label
+					dataHeadLabel.Visible = true;
+					headGridView.Visible = true;
+
+					// show info table and label
+					dataInfoLabel.Visible = true;
+					infoGridView.Visible = true;
+
+					// show numerical features table and label
+					numericalListView.Visible = true;
+					numericalLabel.Visible = true;
+
+					// show categorical features table and label
+					categoricalListView.Visible = true;
+					categoricalLabel.Visible = true;
+
+					// Switch to dataInfoTab
+					stackPanel1.SelectedIndex = 2;
 				}
 				else if(result.Value == " 5")
 				{
@@ -404,9 +447,37 @@ namespace Final_App
 				}
 				else if (result.Value == " 6")
 				{
-					// write and show label
-					noiseDetectLabel.Text = result.Key;
+					// Show label
 					noiseDetectLabel.Visible = true;
+
+					string[] noise_info = result.Key.Split('!');
+					if(noise_info.Length == 1)
+					{
+						// write label for no noise
+						noiseDetectLabel.Text = result.Key;
+					}
+					else
+					{
+						// write label for noise
+						noiseDetectLabel.Text = noise_info[0];
+
+						// write ListView
+						string[] noisy_features = noise_info[1].Split('\n');
+						noisyListView.Items.Clear();
+						noisyListView.Columns[0].Width = noisyListView.Width - 4;
+
+						// Avoid last extra line
+						for (int i = 0; i < (noisy_features.Length - 1); i++)
+						{
+							noisyListView.Items.Add(noisy_features[i], i);
+						}
+
+						// show ListView
+						noisyListView.Visible = true;
+					}
+
+					// switch to noiseDetectTab
+					stackPanel1.SelectedIndex = 6;
 
 					// change text of button
 					submitButton.Text = "Submit";

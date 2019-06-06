@@ -55,8 +55,18 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.dataInfoTab = new System.Windows.Forms.TabPage();
 			this.dataInfoPanel = new System.Windows.Forms.Panel();
+			this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
+			this.targetFeatureLabel = new System.Windows.Forms.Label();
+			this.categoricalLabel = new MaterialSkin.Controls.MaterialLabel();
+			this.categoricalListView = new MaterialSkin.Controls.MaterialListView();
+			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.numericalLabel = new MaterialSkin.Controls.MaterialLabel();
+			this.numericalListView = new MaterialSkin.Controls.MaterialListView();
+			this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.dataInfoLabel = new MaterialSkin.Controls.MaterialLabel();
+			this.dataHeadLabel = new MaterialSkin.Controls.MaterialLabel();
+			this.headGridView = new System.Windows.Forms.DataGridView();
 			this.infoGridView = new System.Windows.Forms.DataGridView();
-			this.dataInfoLabel = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.catToNumSTab = new System.Windows.Forms.TabPage();
 			this.catToNumPanel = new System.Windows.Forms.Panel();
@@ -106,16 +116,8 @@
 			this.pictureBox2 = new System.Windows.Forms.PictureBox();
 			this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-			this.headGridView = new System.Windows.Forms.DataGridView();
-			this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
-			this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
-			this.numericalListView = new MaterialSkin.Controls.MaterialListView();
-			this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
-			this.materialLabel4 = new MaterialSkin.Controls.MaterialLabel();
-			this.categoricalListView = new MaterialSkin.Controls.MaterialListView();
-			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
+			this.noisyListView = new MaterialSkin.Controls.MaterialListView();
+			this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.tableLayoutPanel1.SuspendLayout();
 			this.flowLayoutPanel1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -129,6 +131,8 @@
 			this.loadDataPanel.SuspendLayout();
 			this.dataInfoTab.SuspendLayout();
 			this.dataInfoPanel.SuspendLayout();
+			this.flowLayoutPanel4.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.headGridView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.infoGridView)).BeginInit();
 			this.catToNumSTab.SuspendLayout();
 			this.catToNumPanel.SuspendLayout();
@@ -153,8 +157,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.panel4.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.headGridView)).BeginInit();
-			this.flowLayoutPanel4.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tableLayoutPanel1
@@ -175,7 +177,7 @@
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 13F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 82F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(1913, 1006);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(1924, 1006);
 			this.tableLayoutPanel1.TabIndex = 0;
 			// 
 			// flowLayoutPanel1
@@ -186,10 +188,10 @@
 			this.flowLayoutPanel1.Controls.Add(this.groupBox3);
 			this.flowLayoutPanel1.Controls.Add(this.groupBox4);
 			this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.flowLayoutPanel1.Location = new System.Drawing.Point(573, 0);
+			this.flowLayoutPanel1.Location = new System.Drawing.Point(577, 0);
 			this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
 			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-			this.flowLayoutPanel1.Size = new System.Drawing.Size(1340, 130);
+			this.flowLayoutPanel1.Size = new System.Drawing.Size(1347, 130);
 			this.flowLayoutPanel1.TabIndex = 2;
 			// 
 			// groupBox2
@@ -325,10 +327,10 @@
 			this.flowLayoutPanel2.Controls.Add(this.submitButton);
 			this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-			this.flowLayoutPanel2.Location = new System.Drawing.Point(573, 954);
+			this.flowLayoutPanel2.Location = new System.Drawing.Point(577, 954);
 			this.flowLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
 			this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-			this.flowLayoutPanel2.Size = new System.Drawing.Size(1340, 52);
+			this.flowLayoutPanel2.Size = new System.Drawing.Size(1347, 52);
 			this.flowLayoutPanel2.TabIndex = 5;
 			// 
 			// submitButton
@@ -338,7 +340,7 @@
 			this.submitButton.Dock = System.Windows.Forms.DockStyle.Right;
 			this.submitButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.submitButton.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.submitButton.Location = new System.Drawing.Point(1262, 3);
+			this.submitButton.Location = new System.Drawing.Point(1269, 3);
 			this.submitButton.Name = "submitButton";
 			this.submitButton.Size = new System.Drawing.Size(75, 30);
 			this.submitButton.TabIndex = 4;
@@ -359,11 +361,11 @@
 			this.stackPanel1.Controls.Add(this.dimReduceTab);
 			this.stackPanel1.Controls.Add(this.loaderTab);
 			this.stackPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.stackPanel1.Location = new System.Drawing.Point(573, 130);
+			this.stackPanel1.Location = new System.Drawing.Point(577, 130);
 			this.stackPanel1.Margin = new System.Windows.Forms.Padding(0);
 			this.stackPanel1.Name = "stackPanel1";
 			this.stackPanel1.SelectedIndex = 0;
-			this.stackPanel1.Size = new System.Drawing.Size(1340, 824);
+			this.stackPanel1.Size = new System.Drawing.Size(1347, 824);
 			this.stackPanel1.TabIndex = 7;
 			// 
 			// emptyTab
@@ -372,7 +374,7 @@
 			this.emptyTab.Location = new System.Drawing.Point(4, 25);
 			this.emptyTab.Name = "emptyTab";
 			this.emptyTab.Padding = new System.Windows.Forms.Padding(3);
-			this.emptyTab.Size = new System.Drawing.Size(1250, 715);
+			this.emptyTab.Size = new System.Drawing.Size(1332, 795);
 			this.emptyTab.TabIndex = 0;
 			this.emptyTab.Text = "Empty";
 			this.emptyTab.UseVisualStyleBackColor = true;
@@ -383,7 +385,7 @@
 			this.emptyPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.emptyPanel.Location = new System.Drawing.Point(3, 3);
 			this.emptyPanel.Name = "emptyPanel";
-			this.emptyPanel.Size = new System.Drawing.Size(1244, 709);
+			this.emptyPanel.Size = new System.Drawing.Size(1326, 789);
 			this.emptyPanel.TabIndex = 6;
 			// 
 			// loadDataTab
@@ -392,7 +394,7 @@
 			this.loadDataTab.Location = new System.Drawing.Point(4, 25);
 			this.loadDataTab.Name = "loadDataTab";
 			this.loadDataTab.Padding = new System.Windows.Forms.Padding(3);
-			this.loadDataTab.Size = new System.Drawing.Size(1332, 795);
+			this.loadDataTab.Size = new System.Drawing.Size(1339, 795);
 			this.loadDataTab.TabIndex = 1;
 			this.loadDataTab.Text = "Load Data";
 			this.loadDataTab.UseVisualStyleBackColor = true;
@@ -411,7 +413,7 @@
 			this.loadDataPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.loadDataPanel.Location = new System.Drawing.Point(3, 3);
 			this.loadDataPanel.Name = "loadDataPanel";
-			this.loadDataPanel.Size = new System.Drawing.Size(1326, 789);
+			this.loadDataPanel.Size = new System.Drawing.Size(1333, 789);
 			this.loadDataPanel.TabIndex = 3;
 			// 
 			// categoricalRadio
@@ -503,7 +505,7 @@
 			this.dataInfoTab.Controls.Add(this.dataInfoPanel);
 			this.dataInfoTab.Location = new System.Drawing.Point(4, 25);
 			this.dataInfoTab.Name = "dataInfoTab";
-			this.dataInfoTab.Size = new System.Drawing.Size(1332, 795);
+			this.dataInfoTab.Size = new System.Drawing.Size(1339, 795);
 			this.dataInfoTab.TabIndex = 2;
 			this.dataInfoTab.Text = "Data Info";
 			this.dataInfoTab.UseVisualStyleBackColor = true;
@@ -512,27 +514,171 @@
 			// 
 			this.dataInfoPanel.AutoScroll = true;
 			this.dataInfoPanel.Controls.Add(this.flowLayoutPanel4);
-			this.dataInfoPanel.Controls.Add(this.materialLabel4);
+			this.dataInfoPanel.Controls.Add(this.categoricalLabel);
 			this.dataInfoPanel.Controls.Add(this.categoricalListView);
-			this.dataInfoPanel.Controls.Add(this.materialLabel3);
+			this.dataInfoPanel.Controls.Add(this.numericalLabel);
 			this.dataInfoPanel.Controls.Add(this.numericalListView);
-			this.dataInfoPanel.Controls.Add(this.materialLabel2);
-			this.dataInfoPanel.Controls.Add(this.materialLabel1);
+			this.dataInfoPanel.Controls.Add(this.dataInfoLabel);
+			this.dataInfoPanel.Controls.Add(this.dataHeadLabel);
 			this.dataInfoPanel.Controls.Add(this.headGridView);
 			this.dataInfoPanel.Controls.Add(this.infoGridView);
 			this.dataInfoPanel.Controls.Add(this.label2);
 			this.dataInfoPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.dataInfoPanel.Location = new System.Drawing.Point(0, 0);
 			this.dataInfoPanel.Name = "dataInfoPanel";
-			this.dataInfoPanel.Size = new System.Drawing.Size(1332, 795);
+			this.dataInfoPanel.Size = new System.Drawing.Size(1339, 795);
 			this.dataInfoPanel.TabIndex = 0;
+			// 
+			// flowLayoutPanel4
+			// 
+			this.flowLayoutPanel4.Controls.Add(this.targetFeatureLabel);
+			this.flowLayoutPanel4.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
+			this.flowLayoutPanel4.Location = new System.Drawing.Point(205, 327);
+			this.flowLayoutPanel4.Name = "flowLayoutPanel4";
+			this.flowLayoutPanel4.Size = new System.Drawing.Size(1059, 29);
+			this.flowLayoutPanel4.TabIndex = 11;
+			// 
+			// targetFeatureLabel
+			// 
+			this.targetFeatureLabel.AutoSize = true;
+			this.targetFeatureLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.targetFeatureLabel.Location = new System.Drawing.Point(1010, 0);
+			this.targetFeatureLabel.Name = "targetFeatureLabel";
+			this.targetFeatureLabel.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+			this.targetFeatureLabel.Size = new System.Drawing.Size(46, 17);
+			this.targetFeatureLabel.TabIndex = 1;
+			this.targetFeatureLabel.Text = "label3";
+			// 
+			// categoricalLabel
+			// 
+			this.categoricalLabel.AutoSize = true;
+			this.categoricalLabel.BackColor = System.Drawing.Color.SkyBlue;
+			this.categoricalLabel.Depth = 0;
+			this.categoricalLabel.Font = new System.Drawing.Font("Roboto", 11F);
+			this.categoricalLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.categoricalLabel.Location = new System.Drawing.Point(1069, 417);
+			this.categoricalLabel.Margin = new System.Windows.Forms.Padding(0);
+			this.categoricalLabel.MouseState = MaterialSkin.MouseState.HOVER;
+			this.categoricalLabel.Name = "categoricalLabel";
+			this.categoricalLabel.Size = new System.Drawing.Size(184, 24);
+			this.categoricalLabel.TabIndex = 10;
+			this.categoricalLabel.Text = "Categorical Features";
+			// 
+			// categoricalListView
+			// 
+			this.categoricalListView.Alignment = System.Windows.Forms.ListViewAlignment.Left;
+			this.categoricalListView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.categoricalListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1});
+			this.categoricalListView.Depth = 0;
+			this.categoricalListView.Font = new System.Drawing.Font("Roboto", 40F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
+			this.categoricalListView.FullRowSelect = true;
+			this.categoricalListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+			this.categoricalListView.Location = new System.Drawing.Point(1070, 440);
+			this.categoricalListView.MouseLocation = new System.Drawing.Point(-1, -1);
+			this.categoricalListView.MouseState = MaterialSkin.MouseState.OUT;
+			this.categoricalListView.Name = "categoricalListView";
+			this.categoricalListView.OwnerDraw = true;
+			this.categoricalListView.Size = new System.Drawing.Size(230, 286);
+			this.categoricalListView.TabIndex = 9;
+			this.categoricalListView.UseCompatibleStateImageBehavior = false;
+			this.categoricalListView.View = System.Windows.Forms.View.Details;
+			// 
+			// columnHeader1
+			// 
+			this.columnHeader1.Text = "";
+			// 
+			// numericalLabel
+			// 
+			this.numericalLabel.AutoSize = true;
+			this.numericalLabel.BackColor = System.Drawing.Color.SkyBlue;
+			this.numericalLabel.Depth = 0;
+			this.numericalLabel.Font = new System.Drawing.Font("Roboto", 11F);
+			this.numericalLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.numericalLabel.Location = new System.Drawing.Point(676, 417);
+			this.numericalLabel.Margin = new System.Windows.Forms.Padding(0);
+			this.numericalLabel.MouseState = MaterialSkin.MouseState.HOVER;
+			this.numericalLabel.Name = "numericalLabel";
+			this.numericalLabel.Size = new System.Drawing.Size(175, 24);
+			this.numericalLabel.TabIndex = 8;
+			this.numericalLabel.Text = "Numerical Features";
+			// 
+			// numericalListView
+			// 
+			this.numericalListView.Alignment = System.Windows.Forms.ListViewAlignment.Left;
+			this.numericalListView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.numericalListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader2});
+			this.numericalListView.Depth = 0;
+			this.numericalListView.Font = new System.Drawing.Font("Roboto", 40F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
+			this.numericalListView.FullRowSelect = true;
+			this.numericalListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+			this.numericalListView.Location = new System.Drawing.Point(677, 440);
+			this.numericalListView.MouseLocation = new System.Drawing.Point(-1, -1);
+			this.numericalListView.MouseState = MaterialSkin.MouseState.OUT;
+			this.numericalListView.Name = "numericalListView";
+			this.numericalListView.OwnerDraw = true;
+			this.numericalListView.Size = new System.Drawing.Size(230, 286);
+			this.numericalListView.TabIndex = 7;
+			this.numericalListView.UseCompatibleStateImageBehavior = false;
+			this.numericalListView.View = System.Windows.Forms.View.Details;
+			// 
+			// columnHeader2
+			// 
+			this.columnHeader2.Text = "";
+			// 
+			// dataInfoLabel
+			// 
+			this.dataInfoLabel.AutoSize = true;
+			this.dataInfoLabel.BackColor = System.Drawing.Color.SkyBlue;
+			this.dataInfoLabel.Depth = 0;
+			this.dataInfoLabel.Font = new System.Drawing.Font("Roboto", 11F);
+			this.dataInfoLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.dataInfoLabel.Location = new System.Drawing.Point(71, 417);
+			this.dataInfoLabel.Margin = new System.Windows.Forms.Padding(0);
+			this.dataInfoLabel.MouseState = MaterialSkin.MouseState.HOVER;
+			this.dataInfoLabel.Name = "dataInfoLabel";
+			this.dataInfoLabel.Size = new System.Drawing.Size(91, 24);
+			this.dataInfoLabel.TabIndex = 6;
+			this.dataInfoLabel.Text = "Data Info.";
+			// 
+			// dataHeadLabel
+			// 
+			this.dataHeadLabel.AutoSize = true;
+			this.dataHeadLabel.BackColor = System.Drawing.Color.SkyBlue;
+			this.dataHeadLabel.Depth = 0;
+			this.dataHeadLabel.Font = new System.Drawing.Font("Roboto", 11F);
+			this.dataHeadLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.dataHeadLabel.Location = new System.Drawing.Point(106, 102);
+			this.dataHeadLabel.Margin = new System.Windows.Forms.Padding(0);
+			this.dataHeadLabel.MouseState = MaterialSkin.MouseState.HOVER;
+			this.dataHeadLabel.Name = "dataHeadLabel";
+			this.dataHeadLabel.Size = new System.Drawing.Size(98, 24);
+			this.dataHeadLabel.TabIndex = 5;
+			this.dataHeadLabel.Text = "Data Head";
+			// 
+			// headGridView
+			// 
+			this.headGridView.AllowUserToAddRows = false;
+			this.headGridView.AllowUserToDeleteRows = false;
+			this.headGridView.BackgroundColor = System.Drawing.SystemColors.Window;
+			this.headGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.headGridView.Location = new System.Drawing.Point(106, 126);
+			this.headGridView.Name = "headGridView";
+			this.headGridView.ReadOnly = true;
+			this.headGridView.RowTemplate.Height = 24;
+			this.headGridView.ShowEditingIcon = false;
+			this.headGridView.Size = new System.Drawing.Size(1158, 195);
+			this.headGridView.TabIndex = 4;
+			this.headGridView.TabStop = false;
 			// 
 			// infoGridView
 			// 
 			this.infoGridView.AllowUserToAddRows = false;
 			this.infoGridView.AllowUserToDeleteRows = false;
+			this.infoGridView.BackgroundColor = System.Drawing.SystemColors.Window;
 			this.infoGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.infoGridView.Location = new System.Drawing.Point(20, 440);
+			this.infoGridView.Location = new System.Drawing.Point(71, 440);
 			this.infoGridView.Name = "infoGridView";
 			this.infoGridView.ReadOnly = true;
 			this.infoGridView.RowTemplate.Height = 24;
@@ -540,17 +686,6 @@
 			this.infoGridView.Size = new System.Drawing.Size(457, 286);
 			this.infoGridView.TabIndex = 2;
 			this.infoGridView.TabStop = false;
-			// 
-			// dataInfoLabel
-			// 
-			this.dataInfoLabel.AutoSize = true;
-			this.dataInfoLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.dataInfoLabel.Location = new System.Drawing.Point(550, 0);
-			this.dataInfoLabel.Name = "dataInfoLabel";
-			this.dataInfoLabel.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-			this.dataInfoLabel.Size = new System.Drawing.Size(46, 17);
-			this.dataInfoLabel.TabIndex = 1;
-			this.dataInfoLabel.Text = "label3";
 			// 
 			// label2
 			// 
@@ -567,7 +702,7 @@
 			this.catToNumSTab.Controls.Add(this.catToNumPanel);
 			this.catToNumSTab.Location = new System.Drawing.Point(4, 25);
 			this.catToNumSTab.Name = "catToNumSTab";
-			this.catToNumSTab.Size = new System.Drawing.Size(1250, 715);
+			this.catToNumSTab.Size = new System.Drawing.Size(1339, 795);
 			this.catToNumSTab.TabIndex = 3;
 			this.catToNumSTab.Text = "Cat To Num S";
 			this.catToNumSTab.UseVisualStyleBackColor = true;
@@ -580,7 +715,7 @@
 			this.catToNumPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.catToNumPanel.Location = new System.Drawing.Point(0, 0);
 			this.catToNumPanel.Name = "catToNumPanel";
-			this.catToNumPanel.Size = new System.Drawing.Size(1250, 715);
+			this.catToNumPanel.Size = new System.Drawing.Size(1339, 795);
 			this.catToNumPanel.TabIndex = 0;
 			// 
 			// radioButtonPanel
@@ -642,7 +777,7 @@
 			this.missingValueTab.Controls.Add(this.missingValuePanel);
 			this.missingValueTab.Location = new System.Drawing.Point(4, 25);
 			this.missingValueTab.Name = "missingValueTab";
-			this.missingValueTab.Size = new System.Drawing.Size(1250, 715);
+			this.missingValueTab.Size = new System.Drawing.Size(1339, 795);
 			this.missingValueTab.TabIndex = 4;
 			this.missingValueTab.Text = "Missing values";
 			this.missingValueTab.UseVisualStyleBackColor = true;
@@ -655,7 +790,7 @@
 			this.missingValuePanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.missingValuePanel.Location = new System.Drawing.Point(0, 0);
 			this.missingValuePanel.Name = "missingValuePanel";
-			this.missingValuePanel.Size = new System.Drawing.Size(1250, 715);
+			this.missingValuePanel.Size = new System.Drawing.Size(1339, 795);
 			this.missingValuePanel.TabIndex = 1;
 			// 
 			// panel2
@@ -730,7 +865,7 @@
 			this.ScalingTab.Controls.Add(this.scalingPanel);
 			this.ScalingTab.Location = new System.Drawing.Point(4, 25);
 			this.ScalingTab.Name = "ScalingTab";
-			this.ScalingTab.Size = new System.Drawing.Size(1250, 715);
+			this.ScalingTab.Size = new System.Drawing.Size(1339, 795);
 			this.ScalingTab.TabIndex = 5;
 			this.ScalingTab.Text = "Scaling";
 			this.ScalingTab.UseVisualStyleBackColor = true;
@@ -743,7 +878,7 @@
 			this.scalingPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.scalingPanel.Location = new System.Drawing.Point(0, 0);
 			this.scalingPanel.Name = "scalingPanel";
-			this.scalingPanel.Size = new System.Drawing.Size(1250, 715);
+			this.scalingPanel.Size = new System.Drawing.Size(1339, 795);
 			this.scalingPanel.TabIndex = 1;
 			// 
 			// panel3
@@ -805,7 +940,7 @@
 			this.noiseDetectTab.Controls.Add(this.noiseDetectPanel);
 			this.noiseDetectTab.Location = new System.Drawing.Point(4, 25);
 			this.noiseDetectTab.Name = "noiseDetectTab";
-			this.noiseDetectTab.Size = new System.Drawing.Size(1250, 715);
+			this.noiseDetectTab.Size = new System.Drawing.Size(1339, 795);
 			this.noiseDetectTab.TabIndex = 7;
 			this.noiseDetectTab.Text = "Noise Detect";
 			this.noiseDetectTab.UseVisualStyleBackColor = true;
@@ -813,19 +948,20 @@
 			// noiseDetectPanel
 			// 
 			this.noiseDetectPanel.AutoScroll = true;
+			this.noiseDetectPanel.Controls.Add(this.noisyListView);
 			this.noiseDetectPanel.Controls.Add(this.noiseDetectLabel);
 			this.noiseDetectPanel.Controls.Add(this.label12);
 			this.noiseDetectPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.noiseDetectPanel.Location = new System.Drawing.Point(0, 0);
 			this.noiseDetectPanel.Name = "noiseDetectPanel";
-			this.noiseDetectPanel.Size = new System.Drawing.Size(1250, 715);
+			this.noiseDetectPanel.Size = new System.Drawing.Size(1339, 795);
 			this.noiseDetectPanel.TabIndex = 2;
 			// 
 			// noiseDetectLabel
 			// 
 			this.noiseDetectLabel.AutoSize = true;
 			this.noiseDetectLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.noiseDetectLabel.Location = new System.Drawing.Point(5, 95);
+			this.noiseDetectLabel.Location = new System.Drawing.Point(5, 169);
 			this.noiseDetectLabel.Name = "noiseDetectLabel";
 			this.noiseDetectLabel.Size = new System.Drawing.Size(82, 26);
 			this.noiseDetectLabel.TabIndex = 1;
@@ -846,7 +982,7 @@
 			this.mcaTab.Controls.Add(this.mcaPanel);
 			this.mcaTab.Location = new System.Drawing.Point(4, 25);
 			this.mcaTab.Name = "mcaTab";
-			this.mcaTab.Size = new System.Drawing.Size(1250, 715);
+			this.mcaTab.Size = new System.Drawing.Size(1332, 795);
 			this.mcaTab.TabIndex = 6;
 			this.mcaTab.Text = "MCA";
 			this.mcaTab.UseVisualStyleBackColor = true;
@@ -859,7 +995,7 @@
 			this.mcaPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.mcaPanel.Location = new System.Drawing.Point(0, 0);
 			this.mcaPanel.Name = "mcaPanel";
-			this.mcaPanel.Size = new System.Drawing.Size(1250, 715);
+			this.mcaPanel.Size = new System.Drawing.Size(1332, 795);
 			this.mcaPanel.TabIndex = 1;
 			// 
 			// mcaLabel
@@ -887,7 +1023,7 @@
 			this.dimReduceTab.Controls.Add(this.dimReducePanel);
 			this.dimReduceTab.Location = new System.Drawing.Point(4, 25);
 			this.dimReduceTab.Name = "dimReduceTab";
-			this.dimReduceTab.Size = new System.Drawing.Size(1250, 715);
+			this.dimReduceTab.Size = new System.Drawing.Size(1332, 795);
 			this.dimReduceTab.TabIndex = 8;
 			this.dimReduceTab.Text = "dimReduce";
 			this.dimReduceTab.UseVisualStyleBackColor = true;
@@ -902,7 +1038,7 @@
 			this.dimReducePanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.dimReducePanel.Location = new System.Drawing.Point(0, 0);
 			this.dimReducePanel.Name = "dimReducePanel";
-			this.dimReducePanel.Size = new System.Drawing.Size(1250, 715);
+			this.dimReducePanel.Size = new System.Drawing.Size(1332, 795);
 			this.dimReducePanel.TabIndex = 2;
 			// 
 			// dimrReduceNumber
@@ -1015,7 +1151,7 @@
 			this.flowLayoutPanel3.Location = new System.Drawing.Point(0, 954);
 			this.flowLayoutPanel3.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
 			this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-			this.flowLayoutPanel3.Size = new System.Drawing.Size(571, 52);
+			this.flowLayoutPanel3.Size = new System.Drawing.Size(575, 52);
 			this.flowLayoutPanel3.TabIndex = 8;
 			// 
 			// panel1
@@ -1026,7 +1162,7 @@
 			this.panel1.Location = new System.Drawing.Point(0, 130);
 			this.panel1.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(571, 824);
+			this.panel1.Size = new System.Drawing.Size(575, 824);
 			this.panel1.TabIndex = 10;
 			// 
 			// pictureBox1
@@ -1035,7 +1171,7 @@
 			this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
 			this.pictureBox1.Location = new System.Drawing.Point(0, 0);
 			this.pictureBox1.Name = "pictureBox1";
-			this.pictureBox1.Size = new System.Drawing.Size(571, 824);
+			this.pictureBox1.Size = new System.Drawing.Size(575, 824);
 			this.pictureBox1.TabIndex = 0;
 			this.pictureBox1.TabStop = false;
 			// 
@@ -1047,7 +1183,7 @@
 			this.panel4.Location = new System.Drawing.Point(0, 0);
 			this.panel4.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
 			this.panel4.Name = "panel4";
-			this.panel4.Size = new System.Drawing.Size(571, 130);
+			this.panel4.Size = new System.Drawing.Size(575, 130);
 			this.panel4.TabIndex = 11;
 			// 
 			// pictureBox2
@@ -1056,7 +1192,7 @@
 			this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
 			this.pictureBox2.Location = new System.Drawing.Point(0, 0);
 			this.pictureBox2.Name = "pictureBox2";
-			this.pictureBox2.Size = new System.Drawing.Size(571, 130);
+			this.pictureBox2.Size = new System.Drawing.Size(575, 130);
 			this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
 			this.pictureBox2.TabIndex = 0;
 			this.pictureBox2.TabStop = false;
@@ -1071,134 +1207,29 @@
 			this.openFileDialog1.FileName = "openFileDialog1";
 			this.openFileDialog1.InitialDirectory = "/";
 			// 
-			// headGridView
+			// noisyListView
 			// 
-			this.headGridView.AllowUserToAddRows = false;
-			this.headGridView.AllowUserToDeleteRows = false;
-			this.headGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.headGridView.Location = new System.Drawing.Point(106, 126);
-			this.headGridView.Name = "headGridView";
-			this.headGridView.ReadOnly = true;
-			this.headGridView.RowTemplate.Height = 24;
-			this.headGridView.ShowEditingIcon = false;
-			this.headGridView.Size = new System.Drawing.Size(1158, 195);
-			this.headGridView.TabIndex = 4;
-			this.headGridView.TabStop = false;
+			this.noisyListView.Alignment = System.Windows.Forms.ListViewAlignment.Left;
+			this.noisyListView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.noisyListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader3});
+			this.noisyListView.Depth = 0;
+			this.noisyListView.Font = new System.Drawing.Font("Roboto", 40F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
+			this.noisyListView.FullRowSelect = true;
+			this.noisyListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+			this.noisyListView.Location = new System.Drawing.Point(10, 220);
+			this.noisyListView.MouseLocation = new System.Drawing.Point(-1, -1);
+			this.noisyListView.MouseState = MaterialSkin.MouseState.OUT;
+			this.noisyListView.Name = "noisyListView";
+			this.noisyListView.OwnerDraw = true;
+			this.noisyListView.Size = new System.Drawing.Size(230, 286);
+			this.noisyListView.TabIndex = 10;
+			this.noisyListView.UseCompatibleStateImageBehavior = false;
+			this.noisyListView.View = System.Windows.Forms.View.Details;
 			// 
-			// materialLabel1
+			// columnHeader3
 			// 
-			this.materialLabel1.AutoSize = true;
-			this.materialLabel1.BackColor = System.Drawing.Color.SkyBlue;
-			this.materialLabel1.Depth = 0;
-			this.materialLabel1.Font = new System.Drawing.Font("Roboto", 11F);
-			this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			this.materialLabel1.Location = new System.Drawing.Point(106, 102);
-			this.materialLabel1.Margin = new System.Windows.Forms.Padding(0);
-			this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
-			this.materialLabel1.Name = "materialLabel1";
-			this.materialLabel1.Size = new System.Drawing.Size(98, 24);
-			this.materialLabel1.TabIndex = 5;
-			this.materialLabel1.Text = "Data Head";
-			// 
-			// materialLabel2
-			// 
-			this.materialLabel2.AutoSize = true;
-			this.materialLabel2.BackColor = System.Drawing.Color.SkyBlue;
-			this.materialLabel2.Depth = 0;
-			this.materialLabel2.Font = new System.Drawing.Font("Roboto", 11F);
-			this.materialLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			this.materialLabel2.Location = new System.Drawing.Point(20, 417);
-			this.materialLabel2.Margin = new System.Windows.Forms.Padding(0);
-			this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
-			this.materialLabel2.Name = "materialLabel2";
-			this.materialLabel2.Size = new System.Drawing.Size(91, 24);
-			this.materialLabel2.TabIndex = 6;
-			this.materialLabel2.Text = "Data Info.";
-			// 
-			// numericalListView
-			// 
-			this.numericalListView.Alignment = System.Windows.Forms.ListViewAlignment.Left;
-			this.numericalListView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.numericalListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader2});
-			this.numericalListView.Depth = 0;
-			this.numericalListView.Font = new System.Drawing.Font("Roboto", 7.8F);
-			this.numericalListView.FullRowSelect = true;
-			this.numericalListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-			this.numericalListView.Location = new System.Drawing.Point(514, 440);
-			this.numericalListView.MouseLocation = new System.Drawing.Point(-1, -1);
-			this.numericalListView.MouseState = MaterialSkin.MouseState.OUT;
-			this.numericalListView.Name = "numericalListView";
-			this.numericalListView.Size = new System.Drawing.Size(230, 286);
-			this.numericalListView.TabIndex = 7;
-			this.numericalListView.UseCompatibleStateImageBehavior = false;
-			this.numericalListView.View = System.Windows.Forms.View.Details;
-			// 
-			// columnHeader2
-			// 
-			this.columnHeader2.Text = "";
-			// 
-			// materialLabel3
-			// 
-			this.materialLabel3.AutoSize = true;
-			this.materialLabel3.BackColor = System.Drawing.Color.SkyBlue;
-			this.materialLabel3.Depth = 0;
-			this.materialLabel3.Font = new System.Drawing.Font("Roboto", 11F);
-			this.materialLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			this.materialLabel3.Location = new System.Drawing.Point(513, 417);
-			this.materialLabel3.Margin = new System.Windows.Forms.Padding(0);
-			this.materialLabel3.MouseState = MaterialSkin.MouseState.HOVER;
-			this.materialLabel3.Name = "materialLabel3";
-			this.materialLabel3.Size = new System.Drawing.Size(175, 24);
-			this.materialLabel3.TabIndex = 8;
-			this.materialLabel3.Text = "Numerical Features";
-			// 
-			// materialLabel4
-			// 
-			this.materialLabel4.AutoSize = true;
-			this.materialLabel4.BackColor = System.Drawing.Color.SkyBlue;
-			this.materialLabel4.Depth = 0;
-			this.materialLabel4.Font = new System.Drawing.Font("Roboto", 11F);
-			this.materialLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			this.materialLabel4.Location = new System.Drawing.Point(775, 417);
-			this.materialLabel4.Margin = new System.Windows.Forms.Padding(0);
-			this.materialLabel4.MouseState = MaterialSkin.MouseState.HOVER;
-			this.materialLabel4.Name = "materialLabel4";
-			this.materialLabel4.Size = new System.Drawing.Size(184, 24);
-			this.materialLabel4.TabIndex = 10;
-			this.materialLabel4.Text = "Categorical Features";
-			// 
-			// categoricalListView
-			// 
-			this.categoricalListView.Alignment = System.Windows.Forms.ListViewAlignment.Left;
-			this.categoricalListView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.categoricalListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1});
-			this.categoricalListView.Depth = 0;
-			this.categoricalListView.Font = new System.Drawing.Font("Roboto", 7.8F);
-			this.categoricalListView.FullRowSelect = true;
-			this.categoricalListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-			this.categoricalListView.Location = new System.Drawing.Point(776, 440);
-			this.categoricalListView.MouseLocation = new System.Drawing.Point(-1, -1);
-			this.categoricalListView.MouseState = MaterialSkin.MouseState.OUT;
-			this.categoricalListView.Name = "categoricalListView";
-			this.categoricalListView.Size = new System.Drawing.Size(230, 286);
-			this.categoricalListView.TabIndex = 9;
-			this.categoricalListView.UseCompatibleStateImageBehavior = false;
-			this.categoricalListView.View = System.Windows.Forms.View.Details;
-			// 
-			// columnHeader1
-			// 
-			this.columnHeader1.Text = "";
-			// 
-			// flowLayoutPanel4
-			// 
-			this.flowLayoutPanel4.Controls.Add(this.dataInfoLabel);
-			this.flowLayoutPanel4.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-			this.flowLayoutPanel4.Location = new System.Drawing.Point(665, 327);
-			this.flowLayoutPanel4.Name = "flowLayoutPanel4";
-			this.flowLayoutPanel4.Size = new System.Drawing.Size(599, 29);
-			this.flowLayoutPanel4.TabIndex = 11;
+			this.columnHeader3.Text = "";
 			// 
 			// Final_Application
 			// 
@@ -1206,7 +1237,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoScroll = true;
 			this.AutoSize = true;
-			this.ClientSize = new System.Drawing.Size(1913, 1006);
+			this.ClientSize = new System.Drawing.Size(1924, 1006);
 			this.Controls.Add(this.tableLayoutPanel1);
 			this.Name = "Final_Application";
 			this.Text = "MetaData";
@@ -1229,6 +1260,9 @@
 			this.dataInfoTab.ResumeLayout(false);
 			this.dataInfoPanel.ResumeLayout(false);
 			this.dataInfoPanel.PerformLayout();
+			this.flowLayoutPanel4.ResumeLayout(false);
+			this.flowLayoutPanel4.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.headGridView)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.infoGridView)).EndInit();
 			this.catToNumSTab.ResumeLayout(false);
 			this.catToNumPanel.ResumeLayout(false);
@@ -1263,9 +1297,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.panel4.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.headGridView)).EndInit();
-			this.flowLayoutPanel4.ResumeLayout(false);
-			this.flowLayoutPanel4.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -1290,7 +1321,7 @@
 		private System.Windows.Forms.TabPage loadDataTab;
 		private System.Windows.Forms.TabPage dataInfoTab;
 		private System.Windows.Forms.Panel dataInfoPanel;
-		private System.Windows.Forms.Label dataInfoLabel;
+		private System.Windows.Forms.Label targetFeatureLabel;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.TabPage catToNumSTab;
 		private System.Windows.Forms.Panel catToNumPanel;
@@ -1350,15 +1381,17 @@
 		private MaterialSkin.Controls.MaterialRadioButton numericalRadio;
 		private System.Windows.Forms.DataGridView infoGridView;
 		private System.Windows.Forms.DataGridView headGridView;
-		private MaterialSkin.Controls.MaterialLabel materialLabel1;
-		private MaterialSkin.Controls.MaterialLabel materialLabel2;
+		private MaterialSkin.Controls.MaterialLabel dataHeadLabel;
+		private MaterialSkin.Controls.MaterialLabel dataInfoLabel;
 		private MaterialSkin.Controls.MaterialListView numericalListView;
 		private System.Windows.Forms.ColumnHeader columnHeader2;
-		private MaterialSkin.Controls.MaterialLabel materialLabel3;
-		private MaterialSkin.Controls.MaterialLabel materialLabel4;
+		private MaterialSkin.Controls.MaterialLabel numericalLabel;
+		private MaterialSkin.Controls.MaterialLabel categoricalLabel;
 		private MaterialSkin.Controls.MaterialListView categoricalListView;
 		private System.Windows.Forms.ColumnHeader columnHeader1;
 		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel4;
+		private MaterialSkin.Controls.MaterialListView noisyListView;
+		private System.Windows.Forms.ColumnHeader columnHeader3;
 	}
 }
 
