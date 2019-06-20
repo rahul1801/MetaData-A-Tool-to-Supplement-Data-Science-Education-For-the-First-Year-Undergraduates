@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[1]:
+# In[8]:
 
 
 from keras.layers import Input, Dense
@@ -21,16 +21,16 @@ import os
 import io
 
 
-# In[2]:
+# In[9]:
 
 
 from numpy.linalg import eig
 from sklearn.preprocessing import Imputer
 from future_encoders import OrdinalEncoder, OneHotEncoder
-from pandas.plotting import scatter_matrix
+from pandas.tools.plotting import scatter_matrix
 
 
-# In[3]:
+# In[10]:
 
 
 # import libraries for regression analysis
@@ -40,7 +40,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import mean_squared_error, r2_score
 
 
-# In[4]:
+# In[11]:
 
 
 import matplotlib.pyplot as plt
@@ -49,7 +49,7 @@ import sys
 from numpy.linalg import eig
 
 
-# In[5]:
+# In[ ]:
 
 
 try:
@@ -61,19 +61,13 @@ pickle_filename = r"E:\\IBM\\Mukesh\\myAnalysis.pickle"
 pd.set_option('display.max_columns', 20)
 
 
-# In[6]:
-
-
-# In[7]:
-
-
-# In[8]:
+# In[12]:
 
 
 counter_value = 0
 
 
-# In[10]:
+# In[17]:
 
 
 class Analysis:
@@ -325,9 +319,9 @@ class Analysis:
         missing = self.analysis_data.columns[self.analysis_data.isna(
         ).any()].tolist()
         self.data_matrix = self.analysis_data.values
+        length = len(self.data_matrix) - len(self.df_encoded)
         self.column_names = list(
             self.analysis_data.columns.values)  # store column names
-
         if(len(missing) == 0):
             print('The data does not contain any missing values')
             mis_flag = 0
@@ -345,6 +339,12 @@ class Analysis:
             print("")
             print('The missing values have been detected and handled')
         # copy data_matrix to data_regres to feed into regression models
+        if(self.target_detection==0):
+            self.data_vis = pd.DataFrame(self.data_matrix.iloc[:,0:len(self.num_df)])
+            print(self.data_vis.shape)
+        elif(self.target_detection==1):
+            self.data_vis = pd.DataFrame(self.data_matrix.iloc[:,(len(self.df_encoded)):(len(self.analysis_data)-1)])
+            print(self.data_vis.shape)
         data_new = pd.DataFrame(self.data_matrix)
         data_new.reset_index(drop=True, inplace=True)
         frames2 = [data_new, self.target_data]
@@ -432,8 +432,7 @@ class Analysis:
         self.data_matrix_reduced = encoder.predict(X)
         org = self.data_matrix.shape[0]*self.data_matrix.shape[1]
         # new = latent + weight_component
-        new = self.data_matrix_reduced.shape[0]*self.data_matrix_reduced.shape[1] + \
-            self.data_matrix.shape[1]*self.data_matrix_reduced.shape[1]
+        new = self.data_matrix_reduced.shape[0]*self.data_matrix_reduced.shape[1] +             self.data_matrix.shape[1]*self.data_matrix_reduced.shape[1]
         self.comp = round(100*((org - new)/org), 2)
         print("")
         self.Final_Concatenation()
@@ -720,8 +719,7 @@ class Analysis:
             print(self.new_preview)
         elif(counter_value == 8 or counter_value == 9 or  counter_value ==10):
             print(self.data_final)
-
-
+            
 def store_obj(filename, obj):
     pickle_file = open(filename, "wb")
     pickle.dump(obj, pickle_file)
@@ -733,7 +731,6 @@ def load_obj(filename):
     obj = pickle.load(pickle_file)
     pickle_file.close()
     return obj
-
 
 if __name__ == '__main__':
     arg = int(sys.argv[1])
@@ -791,3 +788,83 @@ if __name__ == '__main__':
         print(len(myAnalysis.data.columns)-1)
         store_obj(pickle_filename, myAnalysis)
         counter_value += 1
+
+
+# In[18]:
+
+
+a = Analysis('housing.csv',0)
+
+
+# In[ ]:
+
+
+def store_obj(filename, obj):
+    pickle_file = open(filename, "wb")
+    pickle.dump(obj, pickle_file)
+    pickle_file.close()
+
+
+def load_obj(filename):
+    pickle_file = open(filename, "rb")
+    obj = pickle.load(pickle_file)
+    pickle_file.close()
+    return obj
+
+if __name__ == '__main__':
+    arg = int(sys.argv[1])
+    if arg == 0:
+        myAnalysis = Analysis(sys.argv[2], int(sys.argv[3]))
+        store_obj(pickle_filename, myAnalysis)
+        counter_value += 1
+    elif arg == 1:
+        myAnalysis = load_obj(pickle_filename)
+        myAnalysis.Entry()
+        store_obj(pickle_filename, myAnalysis)
+        counter_value += 1
+    elif arg == 2:
+        myAnalysis = load_obj(pickle_filename)
+        myAnalysis.cat_to_num(int(sys.argv[2]))
+        store_obj(pickle_filename, myAnalysis)
+        counter_value += 1
+    elif arg == 3:
+        myAnalysis = load_obj(pickle_filename)
+        myAnalysis.MVD(int(sys.argv[2]))
+        store_obj(pickle_filename, myAnalysis)
+        counter_value += 1
+    elif arg == 4:
+        myAnalysis = load_obj(pickle_filename)
+        myAnalysis.Scaling_decision(int(sys.argv[2]))
+        store_obj(pickle_filename, myAnalysis)
+        counter_value += 1
+    elif arg == 5:
+        myAnalysis = load_obj(pickle_filename)
+        myAnalysis.Multicollinearity_Analysis()
+        store_obj(pickle_filename, myAnalysis)
+        counter_value += 1
+    elif arg == 6:
+        myAnalysis = load_obj(pickle_filename)
+        myAnalysis.Noise_detection()
+        store_obj(pickle_filename, myAnalysis)
+        counter_value += 1
+    elif arg == 7:
+        myAnalysis = load_obj(pickle_filename)
+        myAnalysis.Dim_Reduction(int(sys.argv[2]), int(sys.argv[3]))
+        store_obj(pickle_filename, myAnalysis)
+        counter_value += 1
+    elif arg == 8:
+        myAnalysis = load_obj(pickle_filename)
+        myAnalysis.Regression_models()
+        store_obj(pickle_filename, myAnalysis)
+        counter_value += 1
+    elif arg == 9:
+        myAnalysis = load_obj(pickle_filename)
+        myAnalysis.visualization(int(sys.argv[2]),sys.argv[3:])
+        store_obj(pickle_filename, myAnalysis)
+        counter_value += 1
+    elif arg == 99:
+        myAnalysis = load_obj(pickle_filename)
+        print(len(myAnalysis.data.columns)-1)
+        store_obj(pickle_filename, myAnalysis)
+        counter_value += 1
+
