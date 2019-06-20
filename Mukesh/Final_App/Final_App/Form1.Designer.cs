@@ -41,6 +41,13 @@
 			this.analysisDropDown = new System.Windows.Forms.ComboBox();
 			this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
 			this.submitButton = new System.Windows.Forms.Button();
+			this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
+			this.panel1 = new System.Windows.Forms.Panel();
+			this.pictureBox1 = new System.Windows.Forms.PictureBox();
+			this.panel4 = new System.Windows.Forms.Panel();
+			this.pictureBox2 = new System.Windows.Forms.PictureBox();
+			this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.stackPanel1 = new Final_App.StackPanel();
 			this.emptyTab = new System.Windows.Forms.TabPage();
 			this.emptyPanel = new System.Windows.Forms.Panel();
@@ -92,10 +99,14 @@
 			this.label9 = new System.Windows.Forms.Label();
 			this.noiseDetectTab = new System.Windows.Forms.TabPage();
 			this.noiseDetectPanel = new System.Windows.Forms.Panel();
+			this.noisyListView = new MaterialSkin.Controls.MaterialListView();
+			this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.noiseDetectLabel = new System.Windows.Forms.Label();
 			this.label12 = new System.Windows.Forms.Label();
 			this.mcaTab = new System.Windows.Forms.TabPage();
 			this.mcaPanel = new System.Windows.Forms.Panel();
+			this.corrLabel = new MaterialSkin.Controls.MaterialLabel();
+			this.corrGridView = new System.Windows.Forms.DataGridView();
 			this.mcaLabel = new System.Windows.Forms.Label();
 			this.label11 = new System.Windows.Forms.Label();
 			this.dimReduceTab = new System.Windows.Forms.TabPage();
@@ -109,15 +120,8 @@
 			this.label13 = new System.Windows.Forms.Label();
 			this.loaderTab = new System.Windows.Forms.TabPage();
 			this.loaderPictureBox = new System.Windows.Forms.PictureBox();
-			this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
-			this.panel1 = new System.Windows.Forms.Panel();
-			this.pictureBox1 = new System.Windows.Forms.PictureBox();
-			this.panel4 = new System.Windows.Forms.Panel();
-			this.pictureBox2 = new System.Windows.Forms.PictureBox();
-			this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-			this.noisyListView = new MaterialSkin.Controls.MaterialListView();
-			this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.regTab = new System.Windows.Forms.TabPage();
+			this.vizTab = new System.Windows.Forms.TabPage();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.flowLayoutPanel1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -125,6 +129,10 @@
 			this.groupBox3.SuspendLayout();
 			this.groupBox4.SuspendLayout();
 			this.flowLayoutPanel2.SuspendLayout();
+			this.panel1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+			this.panel4.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
 			this.stackPanel1.SuspendLayout();
 			this.emptyTab.SuspendLayout();
 			this.loadDataTab.SuspendLayout();
@@ -147,16 +155,13 @@
 			this.noiseDetectPanel.SuspendLayout();
 			this.mcaTab.SuspendLayout();
 			this.mcaPanel.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.corrGridView)).BeginInit();
 			this.dimReduceTab.SuspendLayout();
 			this.dimReducePanel.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dimrReduceNumber)).BeginInit();
 			this.panel6.SuspendLayout();
 			this.loaderTab.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.loaderPictureBox)).BeginInit();
-			this.panel1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-			this.panel4.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// tableLayoutPanel1
@@ -251,8 +256,7 @@
 			this.preProcessDropDown.Items.AddRange(new object[] {
             "Categorical to Numerical Conversion",
             "Missing Value Handling",
-            "Scaling",
-            "Noise Detection and Elimination"});
+            "Scaling"});
 			this.preProcessDropDown.Location = new System.Drawing.Point(6, 38);
 			this.preProcessDropDown.Name = "preProcessDropDown";
 			this.preProcessDropDown.Size = new System.Drawing.Size(317, 28);
@@ -282,7 +286,6 @@
 			this.featureEngineerDropDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.featureEngineerDropDown.FormattingEnabled = true;
 			this.featureEngineerDropDown.Items.AddRange(new object[] {
-            "Multi-Collinearity Analysis",
             "Dimensionality Reduction"});
 			this.featureEngineerDropDown.Location = new System.Drawing.Point(6, 38);
 			this.featureEngineerDropDown.Name = "featureEngineerDropDown";
@@ -313,6 +316,8 @@
 			this.analysisDropDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.analysisDropDown.FormattingEnabled = true;
 			this.analysisDropDown.Items.AddRange(new object[] {
+            "Noise Detection",
+            "Multi-Collinearity Analysis",
             "Regressional Analysis",
             "Visualization"});
 			this.analysisDropDown.Location = new System.Drawing.Point(6, 38);
@@ -320,6 +325,7 @@
 			this.analysisDropDown.Size = new System.Drawing.Size(317, 28);
 			this.analysisDropDown.TabIndex = 0;
 			this.analysisDropDown.TabStop = false;
+			this.analysisDropDown.SelectedIndexChanged += new System.EventHandler(this.analysisDropDown_SelectedIndexChanged);
 			// 
 			// flowLayoutPanel2
 			// 
@@ -348,6 +354,69 @@
 			this.submitButton.UseVisualStyleBackColor = false;
 			this.submitButton.Click += new System.EventHandler(this.submitButton_Click);
 			// 
+			// flowLayoutPanel3
+			// 
+			this.flowLayoutPanel3.BackColor = System.Drawing.Color.White;
+			this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.flowLayoutPanel3.Location = new System.Drawing.Point(0, 954);
+			this.flowLayoutPanel3.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
+			this.flowLayoutPanel3.Name = "flowLayoutPanel3";
+			this.flowLayoutPanel3.Size = new System.Drawing.Size(575, 52);
+			this.flowLayoutPanel3.TabIndex = 8;
+			// 
+			// panel1
+			// 
+			this.panel1.BackColor = System.Drawing.Color.White;
+			this.panel1.Controls.Add(this.pictureBox1);
+			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panel1.Location = new System.Drawing.Point(0, 130);
+			this.panel1.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
+			this.panel1.Name = "panel1";
+			this.panel1.Size = new System.Drawing.Size(575, 824);
+			this.panel1.TabIndex = 10;
+			// 
+			// pictureBox1
+			// 
+			this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+			this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+			this.pictureBox1.Name = "pictureBox1";
+			this.pictureBox1.Size = new System.Drawing.Size(575, 824);
+			this.pictureBox1.TabIndex = 0;
+			this.pictureBox1.TabStop = false;
+			// 
+			// panel4
+			// 
+			this.panel4.BackColor = System.Drawing.Color.White;
+			this.panel4.Controls.Add(this.pictureBox2);
+			this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panel4.Location = new System.Drawing.Point(0, 0);
+			this.panel4.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
+			this.panel4.Name = "panel4";
+			this.panel4.Size = new System.Drawing.Size(575, 130);
+			this.panel4.TabIndex = 11;
+			// 
+			// pictureBox2
+			// 
+			this.pictureBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+			this.pictureBox2.Location = new System.Drawing.Point(0, 0);
+			this.pictureBox2.Name = "pictureBox2";
+			this.pictureBox2.Size = new System.Drawing.Size(575, 130);
+			this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+			this.pictureBox2.TabIndex = 0;
+			this.pictureBox2.TabStop = false;
+			// 
+			// backgroundWorker1
+			// 
+			this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+			this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
+			// 
+			// openFileDialog1
+			// 
+			this.openFileDialog1.FileName = "openFileDialog1";
+			this.openFileDialog1.InitialDirectory = "/";
+			// 
 			// stackPanel1
 			// 
 			this.stackPanel1.Controls.Add(this.emptyTab);
@@ -360,6 +429,8 @@
 			this.stackPanel1.Controls.Add(this.mcaTab);
 			this.stackPanel1.Controls.Add(this.dimReduceTab);
 			this.stackPanel1.Controls.Add(this.loaderTab);
+			this.stackPanel1.Controls.Add(this.regTab);
+			this.stackPanel1.Controls.Add(this.vizTab);
 			this.stackPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.stackPanel1.Location = new System.Drawing.Point(577, 130);
 			this.stackPanel1.Margin = new System.Windows.Forms.Padding(0);
@@ -374,7 +445,7 @@
 			this.emptyTab.Location = new System.Drawing.Point(4, 25);
 			this.emptyTab.Name = "emptyTab";
 			this.emptyTab.Padding = new System.Windows.Forms.Padding(3);
-			this.emptyTab.Size = new System.Drawing.Size(1332, 795);
+			this.emptyTab.Size = new System.Drawing.Size(1339, 795);
 			this.emptyTab.TabIndex = 0;
 			this.emptyTab.Text = "Empty";
 			this.emptyTab.UseVisualStyleBackColor = true;
@@ -385,7 +456,7 @@
 			this.emptyPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.emptyPanel.Location = new System.Drawing.Point(3, 3);
 			this.emptyPanel.Name = "emptyPanel";
-			this.emptyPanel.Size = new System.Drawing.Size(1326, 789);
+			this.emptyPanel.Size = new System.Drawing.Size(1333, 789);
 			this.emptyPanel.TabIndex = 6;
 			// 
 			// loadDataTab
@@ -766,7 +837,7 @@
 			// 
 			this.label4.AutoSize = true;
 			this.label4.Font = new System.Drawing.Font("Lucida Sans", 20F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label4.Location = new System.Drawing.Point(15, 44);
+			this.label4.Location = new System.Drawing.Point(497, 26);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(500, 39);
 			this.label4.TabIndex = 3;
@@ -854,7 +925,7 @@
 			// 
 			this.label7.AutoSize = true;
 			this.label7.Font = new System.Drawing.Font("Lucida Sans", 20F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label7.Location = new System.Drawing.Point(15, 44);
+			this.label7.Location = new System.Drawing.Point(580, 27);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(400, 39);
 			this.label7.TabIndex = 3;
@@ -929,7 +1000,7 @@
 			// 
 			this.label9.AutoSize = true;
 			this.label9.Font = new System.Drawing.Font("Lucida Sans", 20F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label9.Location = new System.Drawing.Point(15, 44);
+			this.label9.Location = new System.Drawing.Point(612, 25);
 			this.label9.Name = "label9";
 			this.label9.Size = new System.Drawing.Size(271, 39);
 			this.label9.TabIndex = 3;
@@ -957,6 +1028,30 @@
 			this.noiseDetectPanel.Size = new System.Drawing.Size(1339, 795);
 			this.noiseDetectPanel.TabIndex = 2;
 			// 
+			// noisyListView
+			// 
+			this.noisyListView.Alignment = System.Windows.Forms.ListViewAlignment.Left;
+			this.noisyListView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.noisyListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader3});
+			this.noisyListView.Depth = 0;
+			this.noisyListView.Font = new System.Drawing.Font("Roboto", 40F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
+			this.noisyListView.FullRowSelect = true;
+			this.noisyListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+			this.noisyListView.Location = new System.Drawing.Point(10, 220);
+			this.noisyListView.MouseLocation = new System.Drawing.Point(-1, -1);
+			this.noisyListView.MouseState = MaterialSkin.MouseState.OUT;
+			this.noisyListView.Name = "noisyListView";
+			this.noisyListView.OwnerDraw = true;
+			this.noisyListView.Size = new System.Drawing.Size(230, 286);
+			this.noisyListView.TabIndex = 10;
+			this.noisyListView.UseCompatibleStateImageBehavior = false;
+			this.noisyListView.View = System.Windows.Forms.View.Details;
+			// 
+			// columnHeader3
+			// 
+			this.columnHeader3.Text = "";
+			// 
 			// noiseDetectLabel
 			// 
 			this.noiseDetectLabel.AutoSize = true;
@@ -971,7 +1066,7 @@
 			// 
 			this.label12.AutoSize = true;
 			this.label12.Font = new System.Drawing.Font("Lucida Sans", 20F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label12.Location = new System.Drawing.Point(3, 26);
+			this.label12.Location = new System.Drawing.Point(612, 25);
 			this.label12.Name = "label12";
 			this.label12.Size = new System.Drawing.Size(282, 39);
 			this.label12.TabIndex = 0;
@@ -982,7 +1077,7 @@
 			this.mcaTab.Controls.Add(this.mcaPanel);
 			this.mcaTab.Location = new System.Drawing.Point(4, 25);
 			this.mcaTab.Name = "mcaTab";
-			this.mcaTab.Size = new System.Drawing.Size(1332, 795);
+			this.mcaTab.Size = new System.Drawing.Size(1339, 795);
 			this.mcaTab.TabIndex = 6;
 			this.mcaTab.Text = "MCA";
 			this.mcaTab.UseVisualStyleBackColor = true;
@@ -990,19 +1085,51 @@
 			// mcaPanel
 			// 
 			this.mcaPanel.AutoScroll = true;
+			this.mcaPanel.Controls.Add(this.corrLabel);
+			this.mcaPanel.Controls.Add(this.corrGridView);
 			this.mcaPanel.Controls.Add(this.mcaLabel);
 			this.mcaPanel.Controls.Add(this.label11);
 			this.mcaPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.mcaPanel.Location = new System.Drawing.Point(0, 0);
 			this.mcaPanel.Name = "mcaPanel";
-			this.mcaPanel.Size = new System.Drawing.Size(1332, 795);
+			this.mcaPanel.Size = new System.Drawing.Size(1339, 795);
 			this.mcaPanel.TabIndex = 1;
+			// 
+			// corrLabel
+			// 
+			this.corrLabel.AutoSize = true;
+			this.corrLabel.BackColor = System.Drawing.Color.SkyBlue;
+			this.corrLabel.Depth = 0;
+			this.corrLabel.Font = new System.Drawing.Font("Roboto", 11F);
+			this.corrLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.corrLabel.Location = new System.Drawing.Point(34, 130);
+			this.corrLabel.Margin = new System.Windows.Forms.Padding(0);
+			this.corrLabel.MouseState = MaterialSkin.MouseState.HOVER;
+			this.corrLabel.Name = "corrLabel";
+			this.corrLabel.Size = new System.Drawing.Size(184, 24);
+			this.corrLabel.TabIndex = 8;
+			this.corrLabel.Text = "Pair-wise Correlation";
+			// 
+			// corrGridView
+			// 
+			this.corrGridView.AllowUserToAddRows = false;
+			this.corrGridView.AllowUserToDeleteRows = false;
+			this.corrGridView.BackgroundColor = System.Drawing.SystemColors.Window;
+			this.corrGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.corrGridView.Location = new System.Drawing.Point(34, 153);
+			this.corrGridView.Name = "corrGridView";
+			this.corrGridView.ReadOnly = true;
+			this.corrGridView.RowTemplate.Height = 24;
+			this.corrGridView.ShowEditingIcon = false;
+			this.corrGridView.Size = new System.Drawing.Size(457, 286);
+			this.corrGridView.TabIndex = 7;
+			this.corrGridView.TabStop = false;
 			// 
 			// mcaLabel
 			// 
 			this.mcaLabel.AutoSize = true;
 			this.mcaLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.mcaLabel.Location = new System.Drawing.Point(5, 95);
+			this.mcaLabel.Location = new System.Drawing.Point(772, 90);
 			this.mcaLabel.Name = "mcaLabel";
 			this.mcaLabel.Size = new System.Drawing.Size(82, 26);
 			this.mcaLabel.TabIndex = 1;
@@ -1012,7 +1139,7 @@
 			// 
 			this.label11.AutoSize = true;
 			this.label11.Font = new System.Drawing.Font("Lucida Sans", 20F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label11.Location = new System.Drawing.Point(3, 26);
+			this.label11.Location = new System.Drawing.Point(612, 25);
 			this.label11.Name = "label11";
 			this.label11.Size = new System.Drawing.Size(443, 39);
 			this.label11.TabIndex = 0;
@@ -1023,7 +1150,7 @@
 			this.dimReduceTab.Controls.Add(this.dimReducePanel);
 			this.dimReduceTab.Location = new System.Drawing.Point(4, 25);
 			this.dimReduceTab.Name = "dimReduceTab";
-			this.dimReduceTab.Size = new System.Drawing.Size(1332, 795);
+			this.dimReduceTab.Size = new System.Drawing.Size(1339, 795);
 			this.dimReduceTab.TabIndex = 8;
 			this.dimReduceTab.Text = "dimReduce";
 			this.dimReduceTab.UseVisualStyleBackColor = true;
@@ -1038,7 +1165,7 @@
 			this.dimReducePanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.dimReducePanel.Location = new System.Drawing.Point(0, 0);
 			this.dimReducePanel.Name = "dimReducePanel";
-			this.dimReducePanel.Size = new System.Drawing.Size(1332, 795);
+			this.dimReducePanel.Size = new System.Drawing.Size(1339, 795);
 			this.dimReducePanel.TabIndex = 2;
 			// 
 			// dimrReduceNumber
@@ -1117,7 +1244,7 @@
 			// 
 			this.label13.AutoSize = true;
 			this.label13.Font = new System.Drawing.Font("Lucida Sans", 20F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label13.Location = new System.Drawing.Point(15, 44);
+			this.label13.Location = new System.Drawing.Point(539, 37);
 			this.label13.Name = "label13";
 			this.label13.Size = new System.Drawing.Size(438, 39);
 			this.label13.TabIndex = 3;
@@ -1128,7 +1255,7 @@
 			this.loaderTab.Controls.Add(this.loaderPictureBox);
 			this.loaderTab.Location = new System.Drawing.Point(4, 25);
 			this.loaderTab.Name = "loaderTab";
-			this.loaderTab.Size = new System.Drawing.Size(1332, 795);
+			this.loaderTab.Size = new System.Drawing.Size(1339, 795);
 			this.loaderTab.TabIndex = 9;
 			this.loaderTab.Text = "Loader";
 			this.loaderTab.UseVisualStyleBackColor = true;
@@ -1139,97 +1266,28 @@
 			this.loaderPictureBox.Image = global::Final_App.Properties.Resources._9wcA;
 			this.loaderPictureBox.Location = new System.Drawing.Point(0, 0);
 			this.loaderPictureBox.Name = "loaderPictureBox";
-			this.loaderPictureBox.Size = new System.Drawing.Size(1332, 795);
+			this.loaderPictureBox.Size = new System.Drawing.Size(1339, 795);
 			this.loaderPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
 			this.loaderPictureBox.TabIndex = 0;
 			this.loaderPictureBox.TabStop = false;
 			// 
-			// flowLayoutPanel3
+			// regTab
 			// 
-			this.flowLayoutPanel3.BackColor = System.Drawing.Color.White;
-			this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.flowLayoutPanel3.Location = new System.Drawing.Point(0, 954);
-			this.flowLayoutPanel3.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
-			this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-			this.flowLayoutPanel3.Size = new System.Drawing.Size(575, 52);
-			this.flowLayoutPanel3.TabIndex = 8;
+			this.regTab.Location = new System.Drawing.Point(4, 25);
+			this.regTab.Name = "regTab";
+			this.regTab.Size = new System.Drawing.Size(1339, 795);
+			this.regTab.TabIndex = 10;
+			this.regTab.Text = "Reg";
+			this.regTab.UseVisualStyleBackColor = true;
 			// 
-			// panel1
+			// vizTab
 			// 
-			this.panel1.BackColor = System.Drawing.Color.White;
-			this.panel1.Controls.Add(this.pictureBox1);
-			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel1.Location = new System.Drawing.Point(0, 130);
-			this.panel1.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
-			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(575, 824);
-			this.panel1.TabIndex = 10;
-			// 
-			// pictureBox1
-			// 
-			this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-			this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-			this.pictureBox1.Name = "pictureBox1";
-			this.pictureBox1.Size = new System.Drawing.Size(575, 824);
-			this.pictureBox1.TabIndex = 0;
-			this.pictureBox1.TabStop = false;
-			// 
-			// panel4
-			// 
-			this.panel4.BackColor = System.Drawing.Color.White;
-			this.panel4.Controls.Add(this.pictureBox2);
-			this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel4.Location = new System.Drawing.Point(0, 0);
-			this.panel4.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
-			this.panel4.Name = "panel4";
-			this.panel4.Size = new System.Drawing.Size(575, 130);
-			this.panel4.TabIndex = 11;
-			// 
-			// pictureBox2
-			// 
-			this.pictureBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-			this.pictureBox2.Location = new System.Drawing.Point(0, 0);
-			this.pictureBox2.Name = "pictureBox2";
-			this.pictureBox2.Size = new System.Drawing.Size(575, 130);
-			this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-			this.pictureBox2.TabIndex = 0;
-			this.pictureBox2.TabStop = false;
-			// 
-			// backgroundWorker1
-			// 
-			this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
-			this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
-			// 
-			// openFileDialog1
-			// 
-			this.openFileDialog1.FileName = "openFileDialog1";
-			this.openFileDialog1.InitialDirectory = "/";
-			// 
-			// noisyListView
-			// 
-			this.noisyListView.Alignment = System.Windows.Forms.ListViewAlignment.Left;
-			this.noisyListView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.noisyListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader3});
-			this.noisyListView.Depth = 0;
-			this.noisyListView.Font = new System.Drawing.Font("Roboto", 40F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
-			this.noisyListView.FullRowSelect = true;
-			this.noisyListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-			this.noisyListView.Location = new System.Drawing.Point(10, 220);
-			this.noisyListView.MouseLocation = new System.Drawing.Point(-1, -1);
-			this.noisyListView.MouseState = MaterialSkin.MouseState.OUT;
-			this.noisyListView.Name = "noisyListView";
-			this.noisyListView.OwnerDraw = true;
-			this.noisyListView.Size = new System.Drawing.Size(230, 286);
-			this.noisyListView.TabIndex = 10;
-			this.noisyListView.UseCompatibleStateImageBehavior = false;
-			this.noisyListView.View = System.Windows.Forms.View.Details;
-			// 
-			// columnHeader3
-			// 
-			this.columnHeader3.Text = "";
+			this.vizTab.Location = new System.Drawing.Point(4, 25);
+			this.vizTab.Name = "vizTab";
+			this.vizTab.Size = new System.Drawing.Size(1339, 795);
+			this.vizTab.TabIndex = 11;
+			this.vizTab.Text = "Viz";
+			this.vizTab.UseVisualStyleBackColor = true;
 			// 
 			// Final_Application
 			// 
@@ -1252,6 +1310,10 @@
 			this.groupBox4.ResumeLayout(false);
 			this.flowLayoutPanel2.ResumeLayout(false);
 			this.flowLayoutPanel2.PerformLayout();
+			this.panel1.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+			this.panel4.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
 			this.stackPanel1.ResumeLayout(false);
 			this.emptyTab.ResumeLayout(false);
 			this.loadDataTab.ResumeLayout(false);
@@ -1285,6 +1347,7 @@
 			this.mcaTab.ResumeLayout(false);
 			this.mcaPanel.ResumeLayout(false);
 			this.mcaPanel.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.corrGridView)).EndInit();
 			this.dimReduceTab.ResumeLayout(false);
 			this.dimReducePanel.ResumeLayout(false);
 			this.dimReducePanel.PerformLayout();
@@ -1293,10 +1356,6 @@
 			this.panel6.PerformLayout();
 			this.loaderTab.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.loaderPictureBox)).EndInit();
-			this.panel1.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-			this.panel4.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -1392,6 +1451,10 @@
 		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel4;
 		private MaterialSkin.Controls.MaterialListView noisyListView;
 		private System.Windows.Forms.ColumnHeader columnHeader3;
+		private MaterialSkin.Controls.MaterialLabel corrLabel;
+		private System.Windows.Forms.DataGridView corrGridView;
+		private System.Windows.Forms.TabPage regTab;
+		private System.Windows.Forms.TabPage vizTab;
 	}
 }
 

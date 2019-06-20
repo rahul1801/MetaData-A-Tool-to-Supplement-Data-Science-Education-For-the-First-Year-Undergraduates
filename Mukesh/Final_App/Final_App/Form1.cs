@@ -32,9 +32,14 @@ namespace Final_App
 			myComboBoxes.Add(dataInputDropDown);
 			myComboBoxes.Add(preProcessDropDown);
 			myComboBoxes.Add(featureEngineerDropDown);
+			myComboBoxes.Add(analysisDropDown);
 
 			// Disable submit button
 			submitButton.Enabled = false;
+
+			// Image settings
+			pictureBox1.Image = Image.FromFile("E:\\IBM\\Mukesh\\Final_App\\Final_App\\Resources\\start.png");
+			pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
 		}
 
 		private void dataInputDropDown_SelectedIndexChanged(object sender, EventArgs e)
@@ -69,6 +74,9 @@ namespace Final_App
 
 				// disable text box
 				filenameTextBox.Enabled = false;
+
+				// Image settings
+				pictureBox1.Image = Image.FromFile("E:\\IBM\\Mukesh\\Final_App\\Final_App\\Resources\\load_data.png");
 			}
 			else if(choice == "Data Info.")
 			{
@@ -99,6 +107,9 @@ namespace Final_App
 
 				// change text of button
 				submitButton.Text = "Fetch";
+
+				// Image settings
+				pictureBox1.Image = Image.FromFile("E:\\IBM\\Mukesh\\Final_App\\Final_App\\Resources\\info.png");
 			}
 		}
 
@@ -130,6 +141,9 @@ namespace Final_App
 
 				// Switch to catToNumTab
 				stackPanel1.SelectedIndex = index;
+
+				// Image settings
+				pictureBox1.Image = Image.FromFile("E:\\IBM\\Mukesh\\Final_App\\Final_App\\Resources\\cat_to_num.png");
 			}
 			else if(choice == "Missing Value Handling")
 			{
@@ -138,6 +152,9 @@ namespace Final_App
 
 				// Switch to missingValueTab
 				stackPanel1.SelectedIndex = index;
+
+				// Image settings
+				pictureBox1.Image = Image.FromFile("E:\\IBM\\Mukesh\\Final_App\\Final_App\\Resources\\mvh.png");
 			}
 			else if (choice == "Scaling")
 			{
@@ -146,23 +163,9 @@ namespace Final_App
 
 				// Switch to missingValueTab
 				stackPanel1.SelectedIndex = index;
-			}
-			else if (choice == "Noise Detection and Elimination")
-			{
-				// Update index
-				index = 6;
 
-				// hide label
-				noiseDetectLabel.Visible = false;
-
-				// hide ListView
-				noisyListView.Visible = false;
-
-				// switch to noiseDetectTab
-				stackPanel1.SelectedIndex = index;
-
-				// change text of button
-				submitButton.Text = "Perform";
+				// Image settings
+				pictureBox1.Image = Image.FromFile("E:\\IBM\\Mukesh\\Final_App\\Final_App\\Resources\\scaling.png");
 			}
 		}
 
@@ -187,21 +190,8 @@ namespace Final_App
 			// Enable submit button
 			submitButton.Enabled = true;
 
-			if (choice == "Multi-Collinearity Analysis")
-			{
-				// Update index
-				index = 7;
-
-				// hide label
-				mcaLabel.Visible = false;
-
-				// switch to mcaTab
-				stackPanel1.SelectedIndex = index;
-
-				// change text of button
-				submitButton.Text = "Perform";
-			}
-			else if (choice == "Dimensionality Reduction")
+			
+			if (choice == "Dimensionality Reduction")
 			{
 				// Update index
 				index = 8;
@@ -214,7 +204,104 @@ namespace Final_App
 				// Disable Submit Button
 				submitButton.Enabled = false;
 
+				// Image settings
+				pictureBox1.Image = Image.FromFile("E:\\IBM\\Mukesh\\Final_App\\Final_App\\Resources\\dimreduce.png");
+
 				backgroundWorker1.RunWorkerAsync(arg);
+			}
+		}
+
+		private void analysisDropDown_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			// If this is reset
+			if (analysisDropDown.SelectedIndex == -1)
+				return;
+
+			// Reset all other dropdowns
+			for (int i = 0; i < myComboBoxes.Count(); i++)
+			{
+				if (i != 3)
+				{
+					myComboBoxes[i].SelectedIndex = -1;
+				}
+			}
+
+			// Choice selected
+			 string choice = analysisDropDown.SelectedItem.ToString();
+
+			// Enable submit button
+			submitButton.Enabled = true;
+
+			if (choice == "Noise Detection")
+			{
+				// Update index
+				index = 6;
+
+				// hide label
+				noiseDetectLabel.Visible = false;
+
+				// hide ListView
+				noisyListView.Visible = false;
+
+				// switch to noiseDetectTab
+				stackPanel1.SelectedIndex = index;
+
+				// change text of button
+				submitButton.Text = "Perform";
+
+				// Image settings
+				pictureBox1.Image = Image.FromFile("E:\\IBM\\Mukesh\\Final_App\\Final_App\\Resources\\noise.png");
+			}
+			else if (choice == "Multi-Collinearity Analysis")
+			{
+				// Update index
+				index = 7;
+
+				// hide label
+				mcaLabel.Visible = false;
+
+				// hide corrLabel
+				corrLabel.Visible = false;
+
+				// hide corrGrid
+				corrGridView.Visible = false;
+
+				// switch to mcaTab
+				stackPanel1.SelectedIndex = index;
+
+				// change text of button
+				submitButton.Text = "Perform";
+
+				// Image settings
+				pictureBox1.Image = Image.FromFile("E:\\IBM\\Mukesh\\Final_App\\Final_App\\Resources\\mca.png");
+			}
+			else if (choice == "Regressional Analysis")
+			{
+				// Update index
+				index = 10;
+
+				// switch to regTab
+				stackPanel1.SelectedIndex = index;
+
+				// change text of button
+				submitButton.Text = "Perform";
+
+				// Image settings
+				pictureBox1.Image = Image.FromFile("E:\\IBM\\Mukesh\\Final_App\\Final_App\\Resources\\reg.png");
+			}
+			else if (choice == "Visualization")
+			{
+				// Update index
+				index = 11;
+
+				// switch to regTab
+				stackPanel1.SelectedIndex = index;
+
+				// change text of button
+				submitButton.Text = "Perform";
+
+				// Image settings
+				pictureBox1.Image = Image.FromFile("E:\\IBM\\Mukesh\\Final_App\\Final_App\\Resources\\viz.png");
 			}
 		}
 
@@ -385,10 +472,10 @@ namespace Final_App
 				if(result.Value == " 1")
 				{
 					// write info table
-					bindCSV("E:\\IBM\\Mukesh\\Entry_data\\info.csv", infoGridView, true);
+					bindCSV("E:\\IBM\\Mukesh\\Entry_data\\info.csv", infoGridView, 1);
 
 					// write head table
-					bindCSV("E:\\IBM\\Mukesh\\Entry_data\\head.csv", headGridView, true);
+					bindCSV("E:\\IBM\\Mukesh\\Entry_data\\head.csv", headGridView, 1);
 
 					// write numerical features and categorical features
 					string[] res_split = result.Key.Split('!');
@@ -404,7 +491,6 @@ namespace Final_App
 					categoricalListView.Columns[0].Width = categoricalListView.Width - 4;
 					for (int i = 0; i < cat_features.Length; i++)
 					{
-						Console.WriteLine(cat_features[i]);
 						categoricalListView.Items.Add(cat_features[i], i);
 					}
 
@@ -441,6 +527,13 @@ namespace Final_App
 					// write and show label
 					mcaLabel.Text = result.Key;
 					mcaLabel.Visible = true;
+
+					// write corr matrix
+					bindCSV("E:\\IBM\\Mukesh\\Entry_data\\corr.csv", corrGridView, 2);
+
+					// show corrLabel and corr matrix
+					corrGridView.Visible = true;
+					corrGridView.Visible = true;
 
 					// change text of button
 					submitButton.Text = "Submit";
@@ -565,7 +658,9 @@ namespace Final_App
 		}
 
 		// Parses a csv file and displays it to a DataGridView
-		private void bindCSV(string filePath, DataGridView dgv, Boolean rowNo)
+		// rowHeaderChoice is 0 if no header, 1 if row numbers, 2 if row names
+		// if rowHeaderChoice is 2 and names is left null, row headers and column headers are same
+		private void bindCSV(string filePath, DataGridView dgv, int rowHeaderChoice, string[] names=null)
 		{
 			DataTable dt = new DataTable();
 			string[] lines = System.IO.File.ReadAllLines(filePath);
@@ -597,13 +692,20 @@ namespace Final_App
 			if(dt.Rows.Count>0)
 			{
 				dgv.DataSource = dt;
-				if(rowNo)
+				if(rowHeaderChoice == 1)
 				{
 					setRowNumber(dgv);
 				}
+				else if(rowHeaderChoice==2)
+				{
+					if (names == null)
+						setRowNames(dgv, lines[0].Split(','));
+					else
+						setRowNames(dgv, names);
+				}
 				else
 				{
-					dgv.RowHeadersVisible = false;
+					dgv.RowHeadersVisible = false; 
 				}
 			}
 		}
@@ -614,8 +716,24 @@ namespace Final_App
 			foreach (DataGridViewRow row in dgv.Rows)
 			{
 				row.HeaderCell.Value = (row.Index + 1).ToString();
+				Console.Write(row.HeaderCell.Value);
+				Console.WriteLine(row.HeaderCell.Visible);
 			}
 		}
+
+		// Displays given list as row headers
+		private void setRowNames(DataGridView dgv, string[] names)
+		{
+			int i = 0;
+			foreach (DataGridViewRow row in dgv.Rows)
+			{
+				row.HeaderCell.Value = names[i];
+				Console.WriteLine(names[i]);
+				i++;
+			}
+		}
+
+		
 	}
 
 	class StackPanel : TabControl

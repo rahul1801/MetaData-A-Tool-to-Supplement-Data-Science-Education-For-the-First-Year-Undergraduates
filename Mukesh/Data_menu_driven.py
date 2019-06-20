@@ -57,7 +57,7 @@ try:
 except ModuleNotFoundError:
     import pickle
 
-pickle_filename = "E:\\IBM\\Mukesh\\myAnalysis.pickle"
+pickle_filename = r"E:\\IBM\\Mukesh\\myAnalysis.pickle"
 pd.set_option('display.max_columns', 20)
 
 
@@ -207,9 +207,12 @@ class Analysis:
         X = self.data_matrix
         graph_set = set([])
         corr_matrix = np.dot(X.T, X)/self.data_matrix.shape[0]
+        corr_matrix = np.around(corr_matrix,decimals=4)
         print('Correlation Matrix Analysis:')
         print("")
         print(corr_matrix)
+        corr_as_df = pd.DataFrame(data=corr_matrix, columns=self.analysis_data.columns)
+        corr_as_df.to_csv('E:\\IBM\\Mukesh\\Entry_data\\corr.csv',index=False)
         print("")
         print('Correlation Analysis between Pair Wise Regressors: ')
         reg_count = 0
@@ -423,7 +426,7 @@ class Analysis:
         encoder = Model(input_value, encoded)
         autoencoder.compile(optimizer='adadelta', loss='mean_squared_error')
         autoencoder.fit(X, X,
-                        epochs=20,
+                        epochs=500,
                         batch_size=int(data_count/5),
                         shuffle=True)
         self.data_matrix_reduced = encoder.predict(X)
@@ -552,25 +555,33 @@ class Analysis:
         feat = self.data.columns
         self.box_plot(feat)
 
+    def visualization(self,choice,features):
+    	if choice==1:
+    		self.box_plot(features)
+    	elif choice==2:
+    		self.hlines_plot(features)
+    	elif choice==3:
+    		self.histogram_plot(features)
+    	elif choice==4:
+    		self.scatter_plot(features)
+    	else:
+    		self.line_plot(features)
+
     def box_plot(self, features):
         fig = plt.figure(figsize=(20, 8))
 
-        df = data_visual[features]
+        df = self.data_visual[features]
 
         df.plot(kind="box")
         plt.ylabel("Number")
 
-        # Figures out the absolute path for you in case your working directory moves around.
-        my_path = os.path.abspath(__file__)
-        # Goes to previous directory to store the image
-        my_path = os.path.dirname(my_path)
-        my_file = '/images/box_plot.jpeg'       # Name of the scatter plot file
-        fig.savefig(os.path.join(my_path, my_file))
+        my_file = './images/box_plot.jpeg'       # Name of the scatter plot file
+        fig.savefig(my_file)
         print("Saved Box plot")
 
     def hlines_plot(self, features):
         fig = plt.figure(figsize=(20, 8))
-        x = list(data_visual[features[0]])
+        x = list(self.data_visual[features[0]])
         x = np.unique(x)
         plt.hlines(1, np.min(x)-1, np.max(x)+1)
         plt.xlim(np.min(x)-1, np.max(x)+1)
@@ -580,12 +591,9 @@ class Analysis:
         xlabel = features[0]
         plt.title('HLines for ' + xlabel)
 
-        # Figures out the absolute path for you in case your working directory moves around.
-        my_path = os.path.abspath(__file__)
-        # Goes to previous directory to store the image
-        my_path = os.path.dirname(my_path)
-        my_file = '/images/hlines_plot.jpeg'       # Name of the scatter plot file
-        fig.savefig(os.path.join(my_path, my_file))
+
+        my_file = './images/hlines_plot.jpeg'       # Name of the scatter plot file
+        fig.savefig(my_file)
         print("Saved HLines plot")
 
     def histogram_plot(self, features):
@@ -770,7 +778,12 @@ if __name__ == '__main__':
         counter_value += 1
     elif arg == 8:
         myAnalysis = load_obj(pickle_filename)
-        myAnalysis.Regression_models(int(sys.argv[2]))
+        myAnalysis.Regression_models()
+        store_obj(pickle_filename, myAnalysis)
+        counter_value += 1
+    elif arg == 9:
+        myAnalysis = load_obj(pickle_filename)
+        myAnalysis.visualization(int(sys.argv[2]),sys.argv[3:])
         store_obj(pickle_filename, myAnalysis)
         counter_value += 1
     elif arg == 99:
