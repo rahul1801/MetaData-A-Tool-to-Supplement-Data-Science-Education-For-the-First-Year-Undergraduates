@@ -111,6 +111,7 @@
 			this.label11 = new System.Windows.Forms.Label();
 			this.dimReduceTab = new System.Windows.Forms.TabPage();
 			this.dimReducePanel = new System.Windows.Forms.Panel();
+			this.dimReduceResults1 = new System.Windows.Forms.Label();
 			this.dimrReduceNumber = new System.Windows.Forms.NumericUpDown();
 			this.label14 = new System.Windows.Forms.Label();
 			this.panel6 = new System.Windows.Forms.Panel();
@@ -122,6 +123,7 @@
 			this.loaderPictureBox = new System.Windows.Forms.PictureBox();
 			this.regTab = new System.Windows.Forms.TabPage();
 			this.vizTab = new System.Windows.Forms.TabPage();
+			this.dimReduceResults2 = new System.Windows.Forms.Label();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.flowLayoutPanel1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -1157,6 +1159,8 @@
 			// 
 			// dimReducePanel
 			// 
+			this.dimReducePanel.Controls.Add(this.dimReduceResults2);
+			this.dimReducePanel.Controls.Add(this.dimReduceResults1);
 			this.dimReducePanel.Controls.Add(this.dimrReduceNumber);
 			this.dimReducePanel.Controls.Add(this.label14);
 			this.dimReducePanel.Controls.Add(this.panel6);
@@ -1167,6 +1171,16 @@
 			this.dimReducePanel.Name = "dimReducePanel";
 			this.dimReducePanel.Size = new System.Drawing.Size(1339, 795);
 			this.dimReducePanel.TabIndex = 2;
+			// 
+			// dimReduceResults1
+			// 
+			this.dimReduceResults1.AutoSize = true;
+			this.dimReduceResults1.Font = new System.Drawing.Font("Lucida Sans", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.dimReduceResults1.Location = new System.Drawing.Point(17, 572);
+			this.dimReduceResults1.Name = "dimReduceResults1";
+			this.dimReduceResults1.Size = new System.Drawing.Size(105, 29);
+			this.dimReduceResults1.TabIndex = 8;
+			this.dimReduceResults1.Text = "label16";
 			// 
 			// dimrReduceNumber
 			// 
@@ -1288,6 +1302,16 @@
 			this.vizTab.TabIndex = 11;
 			this.vizTab.Text = "Viz";
 			this.vizTab.UseVisualStyleBackColor = true;
+			// 
+			// dimReduceResults2
+			// 
+			this.dimReduceResults2.AutoSize = true;
+			this.dimReduceResults2.Font = new System.Drawing.Font("Lucida Sans", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.dimReduceResults2.Location = new System.Drawing.Point(17, 626);
+			this.dimReduceResults2.Name = "dimReduceResults2";
+			this.dimReduceResults2.Size = new System.Drawing.Size(105, 29);
+			this.dimReduceResults2.TabIndex = 9;
+			this.dimReduceResults2.Text = "label16";
 			// 
 			// Final_Application
 			// 
@@ -1455,6 +1479,8 @@
 		private System.Windows.Forms.DataGridView corrGridView;
 		private System.Windows.Forms.TabPage regTab;
 		private System.Windows.Forms.TabPage vizTab;
+		private System.Windows.Forms.Label dimReduceResults1;
+		private System.Windows.Forms.Label dimReduceResults2;
 	}
 }
 

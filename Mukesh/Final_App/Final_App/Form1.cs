@@ -196,6 +196,10 @@ namespace Final_App
 				// Update index
 				index = 8;
 
+				// Hide labels
+				dimReduceResults1.Visible = false;
+				dimReduceResults2.Visible = false;
+
 				string arg = " 99";
 
 				// Switch to loaderTab
@@ -589,6 +593,16 @@ namespace Final_App
 					submitButton.Enabled = true;
 					return;
 				}
+				else if (result.Value.Substring(0,2) == " 7")
+				{
+					// Fill and show labels
+					string[] res = result.Key.Split('\n');
+					string label_text = "\t\u2022" + res[0];
+					dimReduceResults1.Text = label_text;
+					dimReduceResults1.Visible = true;
+					dimReduceResults2.Text = "\t\u2022" + res[1];
+					dimReduceResults2.Visible = true;
+				}
 				else
 				{
 					// Show Prompt
@@ -732,8 +746,6 @@ namespace Final_App
 				i++;
 			}
 		}
-
-		
 	}
 
 	class StackPanel : TabControl
