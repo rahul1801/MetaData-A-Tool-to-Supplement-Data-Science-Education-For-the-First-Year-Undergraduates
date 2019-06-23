@@ -57,7 +57,7 @@ try:
 except ModuleNotFoundError:
     import pickle
 
-pickle_filename = r"E:\\IBM\\Mukesh\\myAnalysis.pickle"
+pickle_filename = r"E:\IBM\Mukesh\myAnalysis.pickle"
 pd.set_option('display.max_columns', 20)
 
 
@@ -123,6 +123,7 @@ class Analysis:
         for i in range(len(info_as_list)):
             temp_info = info_as_list[i].strip().split()
             info_as_list[i] = temp_info[:2] + temp_info[3:]
+        # print(info_as_list)
         info_as_df = pd.DataFrame(data=info_as_list, columns=["Feature", "Non-null values", "Dtype"], index=np.arange(1, len(info_as_list)+1))
         info_as_df.to_csv('E:\\IBM\\Mukesh\\Entry_data\\info.csv',index=False)
 
@@ -340,11 +341,11 @@ class Analysis:
             print('The missing values have been detected and handled')
         # copy data_matrix to data_regres to feed into regression models
         if(self.target_detection==0):
-            self.data_vis = pd.DataFrame(self.data_matrix.iloc[:,0:len(self.num_df)])
-            print(self.data_vis.shape)
+            self.data_vis = pd.DataFrame(self.data_matrix[:,0:len(self.num_df)])
+            print(self.data_vis)
         elif(self.target_detection==1):
-            self.data_vis = pd.DataFrame(self.data_matrix.iloc[:,(len(self.df_encoded)):(len(self.analysis_data)-1)])
-            print(self.data_vis.shape)
+            self.data_vis = pd.DataFrame(self.data_matrix[:,(len(self.df_encoded)):(len(self.analysis_data)-1)])
+            print(self.data_vis)
         data_new = pd.DataFrame(self.data_matrix)
         data_new.reset_index(drop=True, inplace=True)
         frames2 = [data_new, self.target_data]
@@ -788,83 +789,3 @@ if __name__ == '__main__':
         print(len(myAnalysis.data.columns)-1)
         store_obj(pickle_filename, myAnalysis)
         counter_value += 1
-
-
-# In[18]:
-
-
-a = Analysis('housing.csv',0)
-
-
-# In[ ]:
-
-
-def store_obj(filename, obj):
-    pickle_file = open(filename, "wb")
-    pickle.dump(obj, pickle_file)
-    pickle_file.close()
-
-
-def load_obj(filename):
-    pickle_file = open(filename, "rb")
-    obj = pickle.load(pickle_file)
-    pickle_file.close()
-    return obj
-
-if __name__ == '__main__':
-    arg = int(sys.argv[1])
-    if arg == 0:
-        myAnalysis = Analysis(sys.argv[2], int(sys.argv[3]))
-        store_obj(pickle_filename, myAnalysis)
-        counter_value += 1
-    elif arg == 1:
-        myAnalysis = load_obj(pickle_filename)
-        myAnalysis.Entry()
-        store_obj(pickle_filename, myAnalysis)
-        counter_value += 1
-    elif arg == 2:
-        myAnalysis = load_obj(pickle_filename)
-        myAnalysis.cat_to_num(int(sys.argv[2]))
-        store_obj(pickle_filename, myAnalysis)
-        counter_value += 1
-    elif arg == 3:
-        myAnalysis = load_obj(pickle_filename)
-        myAnalysis.MVD(int(sys.argv[2]))
-        store_obj(pickle_filename, myAnalysis)
-        counter_value += 1
-    elif arg == 4:
-        myAnalysis = load_obj(pickle_filename)
-        myAnalysis.Scaling_decision(int(sys.argv[2]))
-        store_obj(pickle_filename, myAnalysis)
-        counter_value += 1
-    elif arg == 5:
-        myAnalysis = load_obj(pickle_filename)
-        myAnalysis.Multicollinearity_Analysis()
-        store_obj(pickle_filename, myAnalysis)
-        counter_value += 1
-    elif arg == 6:
-        myAnalysis = load_obj(pickle_filename)
-        myAnalysis.Noise_detection()
-        store_obj(pickle_filename, myAnalysis)
-        counter_value += 1
-    elif arg == 7:
-        myAnalysis = load_obj(pickle_filename)
-        myAnalysis.Dim_Reduction(int(sys.argv[2]), int(sys.argv[3]))
-        store_obj(pickle_filename, myAnalysis)
-        counter_value += 1
-    elif arg == 8:
-        myAnalysis = load_obj(pickle_filename)
-        myAnalysis.Regression_models()
-        store_obj(pickle_filename, myAnalysis)
-        counter_value += 1
-    elif arg == 9:
-        myAnalysis = load_obj(pickle_filename)
-        myAnalysis.visualization(int(sys.argv[2]),sys.argv[3:])
-        store_obj(pickle_filename, myAnalysis)
-        counter_value += 1
-    elif arg == 99:
-        myAnalysis = load_obj(pickle_filename)
-        print(len(myAnalysis.data.columns)-1)
-        store_obj(pickle_filename, myAnalysis)
-        counter_value += 1
-
