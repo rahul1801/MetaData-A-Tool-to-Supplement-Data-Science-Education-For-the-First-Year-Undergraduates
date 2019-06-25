@@ -332,12 +332,16 @@ class Analysis:
         # copy data_matrix to data_regres to feed into regression models
         if(self.target_detection==0 and self.num_flag==1):
             self.data_vis = pd.DataFrame(self.data_matrix[:,0:(self.num_df.shape[1])])
+            con = [self.data_vis,self.target_data]
+            self.data_vis = pd.concat(con,axis=1,sort=False)
             print(self.data_vis)
         elif(self.target_detection==1 and (self.analysis_data.shape[1]==self.df_encoded.shape[1])):
           self.data_vis = []
           print('No numerical features present for data visualization.')
         elif(self.target_detection==1 and (self.analysis_data.shape[1]!=self.df_encoded.shape[1])):
             self.data_vis = pd.DataFrame(self.data_matrix[:,(self.df_encoded.shape[1]):(self.analysis_data.shape[1])])
+            con = [self.data_vis,self.target_data]
+            self.data_vis = pd.concat(con,axis=1,sort=False)
             print(self.data_vis)
         elif(self.target_detection==0 and self.num_flag==0):
           self.data_vis = []
@@ -348,8 +352,8 @@ class Analysis:
         self.data_regres = pd.concat(frames2, axis=1, sort=False)
 
         # convert data_matrix to dataframe for visualisation
-        self.data_visual = pd.DataFrame(
-            self.data_matrix, columns=self.column_names)
+        # self.data_vis = pd.DataFrame(
+        #     self.data_matrix, columns=self.column_names)
 
     def Scaling_decision(self, ch_num):
         if(ch_num == 1):
@@ -566,18 +570,18 @@ class Analysis:
     def box_plot(self, features):
         fig = plt.figure(figsize=(20, 8))
 
-        df = self.data_visual[features]
+        df = self.data_vis[features]
 
         df.plot(kind="box")
         plt.ylabel("Number")
 
-        my_file = './images/box_plot.jpeg'       # Name of the scatter plot file
+        my_file = './images/box_plot.jpeg'       # Name of the box plot file
         fig.savefig(my_file)
         print("Saved Box plot")
 
     def hlines_plot(self, features):
         fig = plt.figure(figsize=(20, 8))
-        x = list(self.data_visual[features[0]])
+        x = list(self.data_vis[features[0]])
         x = np.unique(x)
         plt.hlines(1, np.min(x)-1, np.max(x)+1)
         plt.xlim(np.min(x)-1, np.max(x)+1)
@@ -588,51 +592,43 @@ class Analysis:
         plt.title('HLines for ' + xlabel)
 
 
-        my_file = './images/hlines_plot.jpeg'       # Name of the scatter plot file
+        my_file = './images/hlines_plot.jpeg'       # Name of the hlines plot file
         fig.savefig(my_file)
         print("Saved HLines plot")
 
     def histogram_plot(self, features):
         xlabel = features[0]
-        x = list(data_visual[features[0]])
+        x = list(self.data_vis[features[0]])
 
         fig = plt.figure(figsize=(20, 8))
         plt.hist(x, bins=20)
         plt.ylabel('No of times')
         plt.title(xlabel)
 
-        # Figures out the absolute path for you in case your working directory moves around.
-        my_path = os.path.abspath(__file__)
-        # Goes to previous directory to store the image
-        my_path = os.path.dirname(my_path)
-        my_file = '/images/histogram_plot.jpeg'       # Name of the scatter plot file
-        fig.savefig(os.path.join(my_path, my_file))
-        print("Saved Histogram plot")
+        my_file = './images/hist_plot.jpeg'       # Name of the hist plot file
+        fig.savefig(my_file)
+        print("Saved hist plot")
 
     def scatter_plot(self, features):
         xlabel = features[0]
         ylabel = features[1]
-        x = list(data_visual[features[0]])
-        y = list(data_visual[features[1]])
+        x = list(self.data_vis[features[0]])
+        y = list(self.data_vis[features[1]])
         fig = plt.figure(figsize=(20, 8))
         plt.scatter(x, y, alpha=0.5)
         plt.xlabel(xlabel)
         plt.ylabel(ylabel)
         plt.title(xlabel+" vs "+ylabel)
 
-        # Figures out the absolute path for you in case your working directory moves around.
-        my_path = os.path.abspath(__file__)
-        # Goes to previous directory to store the image
-        my_path = os.path.dirname(my_path)
-        my_file = '/images/scatter_plot.jpeg'       # Name of the scatter plot file
-        fig.savefig(os.path.join(my_path, my_file))
+        my_file = './images/scatter_plot.jpeg'       # Name of the scatter plot file
+        fig.savefig(my_file)
         print("Saved Scatter plot")
 
     def line_plot(self, features):
         xlabel = features[0]
         ylabel = features[1]
-        x = list(data_visual[features[0]])
-        y = list(data_visual[features[1]])
+        x = list(self.data_vis[features[0]])
+        y = list(self.data_vis[features[1]])
         fig = plt.figure(figsize=(20, 8))
 
         plt.plot(x, y)
@@ -640,12 +636,8 @@ class Analysis:
         plt.ylabel(ylabel)
         plt.title(xlabel+" vs "+ylabel)
 
-        # Figures out the absolute path for you in case your working directory moves around.
-        my_path = os.path.abspath(__file__)
-        # Goes to previous directory to store the image
-        my_path = os.path.dirname(my_path)
-        my_file = '/images/line_plot.jpeg'       # Name of the scatter plot file
-        fig.savefig(os.path.join(my_path, my_file))
+        my_file = './images/line_plot.jpeg'       # Name of the line plot file
+        fig.savefig(my_file)
         print("Saved Line plot")
 
     def report(self):
