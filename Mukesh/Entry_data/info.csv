@@ -1,11 +1,18 @@
 Feature,Non-null values,Dtype
-longitude,20640,float64
-latitude,20640,float64
-housing_median_age,20640,float64
-total_rooms,20640,float64
-total_bedrooms,20433,float64
-population,20640,float64
-households,20640,float64
-median_income,20640,float64
-median_house_value,20640,float64
-ocean_proximity,20640,object
+animal name,non-null,object
+hair,101,int64
+feathers,101,int64
+eggs,101,int64
+milk,101,int64
+airborne,101,int64
+aquatic,101,int64
+predator,101,int64
+toothed,101,int64
+backbone,101,int64
+breathes,101,int64
+venomous,101,int64
+fins,101,int64
+legs,101,int64
+tail,101,int64
+domestic,101,int64
+catsize,101,int64

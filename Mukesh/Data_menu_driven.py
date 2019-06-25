@@ -123,6 +123,12 @@ class Analysis:
         for i in range(len(info_as_list)):
             temp_info = info_as_list[i].strip().split()
             info_as_list[i] = temp_info[:2] + temp_info[3:]
+            if len(info_as_list[i])>3:
+            	temp = []
+            	temp.append(' '.join(info_as_list[i][:-2]))
+            	temp.append(info_as_list[i][-2])
+            	temp.append(info_as_list[i][-1])
+            	info_as_list[i] = temp
         # print(info_as_list)
         info_as_df = pd.DataFrame(data=info_as_list, columns=["Feature", "Non-null values", "Dtype"], index=np.arange(1, len(info_as_list)+1))
         info_as_df.to_csv('E:\\IBM\\Mukesh\\Entry_data\\info.csv',index=False)
