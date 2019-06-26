@@ -544,9 +544,12 @@ class Analysis:
             print("Analysis after complete data preprocessing")
             yt, y2 = self.Logistic_Regression_model(X_2, Y_2)
             # plot graph
-            plt.plot(yt, color='r', label='Real Y')  # actual y test value
-            plt.plot(y1, color='g', label='Predicted Y before scaling')  # predicted y value before scaling
-            plt.plot(y2, color='orange', label='Predicted Y after scaling')  # predicted y value after scaling
+            # plt.plot(yt, color='r', label='Real Y')  # actual y test value
+            # plt.plot(y1, color='g', label='Predicted Y before scaling')  # predicted y value before scaling
+            # plt.plot(y2, color='orange', label='Predicted Y after scaling')  # predicted y value after scaling
+            plt.scatter(np.arange(yt.shape[0]), yt, label='Real Y')
+            plt.scatter(np.arange(y1.shape[0]), y1, label='Predicted Y before scaling')
+            plt.scatter(np.arange(y2.shape[0]), y2, label='Predicted Y after scaling')
             plt.xlabel('Data set #')
             plt.ylabel('Target value')
             plt.legend(loc='upper left')
