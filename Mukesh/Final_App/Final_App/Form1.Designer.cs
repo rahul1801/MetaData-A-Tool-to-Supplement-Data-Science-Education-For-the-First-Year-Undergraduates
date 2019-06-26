@@ -41,13 +41,6 @@
 			this.analysisDropDown = new System.Windows.Forms.ComboBox();
 			this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
 			this.submitButton = new System.Windows.Forms.Button();
-			this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
-			this.panel1 = new System.Windows.Forms.Panel();
-			this.pictureBox1 = new System.Windows.Forms.PictureBox();
-			this.panel4 = new System.Windows.Forms.Panel();
-			this.pictureBox2 = new System.Windows.Forms.PictureBox();
-			this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.stackPanel1 = new Final_App.StackPanel();
 			this.emptyTab = new System.Windows.Forms.TabPage();
 			this.emptyPanel = new System.Windows.Forms.Panel();
@@ -111,6 +104,7 @@
 			this.label11 = new System.Windows.Forms.Label();
 			this.dimReduceTab = new System.Windows.Forms.TabPage();
 			this.dimReducePanel = new System.Windows.Forms.Panel();
+			this.dimReduceResults2 = new System.Windows.Forms.Label();
 			this.dimReduceResults1 = new System.Windows.Forms.Label();
 			this.dimrReduceNumber = new System.Windows.Forms.NumericUpDown();
 			this.label14 = new System.Windows.Forms.Label();
@@ -123,7 +117,14 @@
 			this.loaderPictureBox = new System.Windows.Forms.PictureBox();
 			this.regTab = new System.Windows.Forms.TabPage();
 			this.vizTab = new System.Windows.Forms.TabPage();
-			this.dimReduceResults2 = new System.Windows.Forms.Label();
+			this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
+			this.panel1 = new System.Windows.Forms.Panel();
+			this.pictureBox1 = new System.Windows.Forms.PictureBox();
+			this.panel4 = new System.Windows.Forms.Panel();
+			this.pictureBox2 = new System.Windows.Forms.PictureBox();
+			this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+			this.maxNoteLabel = new System.Windows.Forms.Label();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.flowLayoutPanel1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -131,10 +132,6 @@
 			this.groupBox3.SuspendLayout();
 			this.groupBox4.SuspendLayout();
 			this.flowLayoutPanel2.SuspendLayout();
-			this.panel1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-			this.panel4.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
 			this.stackPanel1.SuspendLayout();
 			this.emptyTab.SuspendLayout();
 			this.loadDataTab.SuspendLayout();
@@ -164,6 +161,10 @@
 			this.panel6.SuspendLayout();
 			this.loaderTab.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.loaderPictureBox)).BeginInit();
+			this.panel1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+			this.panel4.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// tableLayoutPanel1
@@ -355,69 +356,6 @@
 			this.submitButton.Text = "Submit";
 			this.submitButton.UseVisualStyleBackColor = false;
 			this.submitButton.Click += new System.EventHandler(this.submitButton_Click);
-			// 
-			// flowLayoutPanel3
-			// 
-			this.flowLayoutPanel3.BackColor = System.Drawing.Color.White;
-			this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.flowLayoutPanel3.Location = new System.Drawing.Point(0, 954);
-			this.flowLayoutPanel3.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
-			this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-			this.flowLayoutPanel3.Size = new System.Drawing.Size(575, 52);
-			this.flowLayoutPanel3.TabIndex = 8;
-			// 
-			// panel1
-			// 
-			this.panel1.BackColor = System.Drawing.Color.White;
-			this.panel1.Controls.Add(this.pictureBox1);
-			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel1.Location = new System.Drawing.Point(0, 130);
-			this.panel1.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
-			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(575, 824);
-			this.panel1.TabIndex = 10;
-			// 
-			// pictureBox1
-			// 
-			this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-			this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-			this.pictureBox1.Name = "pictureBox1";
-			this.pictureBox1.Size = new System.Drawing.Size(575, 824);
-			this.pictureBox1.TabIndex = 0;
-			this.pictureBox1.TabStop = false;
-			// 
-			// panel4
-			// 
-			this.panel4.BackColor = System.Drawing.Color.White;
-			this.panel4.Controls.Add(this.pictureBox2);
-			this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel4.Location = new System.Drawing.Point(0, 0);
-			this.panel4.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
-			this.panel4.Name = "panel4";
-			this.panel4.Size = new System.Drawing.Size(575, 130);
-			this.panel4.TabIndex = 11;
-			// 
-			// pictureBox2
-			// 
-			this.pictureBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-			this.pictureBox2.Location = new System.Drawing.Point(0, 0);
-			this.pictureBox2.Name = "pictureBox2";
-			this.pictureBox2.Size = new System.Drawing.Size(575, 130);
-			this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-			this.pictureBox2.TabIndex = 0;
-			this.pictureBox2.TabStop = false;
-			// 
-			// backgroundWorker1
-			// 
-			this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
-			this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
-			// 
-			// openFileDialog1
-			// 
-			this.openFileDialog1.FileName = "openFileDialog1";
-			this.openFileDialog1.InitialDirectory = "/";
 			// 
 			// stackPanel1
 			// 
@@ -1159,6 +1097,7 @@
 			// 
 			// dimReducePanel
 			// 
+			this.dimReducePanel.Controls.Add(this.maxNoteLabel);
 			this.dimReducePanel.Controls.Add(this.dimReduceResults2);
 			this.dimReducePanel.Controls.Add(this.dimReduceResults1);
 			this.dimReducePanel.Controls.Add(this.dimrReduceNumber);
@@ -1171,6 +1110,16 @@
 			this.dimReducePanel.Name = "dimReducePanel";
 			this.dimReducePanel.Size = new System.Drawing.Size(1339, 795);
 			this.dimReducePanel.TabIndex = 2;
+			// 
+			// dimReduceResults2
+			// 
+			this.dimReduceResults2.AutoSize = true;
+			this.dimReduceResults2.Font = new System.Drawing.Font("Lucida Sans", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.dimReduceResults2.Location = new System.Drawing.Point(17, 626);
+			this.dimReduceResults2.Name = "dimReduceResults2";
+			this.dimReduceResults2.Size = new System.Drawing.Size(105, 29);
+			this.dimReduceResults2.TabIndex = 9;
+			this.dimReduceResults2.Text = "label16";
 			// 
 			// dimReduceResults1
 			// 
@@ -1303,15 +1252,77 @@
 			this.vizTab.Text = "Viz";
 			this.vizTab.UseVisualStyleBackColor = true;
 			// 
-			// dimReduceResults2
+			// flowLayoutPanel3
 			// 
-			this.dimReduceResults2.AutoSize = true;
-			this.dimReduceResults2.Font = new System.Drawing.Font("Lucida Sans", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.dimReduceResults2.Location = new System.Drawing.Point(17, 626);
-			this.dimReduceResults2.Name = "dimReduceResults2";
-			this.dimReduceResults2.Size = new System.Drawing.Size(105, 29);
-			this.dimReduceResults2.TabIndex = 9;
-			this.dimReduceResults2.Text = "label16";
+			this.flowLayoutPanel3.BackColor = System.Drawing.Color.White;
+			this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.flowLayoutPanel3.Location = new System.Drawing.Point(0, 954);
+			this.flowLayoutPanel3.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
+			this.flowLayoutPanel3.Name = "flowLayoutPanel3";
+			this.flowLayoutPanel3.Size = new System.Drawing.Size(575, 52);
+			this.flowLayoutPanel3.TabIndex = 8;
+			// 
+			// panel1
+			// 
+			this.panel1.BackColor = System.Drawing.Color.White;
+			this.panel1.Controls.Add(this.pictureBox1);
+			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panel1.Location = new System.Drawing.Point(0, 130);
+			this.panel1.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
+			this.panel1.Name = "panel1";
+			this.panel1.Size = new System.Drawing.Size(575, 824);
+			this.panel1.TabIndex = 10;
+			// 
+			// pictureBox1
+			// 
+			this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+			this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+			this.pictureBox1.Name = "pictureBox1";
+			this.pictureBox1.Size = new System.Drawing.Size(575, 824);
+			this.pictureBox1.TabIndex = 0;
+			this.pictureBox1.TabStop = false;
+			// 
+			// panel4
+			// 
+			this.panel4.BackColor = System.Drawing.Color.White;
+			this.panel4.Controls.Add(this.pictureBox2);
+			this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panel4.Location = new System.Drawing.Point(0, 0);
+			this.panel4.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
+			this.panel4.Name = "panel4";
+			this.panel4.Size = new System.Drawing.Size(575, 130);
+			this.panel4.TabIndex = 11;
+			// 
+			// pictureBox2
+			// 
+			this.pictureBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+			this.pictureBox2.Location = new System.Drawing.Point(0, 0);
+			this.pictureBox2.Name = "pictureBox2";
+			this.pictureBox2.Size = new System.Drawing.Size(575, 130);
+			this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+			this.pictureBox2.TabIndex = 0;
+			this.pictureBox2.TabStop = false;
+			// 
+			// backgroundWorker1
+			// 
+			this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+			this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
+			// 
+			// openFileDialog1
+			// 
+			this.openFileDialog1.FileName = "openFileDialog1";
+			this.openFileDialog1.InitialDirectory = "/";
+			// 
+			// maxNoteLabel
+			// 
+			this.maxNoteLabel.AutoSize = true;
+			this.maxNoteLabel.Location = new System.Drawing.Point(689, 428);
+			this.maxNoteLabel.Name = "maxNoteLabel";
+			this.maxNoteLabel.Size = new System.Drawing.Size(361, 17);
+			this.maxNoteLabel.TabIndex = 10;
+			this.maxNoteLabel.Text = "(If Autoencoder is to be used, don\'t exceed this number)";
 			// 
 			// Final_Application
 			// 
@@ -1334,10 +1345,6 @@
 			this.groupBox4.ResumeLayout(false);
 			this.flowLayoutPanel2.ResumeLayout(false);
 			this.flowLayoutPanel2.PerformLayout();
-			this.panel1.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-			this.panel4.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
 			this.stackPanel1.ResumeLayout(false);
 			this.emptyTab.ResumeLayout(false);
 			this.loadDataTab.ResumeLayout(false);
@@ -1380,6 +1387,10 @@
 			this.panel6.PerformLayout();
 			this.loaderTab.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.loaderPictureBox)).EndInit();
+			this.panel1.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+			this.panel4.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -1481,6 +1492,7 @@
 		private System.Windows.Forms.TabPage vizTab;
 		private System.Windows.Forms.Label dimReduceResults1;
 		private System.Windows.Forms.Label dimReduceResults2;
+		private System.Windows.Forms.Label maxNoteLabel;
 	}
 }
 

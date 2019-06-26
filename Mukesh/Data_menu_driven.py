@@ -262,11 +262,12 @@ class Analysis:
             print('Result Post VIF Analysis: ')
             print(
                 'Number of regressors exhibiting near linear dependence: '+str(vif_count))
-            print('Feature exhibiting maximum multicollinearity: ' +
+            print('Feature exhibiting maximum Variance Inflation Factor: ' +
                   self.data_frame.columns[vif_max_index])
 
     def cat_to_num(self, ch):
         if(self.cat_flag == 0):
+            self.df_encoded = pd.DataFrame()
             print('The data is devoid of any categorical features.')
 
         elif(self.cat_flag == 1):
@@ -333,17 +334,19 @@ class Analysis:
         # copy data_matrix to data_regres to feed into regression models
         if(self.target_detection==0 and self.num_flag==1):
             self.data_vis = pd.DataFrame(self.data_matrix[:,0:(self.num_df.shape[1])])
+            self.data_vis.columns = self.num_df.columns
             con = [self.data_vis,self.target_data]
             self.data_vis = pd.concat(con,axis=1,sort=False)
         elif(self.target_detection==1 and (self.analysis_data.shape[1]==self.df_encoded.shape[1])):
-          self.data_vis = []
+          self.data_vis = pd.DataFrame()
           print('No numerical features present for data visualization.')
         elif(self.target_detection==1 and (self.analysis_data.shape[1]!=self.df_encoded.shape[1])):
             self.data_vis = pd.DataFrame(self.data_matrix[:,(self.df_encoded.shape[1]):(self.analysis_data.shape[1])])
+            self.data_vis.columns = self.num_df.columns[0:(self.num_df.shape[1]-1)]
             con = [self.data_vis,self.target_data]
             self.data_vis = pd.concat(con,axis=1,sort=False)
         elif(self.target_detection==0 and self.num_flag==0):
-          self.data_vis = []
+          self.data_vis = pd.DataFrame()
           print('No numerical features present for data visualization.') 
         data_new = pd.DataFrame(self.data_matrix)
         data_new.reset_index(drop=True, inplace=True)
@@ -519,11 +522,11 @@ class Analysis:
         if(self.target_detection == 1):
            # do multivariate / simple linear regression
             print("Analysis before data preprocessing")
-            yt, y1 = Linear_Regression_model(X_1, Y_1)
+            yt, y1 = self.Linear_Regression_model(X_1, Y_1)
             print("")
             print("")
             print("Analysis after complete data preprocessing")
-            yt, y2 = Linear_Regression_model(X_2, Y_2)
+            yt, y2 = self.Linear_Regression_model(X_2, Y_2)
             # plot graph
             plt.plot(yt, color='r', label='Real Y')  # actual y test value
             plt.plot(y1, color='g', label='Predicted Y before scaling')  # predicted y value before scaling
@@ -634,21 +637,21 @@ class Analysis:
         fig.savefig(my_file)
         print("Saved Scatter plot")
 
-    def line_plot(self, features):
-        xlabel = features[0]
-        ylabel = features[1]
-        x = list(self.data_vis[features[0]])
-        y = list(self.data_vis[features[1]])
-        fig = plt.figure(figsize=(20, 8))
+    # def line_plot(self, features):
+    #     xlabel = features[0]
+    #     ylabel = features[1]
+    #     x = list(self.data_vis[features[0]])
+    #     y = list(self.data_vis[features[1]])
+    #     fig = plt.figure(figsize=(20, 8))
 
-        plt.plot(x, y)
-        plt.xlabel(xlabel)
-        plt.ylabel(ylabel)
-        plt.title(xlabel+" vs "+ylabel)
+    #     plt.plot(x, y)
+    #     plt.xlabel(xlabel)
+    #     plt.ylabel(ylabel)
+    #     plt.title(xlabel+" vs "+ylabel)
 
-        my_file = './images/line_plot.jpeg'       # Name of the line plot file
-        fig.savefig(my_file)
-        print("Saved Line plot")
+    #     my_file = './images/line_plot.jpeg'       # Name of the line plot file
+    #     fig.savefig(my_file)
+    #     print("Saved Line plot")
 
     def report(self):
         print('Data Report')
@@ -784,7 +787,7 @@ if __name__ == '__main__':
         counter_value += 1
     elif arg == 99:
         myAnalysis = load_obj(pickle_filename)
-        print(len(myAnalysis.data.columns)-1)
+        print(round(0.8*(len(myAnalysis.data.columns)-1)))
         store_obj(pickle_filename, myAnalysis)
         counter_value += 1
 
