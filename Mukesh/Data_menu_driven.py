@@ -578,7 +578,7 @@ class Analysis:
 
         df = self.data_visual[features]
 
-        df.plot(kind="box")
+        plt.boxplot(df)
         plt.ylabel("Number")
 
         my_file = './images/box_plot.jpeg'       # Name of the scatter plot file
