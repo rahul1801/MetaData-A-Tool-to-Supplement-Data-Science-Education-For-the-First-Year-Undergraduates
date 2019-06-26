@@ -530,6 +530,7 @@ class Analysis:
             plt.scatter(np.arange(y2.shape[0]), y2)
             plt.xlabel('Data set #')
             plt.ylabel('Target value')
+            plt.title('Linear Regression')
             plt.legend(loc='upper left')
             plt.show()
             # plt.savefig('./images/LiR.png')
