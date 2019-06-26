@@ -109,7 +109,7 @@ namespace Final_App
 				submitButton.Text = "Fetch";
 
 				// Image settings
-				pictureBox1.Image = Image.FromFile("E:\\IBM\\Mukesh\\Final_App\\Final_App\\Resources\\info.png");
+				pictureBox1.Image = Image.FromFile("E:\\IBM\\Mukesh\\Final_App\\Final_App\\Resources\\load_data.png");
 			}
 		}
 
