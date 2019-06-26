@@ -16,7 +16,7 @@ def box_plot(features):
     
     df = data_visual[features]
 
-    df.plot(kind="box")
+    plt.boxplot(df)
     #plt.xlabel(features.columns[0])
     plt.ylabel("Number")
 

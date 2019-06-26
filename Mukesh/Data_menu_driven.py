@@ -509,30 +509,35 @@ class Analysis:
 #         return yTest, yPrediction
 
     def Regression_models(self):
-        self.data_1 = self.data_regres  # data before preprocessing
-        self.data_2 = self.data_final  # data after preprocessing
+        self.data_1 = self.data_regres.values  # data before preprocessing
+        self.data_2 = self.data_final.values  # data after preprocessing
 
-        X_1 = self.data_1.iloc[:, 0:(self.data_1.shape[1]-1)]
-        Y_1 = self.data_1.iloc[:, (self.data_1.shape[1]-1)]
-        X_2 = self.data_2.iloc[:, 0:(self.data_2.shape[1]-1)]
-        Y_2 = self.data_2.iloc[:, (self.data_2.shape[1]-1)]
+        X_1 = self.data_1[:, 0:(self.data_1.shape[1]-1)]
+        Y_1 = self.data_1[:, (self.data_1.shape[1]-1)]
+        X_2 = self.data_2[:, 0:(self.data_2.shape[1]-1)]
+        Y_2 = self.data_2[:, (self.data_2.shape[1]-1)]
 
         if(self.target_detection == 1):
-            # do multivariate / simple linear regression
+           # do multivariate / simple linear regression
             print("Analysis before data preprocessing")
-            yt, y1 = self.Linear_Regression_model(X_1, Y_1)
+            yt, y1 = Linear_Regression_model(X_1, Y_1)
             print("")
             print("")
             print("Analysis after complete data preprocessing")
-            yt, y2 = self.Linear_Regression_model(X_2, Y_2)
+            yt, y2 = Linear_Regression_model(X_2, Y_2)
             # plot graph
-            plt.plot(yt, color='r')  # actual y test value
-            plt.plot(y1, color='g')  # predicted y value before scaling
-            plt.plot(y2, color='orange')  # predicted y value after scaling
+            plt.plot(yt, color='r', label='Real Y')  # actual y test value
+            plt.plot(y1, color='g', label='Predicted Y before scaling')  # predicted y value before scaling
+            plt.plot(y2, color='orange', label='Predicted Y after scaling')  # predicted y value after scaling
+            plt.scatter(np.arange(yt.shape[0]), yt)
+            plt.scatter(np.arange(y1.shape[0]), y1)
+            plt.scatter(np.arange(y2.shape[0]), y2)
             plt.xlabel('Data set #')
             plt.ylabel('Target value')
+            plt.title('Linear Regression')
+            plt.legend(loc='upper left')
             plt.show()
-            plt.savefig('./images/LiR.png')
+            # plt.savefig('./images/LiR.png')
 
         elif(self.target_detection == 0):
             # do logistic regression
@@ -543,11 +548,16 @@ class Analysis:
             print("Analysis after complete data preprocessing")
             yt, y2 = self.Logistic_Regression_model(X_2, Y_2)
             # plot graph
-            plt.plot(yt, color='r')
-            plt.plot(y1, color='g')
-            plt.plot(y2, color='orange')
+            # plt.plot(yt, color='r', label='Real Y')  # actual y test value
+            # plt.plot(y1, color='g', label='Predicted Y before scaling')  # predicted y value before scaling
+            # plt.plot(y2, color='orange', label='Predicted Y after scaling')  # predicted y value after scaling
+            plt.scatter(np.arange(yt.shape[0]), yt, label='Real Y')
+            plt.scatter(np.arange(y1.shape[0]), y1, label='Predicted Y before scaling')
+            plt.scatter(np.arange(y2.shape[0]), y2, label='Predicted Y after scaling')
             plt.xlabel('Data set #')
             plt.ylabel('Target value')
+            plt.legend(loc='upper left')
+            plt.title('Logistic Regression')
             plt.show()
             plt.savefig('./images/LoR.png')
 
@@ -572,7 +582,7 @@ class Analysis:
 
         df = self.data_vis[features]
 
-        df.plot(kind="box")
+        plt.boxplot(df)
         plt.ylabel("Number")
 
         my_file = './images/box_plot.jpeg'       # Name of the box plot file
