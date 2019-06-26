@@ -105,14 +105,16 @@ class Analysis:
         info_as_list = info_as_string.strip('\n').split('\n')[3:-2]
         for i in range(len(info_as_list)):
             temp_info = info_as_list[i].strip().split()
-            info_as_list[i] = temp_info[:2] + temp_info[3:]
+            if(len(temp_info)>4):
+            	info_as_list[i] = temp_info[:-2] + temp_info[-1:]
+            else:
+            	info_as_list[i] = temp_info[:2] + temp_info[3:]
             if len(info_as_list[i])>3:
             	temp = []
             	temp.append(' '.join(info_as_list[i][:-2]))
             	temp.append(info_as_list[i][-2])
             	temp.append(info_as_list[i][-1])
             	info_as_list[i] = temp
-        # print(info_as_list)
         info_as_df = pd.DataFrame(data=info_as_list, columns=["Feature", "Non-null values", "Dtype"], index=np.arange(1, len(info_as_list)+1))
         info_as_df.to_csv('E:\\IBM\\Mukesh\\Entry_data\\info.csv',index=False)
 
@@ -308,7 +310,6 @@ class Analysis:
     def MVD(self, strat_ch):
         missing = self.analysis_data.columns[self.analysis_data.isna(
         ).any()].tolist()
-        print(self.analysis_data)
         self.data_matrix = self.analysis_data.values
         length = len(self.data_matrix) - len(self.df_encoded)
         self.column_names = list(
@@ -334,7 +335,6 @@ class Analysis:
             self.data_vis = pd.DataFrame(self.data_matrix[:,0:(self.num_df.shape[1])])
             con = [self.data_vis,self.target_data]
             self.data_vis = pd.concat(con,axis=1,sort=False)
-            print(self.data_vis)
         elif(self.target_detection==1 and (self.analysis_data.shape[1]==self.df_encoded.shape[1])):
           self.data_vis = []
           print('No numerical features present for data visualization.')
@@ -342,7 +342,6 @@ class Analysis:
             self.data_vis = pd.DataFrame(self.data_matrix[:,(self.df_encoded.shape[1]):(self.analysis_data.shape[1])])
             con = [self.data_vis,self.target_data]
             self.data_vis = pd.concat(con,axis=1,sort=False)
-            print(self.data_vis)
         elif(self.target_detection==0 and self.num_flag==0):
           self.data_vis = []
           print('No numerical features present for data visualization.') 
@@ -566,6 +565,7 @@ class Analysis:
         self.box_plot(feat)
 
     def visualization(self,choice,features):
+    	print(self.data_vis.columns)
     	if choice==1:
     		self.box_plot(features)
     	elif choice==2:
