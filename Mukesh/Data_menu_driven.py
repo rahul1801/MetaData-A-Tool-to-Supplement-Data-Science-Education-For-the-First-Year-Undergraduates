@@ -585,8 +585,10 @@ class Analysis:
 
         df = self.data_vis[features]
 
-        plt.boxplot(df)
-        plt.ylabel("Number")
+        # plt.boxplot(df)
+        # plt.ylabel("Number")
+
+        boxplot = df.boxplot()
 
         my_file = './images/box_plot.jpeg'       # Name of the box plot file
         fig.savefig(my_file)
