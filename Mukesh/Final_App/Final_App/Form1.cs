@@ -261,14 +261,18 @@ namespace Final_App
 				// Update index
 				index = 7;
 
-				// hide label
-				mcaLabel.Visible = false;
-
 				// hide corrLabel
 				corrLabel.Visible = false;
 
-				// hide corrGrid
-				corrGridView.Visible = false;
+				// hide corrMatrixPicture
+				corrMatrixPicture.Visible = false;
+
+				// hide noCorr Label
+				noCorrLabel.Visible = false;
+
+				// hide pairRegressors and Regressors label
+				pairRegressorsGrid.Visible = false;
+				regressorsLabel.Visible = false;
 
 				// switch to mcaTab
 				stackPanel1.SelectedIndex = index;
@@ -528,16 +532,30 @@ namespace Final_App
 				}
 				else if(result.Value == " 5")
 				{
-					// write and show label
-					mcaLabel.Text = result.Key;
-					mcaLabel.Visible = true;
-
-					// write corr matrix
-					bindCSV("E:\\IBM\\Mukesh\\Entry_data\\corr.csv", corrGridView, 2);
+					// write corr matrix picture
+					corrMatrixPicture.Image = Image.FromFile("E:\\IBM\\Mukesh\\images\\corr_matrix.png");
+					corrMatrixPicture.SizeMode = PictureBoxSizeMode.StretchImage;
 
 					// show corrLabel and corr matrix
-					corrGridView.Visible = true;
-					corrGridView.Visible = true;
+					// corrGridView.Visible = true;
+					corrMatrixPicture.Visible = true;
+					corrLabel.Visible = true;
+
+					// Check for pair-wise correlation
+					string[] res_split = result.Key.Split('!');
+					string pair_flag = res_split[0];
+					if(pair_flag== "1")
+					{
+						// Write pair-wise grid and make it visible
+						bindCSV("E:\\IBM\\Mukesh\\Entry_data\\pair_reg.csv", pairRegressorsGrid, 1);
+						pairRegressorsGrid.Visible = true;
+						regressorsLabel.Visible = true;
+					}
+					else
+					{
+						// show no pair-wise correlation label
+						noCorrLabel.Visible = true;
+					}
 
 					// change text of button
 					submitButton.Text = "Submit";
@@ -730,8 +748,6 @@ namespace Final_App
 			foreach (DataGridViewRow row in dgv.Rows)
 			{
 				row.HeaderCell.Value = (row.Index + 1).ToString();
-				Console.Write(row.HeaderCell.Value);
-				Console.WriteLine(row.HeaderCell.Visible);
 			}
 		}
 
@@ -742,7 +758,6 @@ namespace Final_App
 			foreach (DataGridViewRow row in dgv.Rows)
 			{
 				row.HeaderCell.Value = names[i];
-				Console.WriteLine(names[i]);
 				i++;
 			}
 		}

@@ -1,0 +1,6 @@
+Feature-1,Feature-2,Value
+longitude,latitude,-0.9247
+total_rooms,total_bedrooms,0.9271
+total_rooms,households,0.9185
+total_bedrooms,households,0.9744
+population,households,0.9072

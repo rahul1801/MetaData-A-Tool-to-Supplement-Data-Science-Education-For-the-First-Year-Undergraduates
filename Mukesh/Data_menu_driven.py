@@ -20,6 +20,7 @@ from random import seed
 from random import gauss
 import numpy as np
 import pandas as pd
+import seaborn as sns
 import os
 import io
 
@@ -49,7 +50,152 @@ pd.set_option('display.max_columns', 20)
 
 counter_value = 0
 
+
 class Analysis:
+
+	# Helper Functions for Multi-Correlation Analysis
+    def heatmap(self, x, y, **kwargs):
+        if 'color' in kwargs:
+            color = kwargs['color']
+        else:
+            color = [1]*len(x)
+
+        if 'palette' in kwargs:
+            palette = kwargs['palette']
+            n_colors = len(palette)
+        else:
+            n_colors = 256  # Use 256 colors for the diverging color palette
+            palette = sns.color_palette("Blues", n_colors)
+
+        if 'color_range' in kwargs:
+            color_min, color_max = kwargs['color_range']
+        else:
+            # Range of values that will be mapped to the palette, i.e. min and max possible correlation
+            color_min, color_max = min(color), max(color)
+
+        def value_to_color(val):
+            if color_min == color_max:
+                return palette[-1]
+            else:
+                # position of value in the input range, relative to the length of the input range
+                val_position = float((val - color_min)) / (color_max - color_min)
+                # bound the position betwen 0 and 1
+                val_position = min(max(val_position, 0), 1)
+                # target index in the color palette
+                ind = int(val_position * (n_colors - 1))
+                return palette[ind]
+
+        if 'size' in kwargs:
+            size = kwargs['size']
+        else:
+            size = [1]*len(x)
+
+        if 'size_range' in kwargs:
+            size_min, size_max = kwargs['size_range'][0], kwargs['size_range'][1]
+        else:
+            size_min, size_max = min(size), max(size)
+
+        size_scale = kwargs.get('size_scale', 500)
+
+        def value_to_size(val):
+            if size_min == size_max:
+                return 1 * size_scale
+            else:
+                # position of value in the input range, relative to the length of the input range
+                val_position = (val - size_min) * 0.99 / \
+                                (size_max - size_min) + 0.01
+                # bound the position betwen 0 and 1
+                val_position = min(max(val_position, 0), 1)
+                return val_position * size_scale
+        if 'x_order' in kwargs:
+            x_names = [t for t in kwargs['x_order']]
+        else:
+            x_names = [t for t in sorted(set([v for v in x]))]
+        x_to_num = {p[1]: p[0] for p in enumerate(x_names)}
+
+        if 'y_order' in kwargs:
+            y_names = [t for t in kwargs['y_order']]
+        else:
+            y_names = [t for t in sorted(set([v for v in y]))]
+        y_to_num = {p[1]: p[0] for p in enumerate(y_names)}
+
+        plot_grid = plt.GridSpec(
+            1, 15, hspace=0.2, wspace=0.1)  # Setup a 1x10 grid
+        # Use the left 14/15ths of the grid for the main plot
+        ax = plt.subplot(plot_grid[:, :-1])
+
+        marker = kwargs.get('marker', 's')
+
+        kwargs_pass_on = {k: v for k, v in kwargs.items() if k not in [
+                'color', 'palette', 'color_range', 'size', 'size_range', 'size_scale', 'marker', 'x_order', 'y_order'
+        ]}
+
+        ax.scatter(
+            x=[x_to_num[v] for v in x],
+            y=[y_to_num[v] for v in y],
+            marker=marker,
+            s=[value_to_size(v) for v in size],
+            c=[value_to_color(v) for v in color],
+            **kwargs_pass_on
+        )
+        ax.set_xticks([v for k, v in x_to_num.items()])
+        ax.set_xticklabels([k for k in x_to_num], rotation=45,
+                           horizontalalignment='right')
+        ax.set_yticks([v for k, v in y_to_num.items()])
+        ax.set_yticklabels([k for k in y_to_num])
+
+        ax.grid(False, 'major')
+        ax.grid(True, 'minor')
+        ax.set_xticks([t + 0.5 for t in ax.get_xticks()], minor=True)
+        ax.set_yticks([t + 0.5 for t in ax.get_yticks()], minor=True)
+
+        ax.set_xlim([-0.5, max([v for v in x_to_num.values()]) + 0.5])
+        ax.set_ylim([-0.5, max([v for v in y_to_num.values()]) + 0.5])
+        ax.set_facecolor('#F1F1F1')
+
+        # Add color legend on the right side of the plot
+        if color_min < color_max:
+            # Use the rightmost column of the plot
+            ax = plt.subplot(plot_grid[:, -1])
+
+            col_x = [0]*len(palette)  # Fixed x coordinate for the bars
+            # y coordinates for each of the n_colors bars
+            bar_y = np.linspace(color_min, color_max, n_colors)
+
+            bar_height = bar_y[1] - bar_y[0]
+            ax.barh(
+                y=bar_y,
+                width=[5]*len(palette),  # Make bars 5 units wide
+                left=col_x,  # Make bars start at 0
+                height=bar_height,
+                color=palette,
+                linewidth=0
+            )
+            # Bars are going from 0 to 5, so lets crop the plot somewhere in the middle
+            ax.set_xlim(1, 2)
+            ax.grid(False)  # Hide grid
+            ax.set_facecolor('white')  # Make background white
+            ax.set_xticks([])  # Remove horizontal ticks
+            # Show vertical ticks for min, middle and max
+            ax.set_yticks(np.linspace(min(bar_y), max(bar_y), 3))
+            ax.yaxis.tick_right()  # Show vertical ticks on the right
+
+
+    def corrplot(self, data, size_scale=500, marker='s'):
+        # print(data)
+        corr = pd.melt(data.reset_index(), id_vars='index')
+        # print(corr)
+        corr.columns = ['x', 'y', 'value']
+        self.heatmap(
+            corr['x'], corr['y'],
+            color=corr['value'], color_range=[-1, 1],
+            palette=sns.diverging_palette(20, 220, n=256),
+            size=corr['value'].abs(), size_range=[0,1],
+            marker=marker,
+            x_order=data.columns,
+            y_order=data.columns[::-1],
+            size_scale=size_scale)
+    
     def __init__(self, url, choice):
         url = str(url)
         self.target_detection = 0
@@ -189,40 +335,46 @@ class Analysis:
         return data
 
     def Multicollinearity_Analysis(self):
-        print('Performing Multicollinearity Analysis:')
         X = self.data_matrix
         graph_set = set([])
+
+        # Data Matrix as DF for Heatmap
+        X_as_df = pd.DataFrame(data=X, columns=self.analysis_data.columns)
+
+        # Correlation Matrix
         corr_matrix = np.dot(X.T, X)/self.data_matrix.shape[0]
         corr_matrix = np.around(corr_matrix,decimals=4)
-        print('Correlation Matrix Analysis:')
-        print("")
-        print(corr_matrix)
         corr_as_df = pd.DataFrame(data=corr_matrix, columns=self.analysis_data.columns)
         corr_as_df.to_csv('E:\\IBM\\Mukesh\\Entry_data\\corr.csv',index=False)
-        print("")
-        print('Correlation Analysis between Pair Wise Regressors: ')
+        plt.figure(figsize=(8, 8))
+        self.corrplot(X_as_df.corr())
+        plt.savefig('E:\\IBM\\Mukesh\\images\\corr_matrix.png',bbox_inches='tight',pad_inches = 0.2)
+
+        # Strong Pair-Wise Correlation
         reg_count = 0
-        print("")
+        pair_reg = []
         for i in range((corr_matrix.shape[0])):
             for j in range(i+1, corr_matrix.shape[1]):
                 if(abs(corr_matrix[i][j]) > 0.9 and corr_matrix[i][j] < 0.99):
-                    print(
-                        'Regressors: '+self.data_frame.columns[i]+' '+self.data_frame.columns[j])
+                    pair_reg_each = []
+                    pair_reg_each.append(self.data_frame.columns[i])
+                    pair_reg_each.append(self.data_frame.columns[j])
+                    pair_reg_each.append(corr_matrix[i][j])
+                    pair_reg.append(pair_reg_each[:])
                     graph_set.add(self.data_frame.columns[i])
                     graph_set.add(self.data_frame.columns[j])
                     reg_count += 1
-        print("")
-        print('-------------------------------------------------------------------------------------')
-        print('Correlation Graphical Analysis: ')
-        print("")
         graph_final = list(graph_set)
         if(reg_count > 0):
+            print("1!",end="")
+            pair_reg_as_df = pd.DataFrame(data=pair_reg, columns=["Feature-1", "Feature-2","Value"])
+            pair_reg_as_df.to_csv('E:\\IBM\\Mukesh\\Entry_data\\pair_reg.csv',index=False)
             # scatter_matrix(self.data_frame[graph_final],figsize=(12,8))
             # plt.show()
             pass
         elif(reg_count == 0):
-            print('No multicollinearity detected between pair wise regressors')
-            print("")
+            # No pair-wise correlation
+            print("0!",end="")
 
         e1, e2 = eig(corr_matrix)
         e1 = abs(e1)
@@ -470,7 +622,7 @@ class Analysis:
         print('Results of Multivariate Regression')
         print('intercept            : \n', LinearRegressor.intercept_)
         print('Coefficients         : \n', LinearRegressor.coef_)
-        #print('Mean squared error   : %.2f' % mean_squared_error(yTest, yPrediction))
+        # print('Mean squared error   : %.2f' % mean_squared_error(yTest, yPrediction))
         print('Root Mean squared error   : %.2f' %
               np.sqrt(np.mean(np.square(yTest - yPrediction))))
         print('Variance score       : %.2f' % r2_score(yTest, yPrediction))

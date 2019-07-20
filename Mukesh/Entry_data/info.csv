@@ -1,9 +1,11 @@
 Feature,Non-null values,Dtype
-Pt,20,int64
-BP,20,int64
-Age,20,int64
-Weight,20,float64
-BSA,20,float64
-Dur,20,float64
-Pulse,20,int64
-Stress,20,int64
+longitude,20640,float64
+latitude,20640,float64
+housing_median_age,20640,float64
+total_rooms,20640,float64
+total_bedrooms,20433,float64
+population,20640,float64
+households,20640,float64
+median_income,20640,float64
+median_house_value,20640,float64
+ocean_proximity,20640,object
