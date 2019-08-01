@@ -9,6 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MaterialSkin;
+using MaterialSkin.Controls;
 
 namespace Final_App
 {
@@ -40,6 +42,7 @@ namespace Final_App
 			// Image settings
 			pictureBox1.Image = Image.FromFile("E:\\IBM\\Mukesh\\Final_App\\Final_App\\Resources\\start.png");
 			pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
+
 		}
 
 		private void dataInputDropDown_SelectedIndexChanged(object sender, EventArgs e)
@@ -269,6 +272,12 @@ namespace Final_App
 
 				// hide noCorr Label
 				noCorrLabel.Visible = false;
+
+				// hide nomulcorr label
+				noMulCollLabel.Visible = false;
+
+				// hide visualize button
+				scatterButton.Visible = false;
 
 				// hide pairRegressors and Regressors label
 				pairRegressorsGrid.Visible = false;
@@ -542,19 +551,34 @@ namespace Final_App
 					corrLabel.Visible = true;
 
 					// Check for pair-wise correlation
+					Console.WriteLine(result.Key);
 					string[] res_split = result.Key.Split('!');
 					string pair_flag = res_split[0];
-					if(pair_flag== "1")
+					string mul_flag = res_split[1];
+
+					if (pair_flag== "1")
 					{
 						// Write pair-wise grid and make it visible
 						bindCSV("E:\\IBM\\Mukesh\\Entry_data\\pair_reg.csv", pairRegressorsGrid, 1);
 						pairRegressorsGrid.Visible = true;
 						regressorsLabel.Visible = true;
+						scatterButton.Visible = true;
+
 					}
 					else
 					{
 						// show no pair-wise correlation label
 						noCorrLabel.Visible = true;
+					}
+
+					if (mul_flag == "1")
+					{
+						bindCSV("E:\\IBM\\Mukesh\\Entry_data\\combined.csv", eigenVIFGrid, 1);
+					}
+					else
+					{
+						// show no multi-collinearity label
+						noMulCollLabel.Visible = true;
 					}
 
 					// change text of button
@@ -652,6 +676,7 @@ namespace Final_App
 			myProcessStartInfo.RedirectStandardOutput = true;
 			myProcessStartInfo.RedirectStandardInput = true;
 			myProcessStartInfo.CreateNoWindow = true;
+			// myProcessStartInfo.Verb = "runas";
 
 			// arguments
 			myProcessStartInfo.Arguments = myPythonApp + arg;
@@ -761,7 +786,14 @@ namespace Final_App
 				i++;
 			}
 		}
+
+		Form2 secondForm = new Form2();
+		private void scatterButton_Click(object sender, EventArgs e)
+		{
+			secondForm.ShowDialog();
+		}
 	}
+
 
 	class StackPanel : TabControl
 	{
@@ -771,5 +803,5 @@ namespace Final_App
 			if (m.Msg == 0x1328 && !DesignMode) m.Result = (IntPtr)1;
 			else base.WndProc(ref m);
 		}
-	}
+	}	
 }

@@ -348,7 +348,7 @@ class Analysis:
         corr_as_df.to_csv('E:\\IBM\\Mukesh\\Entry_data\\corr.csv',index=False)
         plt.figure(figsize=(8, 8))
         self.corrplot(X_as_df.corr())
-        plt.savefig('E:\\IBM\\Mukesh\\images\\corr_matrix.png',bbox_inches='tight',pad_inches = 0.2)
+        plt.savefig('corr_matrix.png',bbox_inches='tight',pad_inches = 0.2)
 
         # Strong Pair-Wise Correlation
         reg_count = 0
@@ -357,21 +357,22 @@ class Analysis:
             for j in range(i+1, corr_matrix.shape[1]):
                 if(abs(corr_matrix[i][j]) > 0.9 and corr_matrix[i][j] < 0.99):
                     pair_reg_each = []
-                    pair_reg_each.append(self.data_frame.columns[i])
-                    pair_reg_each.append(self.data_frame.columns[j])
+                    pair_reg_each.append(self.analysis_data.columns[i])
+                    pair_reg_each.append(self.analysis_data.columns[j])
                     pair_reg_each.append(corr_matrix[i][j])
                     pair_reg.append(pair_reg_each[:])
-                    graph_set.add(self.data_frame.columns[i])
-                    graph_set.add(self.data_frame.columns[j])
+                    graph_set.add(self.analysis_data.columns[i])
+                    graph_set.add(self.analysis_data.columns[j])
                     reg_count += 1
         graph_final = list(graph_set)
         if(reg_count > 0):
             print("1!",end="")
+
             pair_reg_as_df = pd.DataFrame(data=pair_reg, columns=["Feature-1", "Feature-2","Value"])
             pair_reg_as_df.to_csv('E:\\IBM\\Mukesh\\Entry_data\\pair_reg.csv',index=False)
-            # scatter_matrix(self.data_frame[graph_final],figsize=(12,8))
-            # plt.show()
-            pass
+        
+            scatter_matrix(self.data_frame[graph_final],figsize=(12,8))
+            plt.savefig('scatter_matrix.png',bbox_inches='tight',pad_inches = 0.2)
         elif(reg_count == 0):
             # No pair-wise correlation
             print("0!",end="")
@@ -387,35 +388,52 @@ class Analysis:
         else:
             self.multicol = 0
         if(self.multicol == 1):
-            print('Multicollinearity exists in the data (eigen system analysis)')
+            # Multicollinearity exists
+            print("1!",end="")
         else:
-            print(
-                'The data is free from any multicollinearity issue (eigen system analysis)')
+            # Multicollinearity doesn't exist
+            print("0!",end="")
         count = 0
+        # Result Post Eigen System Analysis
+        cond_indices = []
         if(self.multicol == 1):
             for i in range(len(e1)):
-                if(e1[0]/e1[i] >= 100):
+                cond_indices.append(e1[0]/e1[i])
+                if((e1[0]/e1[i]) >= 100):
                     count += 1
-            print('Result Post Eigen System Analysis:')
-            print('Number of near linear dependencies in the data: '+str(count))
+            cond_indices = np.around(cond_indices,decimals=4)
+            # Number of near linear dependencies in the data
+            # print("Near linear dependencies:"+str(count),end="!")
             corr_matrix_inv = np.linalg.inv(corr_matrix)
             vif_count = 0
-            print('VIF Values:')
+
+            # VIF Values
+            vif_values = []
             vif_max = 0
             vif_max_index = 0
             for i in range(len(corr_matrix_inv)):
-                print(corr_matrix_inv[i][i])
+                vif_values.append(corr_matrix_inv[i][i])
                 if(corr_matrix_inv[i][i] > vif_max):
                     vif_max = corr_matrix_inv[i][i]
                     vif_max_index = i
                 if(corr_matrix_inv[i][i] >= 10):
                     vif_count += 1
-            print("")
-            print('Result Post VIF Analysis: ')
-            print(
-                'Number of regressors exhibiting near linear dependence: '+str(vif_count))
-            print('Feature exhibiting maximum Variance Inflation Factor: ' +
-                  self.data_frame.columns[vif_max_index])
+            vif_values = np.around(vif_values,decimals=4)
+            # Number of regressors exhibiting near linear dependence
+            # print(str(vif_count),end="!")
+            # Feature exhibiting maximum Variance Inflation Factor
+            # print(self.analysis_data.columns[vif_max_index])
+
+            # Combine cond indices and vif values and write into a csv
+            combined = []
+            for i in range(len(vif_values)):
+                comb_temp = []
+                comb_temp.append(self.analysis_data.columns[i])
+                comb_temp.append(cond_indices[i])
+                comb_temp.append(vif_values[i])
+                combined.append(comb_temp[:])
+            combined_as_df = pd.DataFrame(data=combined, columns=["Feature", "Condition Index","VIF Value"])
+            combined_as_df.to_csv('E:\\IBM\\Mukesh\\Entry_data\\combined.csv',index=False)
 
     def cat_to_num(self, ch):
         if(self.cat_flag == 0):

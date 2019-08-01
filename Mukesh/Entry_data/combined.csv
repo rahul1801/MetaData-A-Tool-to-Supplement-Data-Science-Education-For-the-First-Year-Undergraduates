@@ -1,0 +1,10 @@
+Feature,Condition Index,VIF Value
+longitude,1.0,10.2149
+latitude,2.0318,10.5331
+housing_median_age,2.3019,1.3018
+total_rooms,4.2918,12.1772
+total_bedrooms,13.3272,27.1653
+population,27.0797,6.6813
+households,62.2129,28.5064
+median_income,87.7045,2.8637
+median_house_value,199.2115,2.7447

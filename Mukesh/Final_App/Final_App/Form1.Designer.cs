@@ -105,6 +105,10 @@
 			this.label12 = new System.Windows.Forms.Label();
 			this.mcaTab = new System.Windows.Forms.TabPage();
 			this.mcaPanel = new System.Windows.Forms.Panel();
+			this.eigenVIFGrid = new System.Windows.Forms.DataGridView();
+			this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
+			this.scatterButton = new MaterialSkin.Controls.MaterialRaisedButton();
+			this.noMulCollLabel = new MaterialSkin.Controls.MaterialLabel();
 			this.pairRegressorsGrid = new System.Windows.Forms.DataGridView();
 			this.noCorrLabel = new MaterialSkin.Controls.MaterialLabel();
 			this.corrMatrixPicture = new System.Windows.Forms.PictureBox();
@@ -160,6 +164,7 @@
 			this.noiseDetectPanel.SuspendLayout();
 			this.mcaTab.SuspendLayout();
 			this.mcaPanel.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.eigenVIFGrid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pairRegressorsGrid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.corrMatrixPicture)).BeginInit();
 			this.dimReduceTab.SuspendLayout();
@@ -188,7 +193,7 @@
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 13F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 82F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(1924, 1029);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(1924, 1055);
 			this.tableLayoutPanel1.TabIndex = 0;
 			// 
 			// flowLayoutPanel1
@@ -202,7 +207,7 @@
 			this.flowLayoutPanel1.Location = new System.Drawing.Point(577, 0);
 			this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
 			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-			this.flowLayoutPanel1.Size = new System.Drawing.Size(1347, 133);
+			this.flowLayoutPanel1.Size = new System.Drawing.Size(1347, 137);
 			this.flowLayoutPanel1.TabIndex = 2;
 			// 
 			// groupBox2
@@ -339,7 +344,7 @@
 			this.flowLayoutPanel2.Controls.Add(this.submitButton);
 			this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-			this.flowLayoutPanel2.Location = new System.Drawing.Point(577, 976);
+			this.flowLayoutPanel2.Location = new System.Drawing.Point(577, 1002);
 			this.flowLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
 			this.flowLayoutPanel2.Name = "flowLayoutPanel2";
 			this.flowLayoutPanel2.Size = new System.Drawing.Size(1347, 53);
@@ -364,7 +369,7 @@
 			// 
 			this.flowLayoutPanel3.BackColor = System.Drawing.Color.White;
 			this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.flowLayoutPanel3.Location = new System.Drawing.Point(0, 976);
+			this.flowLayoutPanel3.Location = new System.Drawing.Point(0, 1002);
 			this.flowLayoutPanel3.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
 			this.flowLayoutPanel3.Name = "flowLayoutPanel3";
 			this.flowLayoutPanel3.Size = new System.Drawing.Size(575, 53);
@@ -375,10 +380,10 @@
 			this.panel1.BackColor = System.Drawing.Color.White;
 			this.panel1.Controls.Add(this.pictureBox1);
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel1.Location = new System.Drawing.Point(0, 133);
+			this.panel1.Location = new System.Drawing.Point(0, 137);
 			this.panel1.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(575, 843);
+			this.panel1.Size = new System.Drawing.Size(575, 865);
 			this.panel1.TabIndex = 10;
 			// 
 			// pictureBox1
@@ -387,7 +392,7 @@
 			this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
 			this.pictureBox1.Location = new System.Drawing.Point(0, 0);
 			this.pictureBox1.Name = "pictureBox1";
-			this.pictureBox1.Size = new System.Drawing.Size(575, 843);
+			this.pictureBox1.Size = new System.Drawing.Size(575, 865);
 			this.pictureBox1.TabIndex = 0;
 			this.pictureBox1.TabStop = false;
 			// 
@@ -399,7 +404,7 @@
 			this.panel4.Location = new System.Drawing.Point(0, 0);
 			this.panel4.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
 			this.panel4.Name = "panel4";
-			this.panel4.Size = new System.Drawing.Size(575, 133);
+			this.panel4.Size = new System.Drawing.Size(575, 137);
 			this.panel4.TabIndex = 11;
 			// 
 			// pictureBox2
@@ -408,7 +413,7 @@
 			this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
 			this.pictureBox2.Location = new System.Drawing.Point(0, 0);
 			this.pictureBox2.Name = "pictureBox2";
-			this.pictureBox2.Size = new System.Drawing.Size(575, 133);
+			this.pictureBox2.Size = new System.Drawing.Size(575, 137);
 			this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
 			this.pictureBox2.TabIndex = 0;
 			this.pictureBox2.TabStop = false;
@@ -438,11 +443,11 @@
 			this.stackPanel1.Controls.Add(this.regTab);
 			this.stackPanel1.Controls.Add(this.vizTab);
 			this.stackPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.stackPanel1.Location = new System.Drawing.Point(577, 133);
+			this.stackPanel1.Location = new System.Drawing.Point(577, 137);
 			this.stackPanel1.Margin = new System.Windows.Forms.Padding(0);
 			this.stackPanel1.Name = "stackPanel1";
 			this.stackPanel1.SelectedIndex = 0;
-			this.stackPanel1.Size = new System.Drawing.Size(1347, 843);
+			this.stackPanel1.Size = new System.Drawing.Size(1347, 865);
 			this.stackPanel1.TabIndex = 7;
 			// 
 			// emptyTab
@@ -451,7 +456,7 @@
 			this.emptyTab.Location = new System.Drawing.Point(4, 25);
 			this.emptyTab.Name = "emptyTab";
 			this.emptyTab.Padding = new System.Windows.Forms.Padding(3);
-			this.emptyTab.Size = new System.Drawing.Size(1339, 814);
+			this.emptyTab.Size = new System.Drawing.Size(1339, 836);
 			this.emptyTab.TabIndex = 0;
 			this.emptyTab.Text = "Empty";
 			this.emptyTab.UseVisualStyleBackColor = true;
@@ -462,7 +467,7 @@
 			this.emptyPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.emptyPanel.Location = new System.Drawing.Point(3, 3);
 			this.emptyPanel.Name = "emptyPanel";
-			this.emptyPanel.Size = new System.Drawing.Size(1333, 808);
+			this.emptyPanel.Size = new System.Drawing.Size(1333, 830);
 			this.emptyPanel.TabIndex = 6;
 			// 
 			// loadDataTab
@@ -471,7 +476,7 @@
 			this.loadDataTab.Location = new System.Drawing.Point(4, 25);
 			this.loadDataTab.Name = "loadDataTab";
 			this.loadDataTab.Padding = new System.Windows.Forms.Padding(3);
-			this.loadDataTab.Size = new System.Drawing.Size(1339, 814);
+			this.loadDataTab.Size = new System.Drawing.Size(1339, 836);
 			this.loadDataTab.TabIndex = 1;
 			this.loadDataTab.Text = "Load Data";
 			this.loadDataTab.UseVisualStyleBackColor = true;
@@ -490,7 +495,7 @@
 			this.loadDataPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.loadDataPanel.Location = new System.Drawing.Point(3, 3);
 			this.loadDataPanel.Name = "loadDataPanel";
-			this.loadDataPanel.Size = new System.Drawing.Size(1333, 808);
+			this.loadDataPanel.Size = new System.Drawing.Size(1333, 830);
 			this.loadDataPanel.TabIndex = 3;
 			// 
 			// categoricalRadio
@@ -582,7 +587,7 @@
 			this.dataInfoTab.Controls.Add(this.dataInfoPanel);
 			this.dataInfoTab.Location = new System.Drawing.Point(4, 25);
 			this.dataInfoTab.Name = "dataInfoTab";
-			this.dataInfoTab.Size = new System.Drawing.Size(1339, 814);
+			this.dataInfoTab.Size = new System.Drawing.Size(1339, 836);
 			this.dataInfoTab.TabIndex = 2;
 			this.dataInfoTab.Text = "Data Info";
 			this.dataInfoTab.UseVisualStyleBackColor = true;
@@ -603,7 +608,7 @@
 			this.dataInfoPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.dataInfoPanel.Location = new System.Drawing.Point(0, 0);
 			this.dataInfoPanel.Name = "dataInfoPanel";
-			this.dataInfoPanel.Size = new System.Drawing.Size(1339, 814);
+			this.dataInfoPanel.Size = new System.Drawing.Size(1339, 836);
 			this.dataInfoPanel.TabIndex = 0;
 			// 
 			// flowLayoutPanel4
@@ -780,7 +785,7 @@
 			this.catToNumSTab.Controls.Add(this.catToNumPanel);
 			this.catToNumSTab.Location = new System.Drawing.Point(4, 25);
 			this.catToNumSTab.Name = "catToNumSTab";
-			this.catToNumSTab.Size = new System.Drawing.Size(1339, 814);
+			this.catToNumSTab.Size = new System.Drawing.Size(1339, 836);
 			this.catToNumSTab.TabIndex = 3;
 			this.catToNumSTab.Text = "Cat To Num S";
 			this.catToNumSTab.UseVisualStyleBackColor = true;
@@ -793,7 +798,7 @@
 			this.catToNumPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.catToNumPanel.Location = new System.Drawing.Point(0, 0);
 			this.catToNumPanel.Name = "catToNumPanel";
-			this.catToNumPanel.Size = new System.Drawing.Size(1339, 814);
+			this.catToNumPanel.Size = new System.Drawing.Size(1339, 836);
 			this.catToNumPanel.TabIndex = 0;
 			// 
 			// radioButtonPanel
@@ -855,7 +860,7 @@
 			this.missingValueTab.Controls.Add(this.missingValuePanel);
 			this.missingValueTab.Location = new System.Drawing.Point(4, 25);
 			this.missingValueTab.Name = "missingValueTab";
-			this.missingValueTab.Size = new System.Drawing.Size(1339, 814);
+			this.missingValueTab.Size = new System.Drawing.Size(1339, 836);
 			this.missingValueTab.TabIndex = 4;
 			this.missingValueTab.Text = "Missing values";
 			this.missingValueTab.UseVisualStyleBackColor = true;
@@ -868,7 +873,7 @@
 			this.missingValuePanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.missingValuePanel.Location = new System.Drawing.Point(0, 0);
 			this.missingValuePanel.Name = "missingValuePanel";
-			this.missingValuePanel.Size = new System.Drawing.Size(1339, 814);
+			this.missingValuePanel.Size = new System.Drawing.Size(1339, 836);
 			this.missingValuePanel.TabIndex = 1;
 			// 
 			// panel2
@@ -943,7 +948,7 @@
 			this.ScalingTab.Controls.Add(this.scalingPanel);
 			this.ScalingTab.Location = new System.Drawing.Point(4, 25);
 			this.ScalingTab.Name = "ScalingTab";
-			this.ScalingTab.Size = new System.Drawing.Size(1339, 814);
+			this.ScalingTab.Size = new System.Drawing.Size(1339, 836);
 			this.ScalingTab.TabIndex = 5;
 			this.ScalingTab.Text = "Scaling";
 			this.ScalingTab.UseVisualStyleBackColor = true;
@@ -956,7 +961,7 @@
 			this.scalingPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.scalingPanel.Location = new System.Drawing.Point(0, 0);
 			this.scalingPanel.Name = "scalingPanel";
-			this.scalingPanel.Size = new System.Drawing.Size(1339, 814);
+			this.scalingPanel.Size = new System.Drawing.Size(1339, 836);
 			this.scalingPanel.TabIndex = 1;
 			// 
 			// panel3
@@ -1018,7 +1023,7 @@
 			this.noiseDetectTab.Controls.Add(this.noiseDetectPanel);
 			this.noiseDetectTab.Location = new System.Drawing.Point(4, 25);
 			this.noiseDetectTab.Name = "noiseDetectTab";
-			this.noiseDetectTab.Size = new System.Drawing.Size(1339, 814);
+			this.noiseDetectTab.Size = new System.Drawing.Size(1339, 836);
 			this.noiseDetectTab.TabIndex = 7;
 			this.noiseDetectTab.Text = "Noise Detect";
 			this.noiseDetectTab.UseVisualStyleBackColor = true;
@@ -1032,7 +1037,7 @@
 			this.noiseDetectPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.noiseDetectPanel.Location = new System.Drawing.Point(0, 0);
 			this.noiseDetectPanel.Name = "noiseDetectPanel";
-			this.noiseDetectPanel.Size = new System.Drawing.Size(1339, 814);
+			this.noiseDetectPanel.Size = new System.Drawing.Size(1339, 836);
 			this.noiseDetectPanel.TabIndex = 2;
 			// 
 			// noisyListView
@@ -1084,7 +1089,7 @@
 			this.mcaTab.Controls.Add(this.mcaPanel);
 			this.mcaTab.Location = new System.Drawing.Point(4, 25);
 			this.mcaTab.Name = "mcaTab";
-			this.mcaTab.Size = new System.Drawing.Size(1339, 814);
+			this.mcaTab.Size = new System.Drawing.Size(1339, 836);
 			this.mcaTab.TabIndex = 6;
 			this.mcaTab.Text = "MCA";
 			this.mcaTab.UseVisualStyleBackColor = true;
@@ -1092,6 +1097,10 @@
 			// mcaPanel
 			// 
 			this.mcaPanel.AutoScroll = true;
+			this.mcaPanel.Controls.Add(this.eigenVIFGrid);
+			this.mcaPanel.Controls.Add(this.materialLabel1);
+			this.mcaPanel.Controls.Add(this.scatterButton);
+			this.mcaPanel.Controls.Add(this.noMulCollLabel);
 			this.mcaPanel.Controls.Add(this.pairRegressorsGrid);
 			this.mcaPanel.Controls.Add(this.noCorrLabel);
 			this.mcaPanel.Controls.Add(this.corrMatrixPicture);
@@ -1100,9 +1109,72 @@
 			this.mcaPanel.Controls.Add(this.label11);
 			this.mcaPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.mcaPanel.Location = new System.Drawing.Point(0, 0);
+			this.mcaPanel.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
 			this.mcaPanel.Name = "mcaPanel";
-			this.mcaPanel.Size = new System.Drawing.Size(1339, 814);
+			this.mcaPanel.Size = new System.Drawing.Size(1339, 836);
 			this.mcaPanel.TabIndex = 1;
+			// 
+			// eigenVIFGrid
+			// 
+			this.eigenVIFGrid.AllowUserToAddRows = false;
+			this.eigenVIFGrid.AllowUserToDeleteRows = false;
+			this.eigenVIFGrid.BackgroundColor = System.Drawing.SystemColors.Window;
+			this.eigenVIFGrid.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.eigenVIFGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.eigenVIFGrid.Location = new System.Drawing.Point(817, 484);
+			this.eigenVIFGrid.Name = "eigenVIFGrid";
+			this.eigenVIFGrid.ReadOnly = true;
+			this.eigenVIFGrid.RowTemplate.Height = 24;
+			this.eigenVIFGrid.ShowEditingIcon = false;
+			this.eigenVIFGrid.Size = new System.Drawing.Size(457, 255);
+			this.eigenVIFGrid.TabIndex = 19;
+			this.eigenVIFGrid.TabStop = false;
+			// 
+			// materialLabel1
+			// 
+			this.materialLabel1.AutoSize = true;
+			this.materialLabel1.BackColor = System.Drawing.Color.SkyBlue;
+			this.materialLabel1.Depth = 0;
+			this.materialLabel1.Font = new System.Drawing.Font("Roboto", 11F);
+			this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.materialLabel1.Location = new System.Drawing.Point(817, 461);
+			this.materialLabel1.Margin = new System.Windows.Forms.Padding(0);
+			this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
+			this.materialLabel1.Name = "materialLabel1";
+			this.materialLabel1.Size = new System.Drawing.Size(267, 24);
+			this.materialLabel1.TabIndex = 18;
+			this.materialLabel1.Text = "Eigen system and VIF analysis";
+			// 
+			// scatterButton
+			// 
+			this.scatterButton.AutoSize = true;
+			this.scatterButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.scatterButton.BackColor = System.Drawing.Color.Bisque;
+			this.scatterButton.Depth = 0;
+			this.scatterButton.Icon = null;
+			this.scatterButton.Location = new System.Drawing.Point(1160, 360);
+			this.scatterButton.MouseState = MaterialSkin.MouseState.HOVER;
+			this.scatterButton.Name = "scatterButton";
+			this.scatterButton.Primary = true;
+			this.scatterButton.Size = new System.Drawing.Size(105, 36);
+			this.scatterButton.TabIndex = 17;
+			this.scatterButton.Text = "Visualize";
+			this.scatterButton.UseVisualStyleBackColor = false;
+			this.scatterButton.Click += new System.EventHandler(this.scatterButton_Click);
+			// 
+			// noMulCollLabel
+			// 
+			this.noMulCollLabel.AutoSize = true;
+			this.noMulCollLabel.BackColor = System.Drawing.Color.DeepSkyBlue;
+			this.noMulCollLabel.Depth = 0;
+			this.noMulCollLabel.Font = new System.Drawing.Font("Roboto", 11F);
+			this.noMulCollLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.noMulCollLabel.Location = new System.Drawing.Point(817, 429);
+			this.noMulCollLabel.MouseState = MaterialSkin.MouseState.HOVER;
+			this.noMulCollLabel.Name = "noMulCollLabel";
+			this.noMulCollLabel.Size = new System.Drawing.Size(433, 24);
+			this.noMulCollLabel.TabIndex = 16;
+			this.noMulCollLabel.Text = "No multi-collinearity detected among the features.";
 			// 
 			// pairRegressorsGrid
 			// 
@@ -1189,7 +1261,7 @@
 			this.dimReduceTab.Controls.Add(this.dimReducePanel);
 			this.dimReduceTab.Location = new System.Drawing.Point(4, 25);
 			this.dimReduceTab.Name = "dimReduceTab";
-			this.dimReduceTab.Size = new System.Drawing.Size(1339, 814);
+			this.dimReduceTab.Size = new System.Drawing.Size(1339, 836);
 			this.dimReduceTab.TabIndex = 8;
 			this.dimReduceTab.Text = "dimReduce";
 			this.dimReduceTab.UseVisualStyleBackColor = true;
@@ -1207,7 +1279,7 @@
 			this.dimReducePanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.dimReducePanel.Location = new System.Drawing.Point(0, 0);
 			this.dimReducePanel.Name = "dimReducePanel";
-			this.dimReducePanel.Size = new System.Drawing.Size(1339, 814);
+			this.dimReducePanel.Size = new System.Drawing.Size(1339, 836);
 			this.dimReducePanel.TabIndex = 2;
 			// 
 			// maxNoteLabel
@@ -1326,7 +1398,7 @@
 			this.loaderTab.Controls.Add(this.loaderPictureBox);
 			this.loaderTab.Location = new System.Drawing.Point(4, 25);
 			this.loaderTab.Name = "loaderTab";
-			this.loaderTab.Size = new System.Drawing.Size(1339, 814);
+			this.loaderTab.Size = new System.Drawing.Size(1339, 836);
 			this.loaderTab.TabIndex = 9;
 			this.loaderTab.Text = "Loader";
 			this.loaderTab.UseVisualStyleBackColor = true;
@@ -1337,7 +1409,7 @@
 			this.loaderPictureBox.Image = global::Final_App.Properties.Resources._9wcA;
 			this.loaderPictureBox.Location = new System.Drawing.Point(0, 0);
 			this.loaderPictureBox.Name = "loaderPictureBox";
-			this.loaderPictureBox.Size = new System.Drawing.Size(1339, 814);
+			this.loaderPictureBox.Size = new System.Drawing.Size(1339, 836);
 			this.loaderPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
 			this.loaderPictureBox.TabIndex = 0;
 			this.loaderPictureBox.TabStop = false;
@@ -1346,7 +1418,7 @@
 			// 
 			this.regTab.Location = new System.Drawing.Point(4, 25);
 			this.regTab.Name = "regTab";
-			this.regTab.Size = new System.Drawing.Size(1339, 814);
+			this.regTab.Size = new System.Drawing.Size(1339, 836);
 			this.regTab.TabIndex = 10;
 			this.regTab.Text = "Reg";
 			this.regTab.UseVisualStyleBackColor = true;
@@ -1355,7 +1427,7 @@
 			// 
 			this.vizTab.Location = new System.Drawing.Point(4, 25);
 			this.vizTab.Name = "vizTab";
-			this.vizTab.Size = new System.Drawing.Size(1339, 814);
+			this.vizTab.Size = new System.Drawing.Size(1339, 836);
 			this.vizTab.TabIndex = 11;
 			this.vizTab.Text = "Viz";
 			this.vizTab.UseVisualStyleBackColor = true;
@@ -1366,7 +1438,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoScroll = true;
 			this.AutoSize = true;
-			this.ClientSize = new System.Drawing.Size(1924, 1029);
+			this.ClientSize = new System.Drawing.Size(1924, 1055);
 			this.Controls.Add(this.tableLayoutPanel1);
 			this.Name = "Final_Application";
 			this.Text = "MetaData";
@@ -1418,6 +1490,7 @@
 			this.mcaTab.ResumeLayout(false);
 			this.mcaPanel.ResumeLayout(false);
 			this.mcaPanel.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.eigenVIFGrid)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pairRegressorsGrid)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.corrMatrixPicture)).EndInit();
 			this.dimReduceTab.ResumeLayout(false);
@@ -1532,6 +1605,10 @@
 		private System.Windows.Forms.PictureBox corrMatrixPicture;
 		private MaterialSkin.Controls.MaterialLabel noCorrLabel;
 		private System.Windows.Forms.DataGridView pairRegressorsGrid;
+		private MaterialSkin.Controls.MaterialLabel noMulCollLabel;
+		private MaterialSkin.Controls.MaterialRaisedButton scatterButton;
+		private System.Windows.Forms.DataGridView eigenVIFGrid;
+		private MaterialSkin.Controls.MaterialLabel materialLabel1;
 	}
 }
 
