@@ -1,5 +1,5 @@
 # MetaData: A Tool to Supplement Data Science Education for the First Year Undergraduates
-Implementation of the MetaData software application developed as an effort towards encouraging data science education among freshers in the Indian Universities.The research project was carried out under the guidance of Prof. T Senthil Kumar at Amrita Vishwa Vidyapeetham University, India. 
+Implementation of the MetaData software application developed as an effort towards encouraging data science education among freshers in the Indian Universities. The research project was carried out under the guidance of Prof. T Senthil Kumar at Amrita Vishwa Vidyapeetham University, India. 
 
 Details of the software application and our research work is described in our [ACM Paper](https://dl.acm.org/doi/abs/10.1145/3395245.3396409) published at the 8th International Conference on Information and Education Technology 2020, held in Okayama, Japan.
 
